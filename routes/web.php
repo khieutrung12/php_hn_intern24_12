@@ -15,7 +15,7 @@ use App\Http\Controllers\LanguageController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [HomeController::class, 'welcome']);
+Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
 
 Route::get('/lang/{locale}', [LanguageController::class, 'switchLanguage'])->name('lang');
 Auth::routes();
