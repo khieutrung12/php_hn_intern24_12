@@ -18,4 +18,6 @@ return [
     'password.request' => 'Request Password',
     'Verify Your Email Address' => 'Verify Your Email Address',
     'brand' => 'Brand',
+    'brandName' => 'Brand name',
+    'slug' => 'slug',
 ];

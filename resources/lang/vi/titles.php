@@ -18,4 +18,6 @@ return [
     'password.request' => 'Lấy lại mật khẩu',
     'Verify Your Email Address' => 'Xác minh địa chỉ email.',
     'brand' => 'Thương hiệu',
+    'brandName' => 'Tên thương hiệu',
+    'slug' => 'Slug'
 ];
