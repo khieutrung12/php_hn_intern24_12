@@ -11,5 +11,6 @@ return [
         => 'Before proceeding, please check your email for a verification link.',
     'If you did not receive the email' => 'If you did not receive the email',
     'click here to request another' => 'click here to request another',
+    'You are logged in!' => 'You are logged in!',
     'welcome' => 'Welcome to the admin page',
 ];

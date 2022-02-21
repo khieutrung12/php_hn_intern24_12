@@ -11,5 +11,6 @@ return [
         => 'Trước khi tiếp tục, hãy kiểm tra link xác minh trong email của bạn.',
     'If you did not receive the email' => 'Nếu bạn không nhận được email',
     'click here to request another' => 'bấm vào đây để thực hiện yêu cầu khác',
+    'You are logged in!' => 'Bạn đã đăng nhập thành công',
     'welcome' => 'Chào mừng đến trang quản trị admin',
 ];
