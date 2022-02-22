@@ -26,7 +26,6 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:28|unique:brands,name,' . request()->id,
-            'slug' => 'required|min:3|max:28'
         ];
     }
 }

@@ -20,3 +20,5 @@ yarn-error.log
 /public/js 
 /public/mix-manifest.json
 /public/bower_components
+/public/images
+/public/webfonts
