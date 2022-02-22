@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Brand\StoreRequest;
 use App\Http\Requests\Brand\UpdateRequest;
@@ -17,9 +18,9 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $all_brand = Brand::orderby('created_at', 'DESC')->get();
+        $all_brand = Brand::orderby('created_at', 'DESC')->paginate(config('app.limit'));
 
-        return view('all_brand')->with(compact('all_brand'));
+        return view('admin.brand.all_brand')->with(compact('all_brand'));
     }
 
     /**
@@ -29,8 +30,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
-        return view('add_brand');
+        return view('admin.brand.add_brand');
     }
 
     /**
@@ -46,6 +46,7 @@ class BrandController extends Controller
             'name' => $request->name,
             'slug' => $slug,
         ]);
+        $request->session()->flash('mess', __('messages.add-success', ['name' => __('titles.brand')]));
 
         return Redirect::route('brands.create');
     }
@@ -58,7 +59,6 @@ class BrandController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -71,7 +71,7 @@ class BrandController extends Controller
     {
         $edit_brand = Brand::findorfail($id);
 
-        return view('edit_brand')->with(compact('edit_brand'));
+        return view('admin.brand.edit_brand')->with(compact('edit_brand'));
     }
 
     /**
@@ -84,10 +84,12 @@ class BrandController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $brand = Brand::findorfail($id);
+        $slug = createSlug($request->name);
         $brand->update([
             'name' => $request->name,
-            'slug' => $request->slug,
+            'slug' => $slug,
         ]);
+        $request->session()->flash('mess', __('messages.update-success', ['name' => __('titles.brand')]));
 
         return Redirect::route('brands.index');
     }
@@ -103,6 +105,7 @@ class BrandController extends Controller
         $delete_brand = Brand::findorfail($id);
         $delete_brand->delete();
 
+        Session::flash('mess', __('messages.delete-success', ['name' => __('titles.brand')]));
         return Redirect::route('brands.index');
     }
 }

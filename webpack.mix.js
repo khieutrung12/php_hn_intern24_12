@@ -23,21 +23,12 @@ mix
 if (mix.inProduction()) {
     mix.version();
 }
-mix.postCss('resources/css/font-awesome.css','css/font-awesome.css').options({
-    processCssUrls: false
-     });
 mix.postCss('resources/css/style-responsive.css','css/style-responsive.css').options({
     processCssUrls: false
      });
 mix.postCss('resources/css/style.css','css/style.css').options({
     processCssUrls: false
      });
-mix.postCss('resources/css/bootstrap.min.css','css/bootstrap.min.css').options({
-    processCssUrls: false
-    });
-     
-mix.js('resources/js/bootstrap.js', 'public/js')
-.js('resources/js/jquery.dcjqaccordion.2.7.js', 'public/js')
+mix.js('resources/js/jquery.dcjqaccordion.2.7.js', 'public/js')
 .js('resources/js/jquery.nicescroll.js', 'public/js')
-.js('resources/js/jquery2.0.3.min.js', 'public/js')
 .js('resources/js/scripts.js', 'public/js')
