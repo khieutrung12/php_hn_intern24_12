@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Session;
 
 class LanguageMiddleware
 {
@@ -18,10 +17,11 @@ class LanguageMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Session::get('locale') == null) {
-            Session::put('locale', 'vi');
+        if (array_key_exists(Session()->get('locale'), config('languages'))) {
+            App::setLocale(Session()->get('locale'));
+        } else {
+            App::setLocale(config('app.fallback_locale'));
         }
-        App::setLocale(Session::get('locale'));
 
         return $next($request);
     }
