@@ -10,6 +10,13 @@
                     {{ __('titles.login') }}
                 </header>
 
+                @if ($message = Session::get('message'))
+                <div 
+                    class="text-red-500 text-base mx-auto mt-10">
+                    {{ $message }}
+                </div>
+                @endif
+
                 <form class="w-full px-6 space-y-6 sm:px-10 sm:space-y-8" method="POST" action="{{ route('login') }}">
                     @csrf
 

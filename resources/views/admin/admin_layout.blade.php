@@ -27,7 +27,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
         rel='stylesheet' type='text/css'>
     <link href="{{ asset('bower_components/font-awesome/css/all.css') }}"
-        rel="stylesheet">
+        rel="stylesheet">     
     {{-- <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet"> --}}
 </head>
 
@@ -64,7 +64,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             href="#">
                             <img alt="" src="{{ asset('images/2.png') }}">
                             <span class="username">
-                                Thai Hung
+                                {{ Auth()->user()->name }}
                             </span>
                             <b class="caret"></b>
                         </a>
@@ -75,9 +75,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </li>
                             <li><a href="#"><i class="fa fa-cog"></i>
                                     {{ __('titles.settings') }}</a></li>
-                            <li><a href=""><i
-                                        class="fa fa-key"></i>{{ __('titles.logout') }}
-                                </a></li>
+                            <li>
+                                <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fa fa-key"></i>
+                                    {{ __('titles.logout') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                </form>
+                            </li>
                         </ul>
                     </li>
                 </ul>
