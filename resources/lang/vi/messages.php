@@ -18,4 +18,5 @@ return [
     'update-success' => 'Cập nhật :name thành công ',
     'delete-success' => 'Xóa :name thành công ',
     'confirmDelete' => 'Bạn có muốn xóa :name này không ?',
+    'update' => 'Cập nhật dữ liệu thành công!',
 ];

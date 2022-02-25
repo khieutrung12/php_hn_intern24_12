@@ -18,4 +18,5 @@ return [
     'update-success' => 'Update :name successful ',
     'delete-success' => 'Delete :name successful ',
     'confirmDelete' => 'Are you sure you want to delete this :name ?',
+    'update' => 'Data updated successfully!',
 ];
