@@ -32,3 +32,4 @@ mix.postCss('resources/css/style.css','css/style.css').options({
 mix.js('resources/js/jquery.dcjqaccordion.2.7.js', 'public/js')
 .js('resources/js/jquery.nicescroll.js', 'public/js')
 .js('resources/js/scripts.js', 'public/js')
+.js('resources/js/style.js', 'public/js')

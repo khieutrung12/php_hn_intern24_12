@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LanguageController;
 
 /*
@@ -18,14 +19,15 @@ use App\Http\Controllers\LanguageController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/lang/{locale}', [LanguageController::class, 'switchLanguage'])->name('lang');
 Auth::routes();
 
 Route::redirect('/', '/home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::resource('admin/brands', BrandController::class);
-
+Route::resource('admin/categories', CategoryController::class);
 Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 Route::put('/profile/{id}', [UserController::class, 'update'])->name('profile.update');
 Route::get('/profile/{id}/edit', [UserController::class, 'edit'])->name('profile.edit');
+Route::resource('admin/brands', BrandController::class);
