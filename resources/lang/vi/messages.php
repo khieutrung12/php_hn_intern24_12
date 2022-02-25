@@ -11,7 +11,7 @@ return [
     => 'Trước khi tiếp tục, hãy kiểm tra link xác minh trong email của bạn.',
     'If you did not receive the email' => 'Nếu bạn không nhận được email',
     'click here to request another' => 'bấm vào đây để thực hiện yêu cầu khác',
-    'You are logged in!' => 'Bạn đã đăng nhập thành công',
+    'login-success' => 'Bạn đã đăng nhập thành công',
     'welcome' => 'Chào mừng đến trang quản trị admin',
     'error' => 'Vui lòng kiểm tra lại dữ liệu.',
     'add-success' => 'Thêm :name thành công',
@@ -19,4 +19,7 @@ return [
     'delete-success' => 'Xóa :name thành công ',
     'confirmDelete' => 'Bạn có muốn xóa :name này không ?',
     'update' => 'Cập nhật dữ liệu thành công!',
+    'login-fail' => 'Đăng nhập không thành công!',
+    'register-success' => 'Đăng ký thành công',
+    'register-fail' => 'Đăng ký không thành công',
 ];

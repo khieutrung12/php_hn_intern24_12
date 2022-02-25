@@ -11,7 +11,6 @@ return [
     => 'Before proceeding, please check your email for a verification link.',
     'If you did not receive the email' => 'If you did not receive the email',
     'click here to request another' => 'click here to request another',
-    'You are logged in!' => 'You are logged in!',
     'welcome' => 'Welcome to the admin page',
     'error' => 'Please check the data again .',
     'add-success' => 'Add :name successful ',
@@ -19,4 +18,8 @@ return [
     'delete-success' => 'Delete :name successful ',
     'confirmDelete' => 'Are you sure you want to delete this :name ?',
     'update' => 'Data updated successfully!',
+    'login-fail' => 'Login unsuccessful!',
+    'login-success' => 'Login successfully!',
+    'register-success' => 'Register successfully',
+    'register-fail' => 'Register unsuccessful',
 ];

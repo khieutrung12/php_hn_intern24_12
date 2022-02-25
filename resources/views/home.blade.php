@@ -18,7 +18,7 @@
 
             <div class="w-full p-6">
                 <p class="text-gray-700">
-                    {{ ('messages.You are logged in!') }}
+                    {{ __('messages.login-success') }}
                 </p>
             </div>
         </section>

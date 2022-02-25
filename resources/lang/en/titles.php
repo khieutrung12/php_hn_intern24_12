@@ -78,4 +78,5 @@ return [
     'name-var' => ':name name',
     'parent-category' => 'Parent category',
     'none' => 'None',
+    'admin' => 'Admin',
 ];

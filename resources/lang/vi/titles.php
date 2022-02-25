@@ -79,4 +79,5 @@ return [
     'name-var' => 'Tên :name',
     'parent-category' => 'Danh mục cha',
     'none' => 'None',
+    'admin' => 'Quản lý',
 ];

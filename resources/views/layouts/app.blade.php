@@ -27,7 +27,7 @@
 
         <!-- header -->
         <header class="py-6 shadow-sm bg-pink-100 lg:bg-white">
-            <div class="container flex items-center justify-between m-auto">
+            <div class="container flex items-center space-x-32 m-auto">
 
                 <!-- logo -->
                 <a href="{{ route('home') }}" class="text-lg font-semibold text-teal-800 no-underline">
@@ -47,11 +47,11 @@
                 </div>
                 <!-- searchbar end -->
 
-                @if (Auth::user() != null)
+                @if (Auth::check() && Auth::user()->role_id == config('auth.roles.user'))
                     <!-- navicons -->
                     <div class="space-x-10 flex items-center justify-center">
                         <a href="#"
-                        class="block text-center text-gray-700 hover:text-red-500 transition relative">
+                            class="block text-center text-gray-700 hover:text-red-500 transition relative">
                             <span
                                 class="absolute left-7 bottom-7 w-5 h-5 rounded-full flex items-center justify-center bg-red-500 text-white text-xs">
                                 5
@@ -64,7 +64,7 @@
                             </small>
                         </a>
                         <a href="#"
-                        class="lg:block text-center text-gray-700 hover:text-red-500 transition hidden relative">
+                            class="lg:block text-center text-gray-700 hover:text-red-500 transition hidden relative">
                             @if (App::getLocale() == 'vi')
                                 <span
                                     class="absolute left-7 bottom-7 w-5 h-5 rounded-full flex items-center justify-center bg-red-500 text-white text-xs">
@@ -93,6 +93,17 @@
                         </a>
                     </div>
                     <!-- navicons end -->
+                @elseif (Auth::check() && Auth::user()->role_id == config('auth.roles.admin'))
+                    <div class="space-x-10 flex items-center justify-center">
+                        <a href="{{ route('admin') }}" class="block text-center text-gray-700 hover:text-red-500 transition">
+                            <div class="text-2xl">
+                                <i class="far fa-user"></i>
+                            </div>
+                            <small class="text-xs leading-3">
+                                {{ __('titles.admin') }}
+                            </small>
+                        </a>
+                    </div>
                 @endif
                 
             </div>
@@ -118,7 +129,7 @@
                     <!-- nav menu -->
                     <div class="flex items-center justify-between flex-grow pl-12">
                         <div class="flex items-center space-x-6 text-base capitalize">
-                            <a href="#" class="text-gray-200 hover:text-white transition">
+                            <a href="{{ route('home') }}" class="text-gray-200 hover:text-white transition">
                                 {{ __('titles.Home') }}
                             </a>
                             <a href="#" class="text-gray-200 hover:text-white transition">
