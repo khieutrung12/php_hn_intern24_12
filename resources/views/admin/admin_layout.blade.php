@@ -110,6 +110,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </li>
                             </ul>
                         </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-book"></i>
+                                <span>{{ __('titles.category') }}</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a
+                                        href="{{ route('categories.create') }}">{{ __('titles.add-var', ['name' => __('titles.category')]) }}</a>
+                                </li>
+                                <li><a
+                                        href="{{ route('categories.index') }}">{{ __('titles.all-var', ['name' => __('titles.category')]) }}</a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -137,6 +151,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="{{ asset('js/jquery.dcjqaccordion.2.7.js') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/jquery.nicescroll.js') }}"></script>
+    <script src="{{ asset('js/style.js') }}"></script>
 </body>
 
 </html>
