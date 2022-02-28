@@ -86,4 +86,10 @@ return [
     'current_password' => 'Mật khẩu hiện tại',
     'new_password' => 'Mật khẩu mới',
     'confirm_password' => 'Xác nhận mật khẩu',
+    'quantity' => 'Số lượng',
+    'price' => 'Giá',
+    'description' => 'Mô tả',
+    'list-image' => 'Danh sách hình ảnh',
+    'image-thumbnail' => 'Ảnh thumbnail',
+    'root-category' => 'Danh mục gốc',
 ];

@@ -85,4 +85,10 @@ return [
     'current_password' => 'Current password',
     'new_password' => 'New password',
     'confirm_password' => 'Confirm password',
+    'quantity' => 'Quantity',
+    'price' => 'Price',
+    'description' => 'Description',
+    'list-image' => 'List image',
+    'image-thumbnail' => 'Image thumbnail',
+    'root-category' => 'Root category',
 ];
