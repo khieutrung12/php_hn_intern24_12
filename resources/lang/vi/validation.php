@@ -12,5 +12,8 @@ return [
     'regex' => ':name không tồn tại.',
     'required' => ':name bắt buộc phải có.',
     'string' => ':name phải là một chuối ký tự.',
-    'unique' => ':name đã tồn tại'
+    'unique' => ':name đã tồn tại',
+    'digits_between' => ':name phải nằm trong khoảng từ :min đến :max chữ số.',
+    'integer' => ':name phải thuộc kiểu số nguyên.',
+    'numeric' => ':name phải là chữ số.',
 ];
