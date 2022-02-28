@@ -74,6 +74,16 @@ body a:hover {
     text-decoration: none;
 }
 
+img.style-image {
+    width: 120px;
+    height: 120px;
+}
+
+img.style-all-image {
+    width: 200px;
+    height: 200px;
+}
+
 /*sidebar navigation*/
 #sidebar {
     width: 240px;
