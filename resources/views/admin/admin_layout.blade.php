@@ -27,7 +27,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
         rel='stylesheet' type='text/css'>
     <link href="{{ asset('bower_components/font-awesome/css/all.css') }}"
-        rel="stylesheet">     
+        rel="stylesheet">
     {{-- <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet"> --}}
 </head>
 
@@ -81,7 +81,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <i class="fa fa-key"></i>
                                     {{ __('titles.logout') }}
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                <form id="logout-form"
+                                    action="{{ route('logout') }}"
+                                    method="POST">
                                     @csrf
                                 </form>
                             </li>
@@ -131,6 +133,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </li>
                             </ul>
                         </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-book"></i>
+                                <span>{{ __('titles.product') }}</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a
+                                        href="{{ route('products.create') }}">{{ __('titles.add-var', ['name' => __('titles.product')]) }}</a>
+                                </li>
+                                <li><a
+                                        href="{{ route('products.index') }}">{{ __('titles.all-var', ['name' => __('titles.product')]) }}</a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -153,6 +169,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!--main content end-->
     </section>
     <script src="{{ asset('bower_components/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.js') }}">
     </script>
     <script src="{{ asset('js/jquery.dcjqaccordion.2.7.js') }}"></script>

@@ -23,6 +23,7 @@
                             <th></th>
                             <th>{{ __('titles.name-var', ['name' => __('titles.category')]) }}
                             </th>
+                            <th>{{ __('titles.parent-category') }}</th>
                             <th>{{ __('titles.slug') }}</th>
                             <th class="width-css"></th>
                         </tr>

@@ -6,6 +6,15 @@
         {{ $prefix ?? '' }} {{ $category->name ?? '' }}
     </td>
     <td>
+        @if ($category->parentCategory)
+            {{ $category->parentCategory->name ?? '' }}
+        @else
+            <div class="text-danger" role="alert">
+                {{ __('titles.root-category') }}
+            </div>
+        @endif
+    </td>
+    <td>
         {{ $category->slug ?? '' }}
     </td>
     <td>
