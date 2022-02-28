@@ -26,8 +26,13 @@ Auth::routes();
 Route::redirect('/', '/home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::resource('admin/categories', CategoryController::class);
-Route::get('/admin', [AdminController::class, 'index'])->name('admin');
-Route::put('/profile/{id}', [UserController::class, 'update'])->name('profile.update');
-Route::get('/profile/{id}/edit', [UserController::class, 'edit'])->name('profile.edit');
-Route::resource('admin/brands', BrandController::class);
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+    Route::resource('admin/categories', CategoryController::class);
+    Route::resource('admin/brands', BrandController::class);
+});
+
+Route::middleware(['auth', 'user'])->group(function () {
+    Route::put('/profile/{id}', [UserController::class, 'update'])->name('profile.update');
+    Route::get('/profile/{id}/edit', [UserController::class, 'edit'])->name('profile.edit');
+});

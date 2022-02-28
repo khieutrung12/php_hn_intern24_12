@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -28,6 +29,15 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    protected function redirectTo()
+    {
+        if (Auth()->user()->role_id == config('auth.roles.admin')) {
+            return route('admin');
+        } else {
+            return route('home');
+        }
+    }
+
     /**
      * Create a new controller instance.
      *
@@ -36,5 +46,30 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $compare = auth()->attempt([
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+        ]);
+
+        if ($compare) {
+            if (auth()->user()->role_id == config('auth.roles.admin')) {
+                return redirect()->route('admin');
+            } else {
+                return redirect()->route('home');
+            }
+        } else {
+            return redirect()
+                ->route('login')
+                ->with('message', __('messages.login-fail'));
+        }
     }
 }
