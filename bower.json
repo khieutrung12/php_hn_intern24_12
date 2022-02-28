@@ -17,6 +17,7 @@
   "dependencies": {
     "bootstrap": "3.3.5",
     "jquery": "2.0.3",
-    "font-awesome": "^6.0.0"
+    "font-awesome": "^6.0.0",
+    "ckeditor": "^4.17.2"
   }
 }
