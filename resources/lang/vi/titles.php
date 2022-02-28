@@ -80,4 +80,10 @@ return [
     'parent-category' => 'Danh mục cha',
     'none' => 'None',
     'admin' => 'Quản lý',
+    'Current Password' => 'Mật khẩu hiện tại',
+    'New Password' => 'Mật khẩu mới',
+    'Confirm Password' => 'Xác nhận mật khẩu',
+    'current_password' => 'Mật khẩu hiện tại',
+    'new_password' => 'Mật khẩu mới',
+    'confirm_password' => 'Xác nhận mật khẩu',
 ];

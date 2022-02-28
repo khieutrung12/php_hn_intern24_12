@@ -79,4 +79,10 @@ return [
     'parent-category' => 'Parent category',
     'none' => 'None',
     'admin' => 'Admin',
+    'Current Password' => 'Current Password',
+    'New Password' => 'New Password',
+    'Confirm Password' => 'Confirm Password',
+    'current_password' => 'Current password',
+    'new_password' => 'New password',
+    'confirm_password' => 'Confirm password',
 ];

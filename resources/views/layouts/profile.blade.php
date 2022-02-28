@@ -18,9 +18,9 @@
             <!-- account profile -->
             <div class="px-4 py-5 shadow flex items-center gap-4 bg-white">
                 <div class="flex-shrink-0">
-                    @if ($user->avatar != null)
+                    @if (Auth::user()->avatar != null)
                         <img
-                            src="{{ asset('avatars/' . $user->avatar) }}"
+                            src="{{ asset('avatars/' . Auth::user()->avatar) }}"
                             class="rounded-full w-14 h-14 p-1 border border-gray-200 object-cover">
                     @else
                         <img
@@ -43,9 +43,10 @@
                 <!-- single link -->
                 <div class="space-y-3 pl-8 py-2">
 
-                    <a href="{{ route('profile.edit', Auth::user()->id) }}" 
-                        class="relative text-base font-medium capitalize hover:text-red-500 transition block text-red-500">
-                        
+                    <a
+                        href="{{ route('profile.edit', Auth::user()->id) }}" 
+                        class="relative text-base font-medium capitalize hover:text-red-500 transition block
+                            @if (Route::currentRouteName() == 'profile.edit') text-red-500 @endif">
                         <span class="absolute left-0 top-0 text-base">
                             <i class="far fa-address-card"></i>
                         </span>
@@ -54,7 +55,10 @@
                         </span>
                     </a>
 
-                    <a href="#" class="hover:text-red-500 transition capitalize block ml-8">
+                    <a
+                        href="{{ route('password.edit', Auth::user()->id) }}"
+                        class="hover:text-red-500 transition capitalize block ml-8
+                            @if (Route::currentRouteName() == 'password.edit') text-red-500 @endif">
                         {{ __('titles.Change password') }}
                     </a>
 

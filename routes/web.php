@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\Auth\ChangePasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,13 +27,15 @@ Auth::routes();
 Route::redirect('/', '/home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
     Route::resource('admin/categories', CategoryController::class);
     Route::resource('admin/brands', BrandController::class);
 });
 
-Route::middleware(['auth', 'user'])->group(function () {
-    Route::put('/profile/{id}', [UserController::class, 'update'])->name('profile.update');
-    Route::get('/profile/{id}/edit', [UserController::class, 'edit'])->name('profile.edit');
+Route::group(['prefix' => 'profile', 'middleware' => ['auth', 'user']], function () {
+    Route::put('/{id}', [UserController::class, 'update'])->name('profile.update');
+    Route::get('/{id}/edit', [UserController::class, 'edit'])->name('profile.edit');
+    Route::get('/password/{id}/edit', [ChangePasswordController::class, 'edit'])->name('password.edit');
+    Route::put('/password/{id}', [ChangePasswordController::class, 'change'])->name('password.change');
 });

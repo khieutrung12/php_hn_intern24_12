@@ -5,7 +5,7 @@
         <form action="{{ route('profile.update', $user->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <h3 class="text-lg font-medium capitalize mb-6 ml-6 mr-6 pb-4 border border-l-0 border-t-0 border-r-0  ">
+            <h3 class="text-lg font-medium capitalize mb-6 ml-6 mr-6 pb-4 border border-l-0 border-t-0 border-r-0">
                 {{ __('titles.Profile Information') }}
             </h3>
             <div class="flex">
