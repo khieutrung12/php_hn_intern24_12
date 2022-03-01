@@ -29,6 +29,7 @@ mix.postCss('resources/css/style-responsive.css','css/style-responsive.css').opt
 mix.postCss('resources/css/style.css','css/style.css').options({
     processCssUrls: false
      });
+mix.sass('resources/css/style-app-user.scss','css/style-app-user.css')
 mix.js('resources/js/jquery.dcjqaccordion.2.7.js', 'public/js')
 .js('resources/js/jquery.nicescroll.js', 'public/js')
 .js('resources/js/scripts.js', 'public/js')
