@@ -20,7 +20,7 @@
                         class="w-full block border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded placeholder-gray-400 @error('current_password') border-red-600 @enderror"
                         name="current_password" required>
                     @error('current_password')
-                    <p class="text-red-500 text-xs italic">
+                    <p class="text-indigo-900 text-xs italic">
                         {{ __($message, ['current_password' => __('titles.current_password')] )}}
                     </p>
                     @enderror
@@ -36,7 +36,7 @@
                         name="new_password"
                         value="{{ old('new_password') }}"required>
                     @error('new_password')
-                    <p class="text-red-500 text-xs italic">
+                    <p class="text-indigo-900 text-xs italic">
                         {{ __($message, ['new_password' => __('titles.new_password')] )}}
                     </p>
                     @enderror
@@ -51,7 +51,7 @@
                         class="w-full block border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded placeholder-gray-400 @error('confirm_password') border-red-600 @enderror"
                         name="confirm_password" required>
                     @error('confirm_password')
-                    <p class="text-red-500 text-xs italic">
+                    <p class="text-indigo-900 text-xs italic">
                         {{ __($message, ['confirm_password' => __('titles.confirm_password')] )}}
                     </p>
                     @enderror
@@ -61,7 +61,7 @@
             <div class="mt-12 ml-6">
                 <button
                     type="submit"
-                    class="px-6 py-2 text-center text-white bg-red-500 border border-red-500 rounded hover:bg-transparent hover:text-red-500 transition uppercase font-roboto font-medium">
+                    class="px-6 py-2 text-center text-white bg-indigo-900 border border-indigo-900 rounded hover:bg-transparent hover:text-indigo-900 transition uppercase font-roboto font-medium">
                     {{ __('titles.Save change') }}
                 </button>
 
