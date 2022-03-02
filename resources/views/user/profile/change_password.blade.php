@@ -1,4 +1,4 @@
-@extends('layouts.profile')
+@extends('user.profile.layouts.profile')
 @section('content-profile')
     <!-- account content -->
     <div class="col-span-5 shadow rounded px-6 pt-5 pb-7 mt-6 lg:mt-0 bg-white">
