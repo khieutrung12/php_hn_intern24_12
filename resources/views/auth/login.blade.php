@@ -12,7 +12,7 @@
 
                 @if ($message = Session::get('message'))
                 <div 
-                    class="text-red-500 text-base mx-auto mt-10">
+                    class="text-indigo-900 text-base mx-auto mt-10">
                     {{ $message }}
                 </div>
                 @endif
@@ -26,11 +26,11 @@
                         </label>
 
                         <input id="email" type="email"
-                            class="form-input w-full @error('email') border-red-500 @enderror" name="email"
+                            class="form-input w-full @error('email') border-indigo-900 @enderror" name="email"
                             value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                         @error('email')
-                        <p class="text-red-500 text-xs italic mt-4">
+                        <p class="text-indigo-900 text-xs italic mt-4">
                             {{ $message }}
                         </p>
                         @enderror
@@ -42,11 +42,11 @@
                         </label>
 
                         <input id="password" type="password"
-                            class="form-input w-full @error('password') border-red-500 @enderror" name="password"
+                            class="form-input w-full @error('password') border-indigo-900 @enderror" name="password"
                             required>
 
                         @error('password')
-                        <p class="text-red-500 text-xs italic mt-4">
+                        <p class="text-indigo-900 text-xs italic mt-4">
                             {{ $message }}
                         </p>
                         @enderror
@@ -63,14 +63,14 @@
 
                     <div class="flex flex-wrap">
                         <button type="submit"
-                        class="w-full select-none font-bold whitespace-no-wrap p-3 rounded-lg text-base leading-normal no-underline text-gray-100 bg-blue-500 hover:bg-blue-700 sm:py-4">
+                        class="w-full select-none font-bold whitespace-no-wrap p-3 rounded-lg text-base leading-normal no-underline text-gray-100 bg-indigo-900  hover:bg-indigo-800 sm:py-4">
                             {{ __('titles.login') }}
                         </button>
 
                         @if (Route::has('register'))
                         <p class="w-full text-xs text-center text-gray-700 my-6 sm:text-sm sm:my-8">
                             {{ __("messages.none-account?") }}
-                            <a class="text-blue-500 hover:text-blue-700 no-underline hover:underline" href="{{ route('register') }}">
+                            <a class="text-indigo-900 hover:text-white no-underline hover:underline" href="{{ route('register') }}">
                                 {{ __('titles.register') }}
                             </a>
                         </p>

@@ -3,7 +3,7 @@
 @section('content')
     <!-- breadcrum -->
     <div class="py-4 container flex gap-3 items-center m-auto">
-        <a href="{{ route('home') }}" class="text-red-500 text-base">
+        <a href="{{ route('home') }}" class="text-indigo-900 text-base">
             <i class="fas fa-home"></i>
         </a>
         <span class="text-sm text-gray-400"><i class="fas fa-chevron-right"></i></span>
@@ -45,8 +45,8 @@
 
                     <a
                         href="{{ route('profile.edit', Auth::user()->id) }}" 
-                        class="relative text-base font-medium capitalize hover:text-red-500 transition block
-                            @if (Route::currentRouteName() == 'profile.edit') text-red-500 @endif">
+                        class="relative text-base font-medium capitalize hover:text-indigo-900 transition block
+                            @if (Route::currentRouteName() == 'profile.edit') text-indigo-900 @endif">
                         <span class="absolute left-0 top-0 text-base">
                             <i class="far fa-address-card"></i>
                         </span>
@@ -57,8 +57,8 @@
 
                     <a
                         href="{{ route('password.edit', Auth::user()->id) }}"
-                        class="hover:text-red-500 transition capitalize block ml-8
-                            @if (Route::currentRouteName() == 'password.edit') text-red-500 @endif">
+                        class="hover:text-indigo-900 transition capitalize block ml-8
+                            @if (Route::currentRouteName() == 'password.edit') text-indigo-900 @endif">
                         {{ __('titles.Change password') }}
                     </a>
 
@@ -67,7 +67,7 @@
                 <!-- single link -->
                 <div class="space-y-3 pl-8 pb-2 pt-5">
                     <a href="#"
-                        class="relative medium capitalize text-gray-800 font-medium hover:text-red-500 transition block">
+                        class="relative medium capitalize text-gray-800 font-medium hover:text-indigo-900 transition block">
                         <span class="absolute left-0 top-0 text-base">
                             <i class="fas fa-gift"></i>
                         </span>
@@ -75,13 +75,13 @@
                             {{ __('titles.My order history') }}
                         </span>
                     </a>
-                    <a href="#" class="hover:text-red-500 transition block capitalize ml-8">
+                    <a href="#" class="hover:text-indigo-900 transition block capitalize ml-8">
                         {{ __('titles.Completed') }}
                     </a>
-                    <a href="#" class="hover:text-red-500 transition block capitalize ml-8">
+                    <a href="#" class="hover:text-indigo-900 transition block capitalize ml-8">
                         {{ __('titles.Cancelled') }}
                     </a>
-                    <a href="#" class="hover:text-red-500 transition block capitalize ml-8">
+                    <a href="#" class="hover:text-indigo-900 transition block capitalize ml-8">
                         {{ __('titles.Unconfirmed') }}
                     </a>
                 </div>
@@ -89,7 +89,7 @@
                 <!-- single link -->
                 <div class="space-y-3 pl-8 pb-2 pt-5">
                     <a href="#"
-                        class="relative medium capitalize text-gray-800 font-medium hover:text-red-500 transition block">
+                        class="relative medium capitalize text-gray-800 font-medium hover:text-indigo-900 transition block">
                         <span class="absolute left-0 top-0 text-base">
                             <i class="far fa-credit-card"></i>
                         </span>
@@ -101,7 +101,7 @@
                 <!-- single link end -->
                 <!-- single link -->
                 <div class="pl-8 pb-2 pt-5">
-                <a href="#" class="relative medium capitalize text-gray-800 font-medium hover:text-red-500 transition block">
+                <a href="#" class="relative medium capitalize text-gray-800 font-medium hover:text-indigo-900 transition block">
                         <span class="absolute left-0 top-0 text-base">
                             <i class="far fa-heart"></i>
                         </span>
@@ -114,7 +114,7 @@
                 <!-- single link -->
                 <div class="pl-8 pb-2 pt-5">
                     <a href="{{ route('logout') }}"
-                        class="relative medium capitalize text-gray-800 font-medium hover:text-red-500 transition block"
+                        class="relative medium capitalize text-gray-800 font-medium hover:text-indigo-900 transition block"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <span class="absolute left-0 top-0 text-base">
                             <i class="fas fa-sign-out-alt"></i>

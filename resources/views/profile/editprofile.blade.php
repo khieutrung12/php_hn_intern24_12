@@ -19,7 +19,7 @@
                             class="w-full block border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded placeholder-gray-400 @error('name') border-red-600 @enderror"
                             name="name" value="{{ $user->name }}" required>
                         @error('name')
-                        <p class="text-red-500 text-xs italic">
+                        <p class="text-indigo-900 text-xs italic">
                             {{ __($message, ['name' => __('titles.name')] )}}
                         </p>
                         @enderror
@@ -42,7 +42,7 @@
                             {{ __('titles.gender') }}
                         </label>
                         <select
-                            class="w-full form-select appearance-none block border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded placeholder-white bg-white focus:border-red-500"
+                            class="w-full form-select appearance-none block border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded placeholder-white bg-white focus:border-indigo-900"
                             name="gender">
                             <option value="" {{ $user->gender_id == null ? 'selected' : '' }}>
                                 {{ __('titles.Pick gender') }}
@@ -65,7 +65,7 @@
                             class="w-full block border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded placeholder-gray-400 @error('phone') border-red-600 @enderror"
                             value="{{ $user->phone }}">
                         @error('phone')
-                        <p class="text-red-500 text-xs italic">
+                        <p class="text-indigo-900 text-xs italic">
                             {{ __($message, ['name' => __('titles.phone')] )}}
                         </p>
                         @enderror
@@ -104,7 +104,7 @@
             <div class="mt-6 ml-6">
                 <button
                     type="submit"
-                    class="px-6 py-2 text-center text-white bg-red-500 border border-red-500 rounded hover:bg-transparent hover:text-red-500 transition uppercase font-roboto font-medium">
+                    class="px-6 py-2 text-center text-white bg-indigo-900 border border-indigo-900 rounded hover:bg-transparent hover:text-indigo-900 transition uppercase font-roboto font-medium">
                     {{ __('titles.Save change') }}
                 </button>
 
