@@ -22,3 +22,5 @@ yarn-error.log
 /public/bower_components
 /public/images
 /public/webfonts
+/public/imagess
+/public/avatars

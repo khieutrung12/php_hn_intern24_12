@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,26 +11,42 @@ const mix = require('laravel-mix');
  |
  */
 
-mix
-    .js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        require('postcss-import'),
-        require('tailwindcss'),
-        require('postcss-nested'),
-        require('autoprefixer'),
-    ]);
+mix.js("resources/js/app.js", "public/js").postCss(
+    "resources/css/app.css",
+    "public/css",
+    [
+        require("postcss-import"),
+        require("tailwindcss"),
+        require("postcss-nested"),
+        require("autoprefixer"),
+    ]
+);
 
 if (mix.inProduction()) {
     mix.version();
 }
-mix.postCss('resources/css/style-responsive.css','css/style-responsive.css').options({
-    processCssUrls: false
-     });
-mix.postCss('resources/css/style.css','css/style.css').options({
-    processCssUrls: false
-     });
-mix.sass('resources/css/style-app-user.scss','css/style-app-user.css')
-mix.js('resources/js/jquery.dcjqaccordion.2.7.js', 'public/js')
-.js('resources/js/jquery.nicescroll.js', 'public/js')
-.js('resources/js/scripts.js', 'public/js')
-.copy('resources/js/style.js', 'public/js/style.js')
+mix.sass("resources/css/style-app-user.scss", "css/style-app-user.css");
+mix.postCss(
+    "resources/css/style-responsive.css",
+    "css/style-responsive.css"
+).options({
+    processCssUrls: false,
+});
+mix.postCss("resources/css/style.css", "css/style.css").options({
+    processCssUrls: false,
+});
+mix.postCss(
+    "resources/css/style-tailwind.css",
+    "css/style-tailwind.css"
+).options({
+    processCssUrls: false,
+});
+mix.postCss("resources/css/style-custom.css", "css/style-custom.css").options({
+    processCssUrls: false,
+});
+
+mix.js("resources/js/jquery.dcjqaccordion.2.7.js", "public/js")
+    .js("resources/js/jquery.nicescroll.js", "public/js")
+    .js("resources/js/scripts.js", "public/js")
+    .copy("resources/js/cart_update.js", "public/js/cart_update.js")
+    .copy("resources/js/style.js", "public/js/style.js");

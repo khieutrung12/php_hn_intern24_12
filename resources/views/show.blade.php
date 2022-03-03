@@ -9,7 +9,8 @@
         <span class="text-sm text-gray-400">
             <i class="fas fa-chevron-right"></i>
         </span>
-        <a href="{{ route('shop') }}" class="text-indigo-900 text-base font-medium uppercase">
+        <a href="{{ route('shop') }}"
+            class="text-indigo-900 text-base font-medium uppercase">
             {{ __('titles.Shop') }}
         </a>
         <span class="text-sm text-gray-400">
@@ -26,12 +27,15 @@
         <!-- product image -->
         <div>
             <div>
-                <img id="main-img" src="{{ asset('images/uploads/products/' . $product->image_thumbnail) }}" class="w-full">
+                <img id="main-img"
+                    src="{{ asset('images/uploads/products/' . $product->image_thumbnail) }}"
+                    class="w-full">
             </div>
             <div class="grid grid-cols-5 gap-4 mt-4">
                 @foreach ($product->images as $image)
                     <div>
-                        <img src="{{ asset('images/uploads/products/' . $image->image) }}" class="single-img w-28 h-28 cursor-pointer border border-indigo-900">
+                        <img src="{{ asset('images/uploads/products/' . $image->image) }}"
+                            class="single-img w-28 h-28 cursor-pointer border border-indigo-900">
                     </div>
                 @endforeach
             </div>
@@ -65,7 +69,7 @@
                 </p>
                 <p class="space-x-2">
                     <span class="text-gray-800 font-semibold">
-                        {{ __('titles.Category') }}: 
+                        {{ __('titles.Category') }}:
                     </span>
                     <span class="text-gray-600">
                         {{ $product->category->name }}
@@ -74,42 +78,60 @@
             </div>
             <div class="mt-20 flex items-baseline gap-5 bg-gray-50 py-8 pl-5">
                 <span class="text-indigo-900 font-semibold text-3xl">
-                    ${{ $product->price }}
+                    {{ vndFormat($product->price) }}
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 </span>
             </div>
             <!-- quantity -->
             <div class="mt-10">
                 <h3 class="text-base text-gray-800 mb-1">
-                    {{ __("titles.Quantity") }}
+                    {{ __('titles.Quantity') }}
                 </h3>
-                <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max-content absolute">
-                    <button id="decrement" onclick="stepper('decrement')" class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer hover:bg-indigo-900 hover:text-white select-none">-</button>
-                    <input id="input-number" type="number" min="0" value="0" readonly class="appearance-none h-8 w-10 flex items-center justify-center cursor-not-allowed text-center">
-                    <button id="increment" onclick="stepper('increment')" class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer hover:bg-indigo-900 hover:text-white select-none">+</button>
+                <div
+                    class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max-content absolute">
+                    <button id="decrement" onclick="stepper('decrement')"
+                        class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer hover:bg-indigo-900 hover:text-white select-none">-</button>
+                    <input id="input-number" type="number" min="1" value="1"
+                        readonly
+                        class="appearance-none h-8 w-10 flex items-center justify-center cursor-not-allowed text-center">
+                    <button id="increment" onclick="stepper('increment')"
+                        class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer hover:bg-indigo-900 hover:text-white select-none">+</button>
                 </div>
                 <div class="text-gray-400 ml-32 pt-2">
                     {{ $product->quantity . __('titles.piece available') }}
                 </div>
-            </div>  
+            </div>
             <!-- {{ __('titles.Add to Cart') }} button -->
             <div class="flex gap-3 border-b border-gray-200 pb-5 mt-10">
-                <a href="#" class="bg-indigo-900 border border-indigo-900 text-white px-8 py-2 font-medium rounded uppercase 
-                    hover:bg-transparent hover:text-indigo-900 transition text-sm flex items-center">
-                    <span class="mr-2"><i class="fas fa-shopping-bag"></i></span> {{ __('titles.Buy now') }}
+                <a href="{{ route('carts.index') }}"
+                    data-url="{{ route('addMoreProduct', ['id' => $product->id]) }}"
+                    class="bg-indigo-900 border border-indigo-900 text-white px-8 py-2 font-medium rounded uppercase 
+                    hover:bg-transparent hover:text-indigo-900 transition text-sm flex items-center add_quantity">
+                    <span class="mr-2"><i
+                            class="fas fa-shopping-bag"></i></span>
+                    {{ __('titles.Buy now') }}
                 </a>
-                <a href="#" class="bg-indigo-900 border border-indigo-900 text-white px-8 py-2 font-medium rounded uppercase 
-                    hover:bg-transparent hover:text-indigo-900 transition text-sm flex items-center">
-                    <span class="mr-2"><i class="fa-solid fa-cart-shopping"></i></span> {{ __('titles.Add to Cart') }}
+                <a href="#"
+                    class="bg-indigo-900 border border-indigo-900 text-white px-8 py-2 font-medium rounded uppercase 
+                    hover:bg-transparent hover:text-indigo-900 transition text-sm flex items-center add_more_product"
+                    data-url="{{ route('addMoreProduct', ['id' => $product->id]) }}">
+                    <span class="mr-2"><i
+                            class="fa-solid fa-cart-shopping"></i></span>
+                    {{ __('titles.Add to Cart') }}
                 </a>
-                <a href="#" class="border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase 
+                <a href="#"
+                    class="border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase 
                     hover:bg-transparent hover:text-indigo-900 transition text-sm">
-                    <span class="mr-2"><i class="far fa-heart"></i></span> {{ __('titles.Wishlist') }}
+                    <span class="mr-2"><i
+                            class="far fa-heart"></i></span>
+                    {{ __('titles.Wishlist') }}
                 </a>
             </div>
             <!-- {{ __('titles.Add to Cart') }} button end -->
             <!-- product share icons -->
             <div class="flex space-x-3 mt-6">
-                <span class="text-gray-500 mr-3 flex items-center justify-center">{{ __('titles.Share') }}:</span>
+                <span
+                    class="text-gray-500 mr-3 flex items-center justify-center">{{ __('titles.Share') }}:</span>
                 <a href="#"
                     class="text-gray-400 hover:text-gray-500 h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center">
                     <i class="fab fa-facebook-f"></i>
@@ -132,7 +154,8 @@
     <!-- product details and review -->
     <div class="container pb-16 mx-auto mt-20">
         <!-- detail buttons -->
-        <h3 class="border-b border-gray-200 font-roboto text-gray-800 pb-3 font-medium text-xl uppercase">
+        <h3
+            class="border-b border-gray-200 font-roboto text-gray-800 pb-3 font-medium text-xl uppercase">
             {{ __('titles.Product Details') }}
         </h3>
         <!-- details button end -->

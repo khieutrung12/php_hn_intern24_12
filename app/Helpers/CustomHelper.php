@@ -23,3 +23,10 @@ if (!function_exists('createSlug')) {
         return $str;
     }
 }
+
+if (!function_exists('vndFormat')) {
+    function vndFormat($money)
+    {
+        return number_format($money, 0, ',', '.') . ' VND';
+    }
+}
