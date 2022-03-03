@@ -140,4 +140,11 @@ return [
     'Share' => 'Chia sẻ',
     'Product Details' => 'Chi tiết sản phẩm',
     'Reviews' => 'Đánh giá',
+    'Order summary' => 'Hóa đơn thanh toán',
+    'Subtotal' => 'Tổng tiền',
+    'Delivery' => 'Vận chuyển',
+    'Apply' => 'Áp dụng',
+    'Process to checkout' => 'Thanh toán',
+    'Total' => 'Thành tiền',
+    'Free' => 'Miễn phí',
 ];

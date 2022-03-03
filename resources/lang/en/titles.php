@@ -139,4 +139,11 @@ return [
     'Share' => 'Share',
     'Product Details' => 'Product Details',
     'Reviews' => 'Reviews',
+    'Order summary' => 'Order summary',
+    'Subtotal' => 'Subtotal',
+    'Delivery' => 'Delivery',
+    'Apply' => 'Apply',
+    'Process to checkout' => 'Process to checkout',
+    'Total' => 'Total',
+    'Free' => 'Free',
 ];
