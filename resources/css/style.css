@@ -77,11 +77,13 @@ body a:hover {
 img.style-image {
     width: 120px;
     height: 120px;
+    object-fit: cover;
 }
 
 img.style-all-image {
     width: 200px;
     height: 200px;
+    object-fit: cover;
 }
 
 /*sidebar navigation*/

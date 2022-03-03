@@ -2,13 +2,15 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ShopController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 
@@ -30,6 +32,17 @@ Route::redirect('/', '/home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 Route::get('/shop/{product}', [ShopController::class, 'show'])->name('show');
+
+Route::group(['middleware' => ['auth', 'user']], function () {
+    Route::post('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('addToCart');
+    Route::put('/update-cart', [CartController::class, 'updateCart'])->name('updateCart');
+    Route::delete('/delete-cart', [CartController::class, 'deleteCart'])->name('deleteCart');
+    Route::get('/count-product', [CartController::class, 'countProduct'])->name('countProduct');
+    Route::post('/add-more-product/{id}', [CartController::class, 'addMoreProduct'])->name('addMoreProduct');
+    Route::post('/add-quantity/{id}', [CartController::class, 'addMoreProduct'])->name('addQuantity');
+    Route::resource('/carts', CartController::class);
+    Route::get('/checkout', [CheckoutController::class, 'infoCheckout'])->name('addQuantity');
+});
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
     Route::resource('/categories', CategoryController::class);
