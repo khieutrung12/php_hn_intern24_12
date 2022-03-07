@@ -24,4 +24,11 @@ return [
     'register-fail' => 'Đăng ký không thành công!',
     'password-fail' => 'Mật khẩu không đúng!',
     'old-password' => 'Bạn đã sử dụng mật khẩu cũ',
+    'cart-empty' => 'Giỏ hàng của bạn đang trống. Vui lòng chọn sản phẩm',
+    'order-complete' =>
+    'Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đang được xử lý và sẽ hoàn thành trong khoảng từ 3-6 tiếng.
+    Bạn sẽ nhận được email thông báo khi đơn hàng thành công',
+    'unconfirmed' => 'Chưa xác nhận',
+    'confirmed' => 'Đã xác nhận',
+    'canceled' => 'Đã hủy bỏ'
 ];

@@ -77,13 +77,17 @@
                                 <span
                                     class="absolute left-7 bottom-7 w-5 h-5 rounded-full flex items-center justify-center bg-indigo-900 text-white text-xs count_product"
                                     data-url_count_product="{{ route('countProduct') }}">
-                                    @include('user.cart.cart_components.count_product')
+                                    @include(
+                                        'user.cart.cart_components.count_product'
+                                    )
                                 </span>
                             @else
                                 <span
                                     class="absolute left-7 bottom-7 w-5 h-5 rounded-full flex items-center justify-center bg-indigo-900 text-white text-xs count_product"
                                     data-url_count_product="{{ route('countProduct') }}">
-                                    @include('user.cart.cart_components.count_product')
+                                    @include(
+                                        'user.cart.cart_components.count_product'
+                                    )
                                 </span>
                             @endif
                             <div class="text-2xl">
@@ -457,6 +461,8 @@
     <script src="{{ asset('js/jquery.dcjqaccordion.2.7.js') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/cart_update.js') }}"></script>
+    <script src="{{ asset('js/style_ajax.js') }}"></script>
+
 </body>
 
 </html>
