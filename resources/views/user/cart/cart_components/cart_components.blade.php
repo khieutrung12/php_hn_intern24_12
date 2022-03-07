@@ -120,7 +120,7 @@
         <!-- searchbar end -->
 
         <!-- checkout -->
-        <a href="checkout.html"
+        <a href="{{ route('checkout') }}"
             class="bg-primary border border-primary text-white px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
          hover:text-primary transition text-sm w-full block text-center">
             {{ __('titles.Process to checkout') }}
