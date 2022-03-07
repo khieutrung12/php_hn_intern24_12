@@ -8,6 +8,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
@@ -41,7 +42,8 @@ Route::group(['middleware' => ['auth', 'user']], function () {
     Route::post('/add-more-product/{id}', [CartController::class, 'addMoreProduct'])->name('addMoreProduct');
     Route::post('/add-quantity/{id}', [CartController::class, 'addMoreProduct'])->name('addQuantity');
     Route::resource('/carts', CartController::class);
-    Route::get('/checkout', [CheckoutController::class, 'infoCheckout'])->name('addQuantity');
+    Route::get('/checkout', [OrderController::class, 'infoCheckout'])->name('checkout');
+    Route::resource('orders', OrderController::class)->only(['store']);
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
@@ -50,6 +52,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::resource('/brands', BrandController::class);
     Route::delete('/deleteimage/{id}', [ProductController::class, 'deleteimage'])->name('deleteimage');
     Route::resource('/products', ProductController::class);
+    Route::get('/all-cancel-order', [OrderController::class, 'allCancelOrder'])->name('allCancelOrder');
+    Route::get('/view-cancel-order/{id}', [OrderController::class, 'viewCancelOrder'])->name('viewCancelOrder');
+    Route::resource('orders', OrderController::class)->only(['index', 'show', 'edit', 'update']);
 });
 
 Route::group(['prefix' => 'profile', 'middleware' => ['auth', 'user']], function () {
@@ -57,4 +62,5 @@ Route::group(['prefix' => 'profile', 'middleware' => ['auth', 'user']], function
     Route::get('/{id}/edit', [UserController::class, 'edit'])->name('profile.edit');
     Route::get('/password/{id}/edit', [ChangePasswordController::class, 'edit'])->name('password.edit');
     Route::put('/password/{id}', [ChangePasswordController::class, 'change'])->name('password.change');
+    Route::get('/orders/{id}', [UserController::class, 'viewOrders'])->name('viewOrders');
 });

@@ -232,4 +232,9 @@ return [
 
     ],
     'limit' => 9,
+    'limitRandomString' => 6,
+    'startOrderStatus' => 2,
+    'confirmed' => 1,
+    'unconfirmed' => 2,
+    'canceled' => 3,
 ];

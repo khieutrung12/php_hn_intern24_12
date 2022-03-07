@@ -9,6 +9,8 @@ class OrderStatus extends Model
 {
     use HasFactory;
 
+    public $table = 'order_status';
+
     public function orders()
     {
         return $this->hasMany(Order::class);
