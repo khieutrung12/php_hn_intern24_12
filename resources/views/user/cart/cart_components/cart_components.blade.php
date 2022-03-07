@@ -12,7 +12,6 @@
             </p>
             <p class="text-gray-600 text-center"> {{ __('titles.Total') }}
             </p>
-            {{-- <p class="text-gray-600 text-center">Chỉnh sửa</p> --}}
 
         </div>
         <!-- cart title end -->

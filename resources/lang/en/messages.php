@@ -24,4 +24,11 @@ return [
     'register-fail' => 'Register unsuccessful!',
     'password-fail' => 'Incorrect password!',
     'old-password' => 'You used the your old password',
+    'cart-empty' => 'Your shopping cart is empty. Please choose a product',
+    'order-complete' => 'Thank you for your order! Your order is being processed and will be
+    completed within 3-6 hours. You will
+    receive an email confirmation when your order is completed.',
+    'unconfirmed' => 'Unconfirmed',
+    'confirmed' => 'Confirmed',
+    'canceled' => 'Cancel'
 ];

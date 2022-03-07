@@ -6,8 +6,10 @@
         <a href="{{ route('home') }}" class="text-indigo-900 text-base">
             <i class="fas fa-home"></i>
         </a>
-        <span class="text-sm text-gray-400"><i class="fas fa-chevron-right"></i></span>
-        <p class="text-gray-600 font-medium uppercase">{{ __('titles.My Account') }}</p>
+        <span class="text-sm text-gray-400"><i
+                class="fas fa-chevron-right"></i></span>
+        <p class="text-gray-600 font-medium uppercase">
+            {{ __('titles.My Account') }}</p>
     </div>
     <!-- breadcrum end -->
 
@@ -19,15 +21,13 @@
             <div class="px-4 py-5 shadow flex items-center gap-4 bg-white">
                 <div class="flex-shrink-0">
                     @if (Auth::user()->avatar != null)
-                        <img
-                            src="{{ asset('avatars/' . Auth::user()->avatar) }}"
+                        <img src="{{ asset('avatars/' . Auth::user()->avatar) }}"
                             class="rounded-full w-14 h-14 p-1 border border-gray-200 object-cover">
                     @else
-                        <img
-                            src="{{ asset('images/user.png') }}"
+                        <img src="{{ asset('images/user.png') }}"
                             class="rounded-full w-14 h-14 p-1 border border-gray-200 object-cover">
                     @endif
-                    
+
                 </div>
                 <div>
                     <p class="text-gray-600">{{ __('titles.Hello') }},</p>
@@ -39,12 +39,12 @@
             <!-- account profile end -->
 
             <!-- profile links -->
-            <div class="mt-6 bg-white shadow rounded p-4 divide-y divide-gray-200 space-y-4 text-gray-600">
+            <div
+                class="mt-6 bg-white shadow rounded p-4 divide-y divide-gray-200 space-y-4 text-gray-600">
                 <!-- single link -->
                 <div class="space-y-3 pl-8 py-2">
 
-                    <a
-                        href="{{ route('profile.edit', Auth::user()->id) }}" 
+                    <a href="{{ route('profile.edit', Auth::user()->id) }}"
                         class="relative text-base font-medium capitalize hover:text-indigo-900 transition block
                             @if (Route::currentRouteName() == 'profile.edit') text-indigo-900 @endif">
                         <span class="absolute left-0 top-0 text-base">
@@ -55,8 +55,7 @@
                         </span>
                     </a>
 
-                    <a
-                        href="{{ route('password.edit', Auth::user()->id) }}"
+                    <a href="{{ route('password.edit', Auth::user()->id) }}"
                         class="hover:text-indigo-900 transition capitalize block ml-8
                             @if (Route::currentRouteName() == 'password.edit') text-indigo-900 @endif">
                         {{ __('titles.Change password') }}
@@ -66,7 +65,7 @@
                 <!-- single link end -->
                 <!-- single link -->
                 <div class="space-y-3 pl-8 pb-2 pt-5">
-                    <a href="#"
+                    <a href="{{ route('viewOrders', ['id' => Auth::user()->id]) }}"
                         class="relative medium capitalize text-gray-800 font-medium hover:text-indigo-900 transition block">
                         <span class="absolute left-0 top-0 text-base">
                             <i class="fas fa-gift"></i>
@@ -75,13 +74,16 @@
                             {{ __('titles.My order history') }}
                         </span>
                     </a>
-                    <a href="#" class="hover:text-indigo-900 transition block capitalize ml-8">
+                    <a href="#"
+                        class="hover:text-indigo-900 transition block capitalize ml-8">
                         {{ __('titles.Completed') }}
                     </a>
-                    <a href="#" class="hover:text-indigo-900 transition block capitalize ml-8">
+                    <a href="#"
+                        class="hover:text-indigo-900 transition block capitalize ml-8">
                         {{ __('titles.Cancelled') }}
                     </a>
-                    <a href="#" class="hover:text-indigo-900 transition block capitalize ml-8">
+                    <a href="#"
+                        class="hover:text-indigo-900 transition block capitalize ml-8">
                         {{ __('titles.Unconfirmed') }}
                     </a>
                 </div>
@@ -101,7 +103,8 @@
                 <!-- single link end -->
                 <!-- single link -->
                 <div class="pl-8 pb-2 pt-5">
-                <a href="#" class="relative medium capitalize text-gray-800 font-medium hover:text-indigo-900 transition block">
+                    <a href="#"
+                        class="relative medium capitalize text-gray-800 font-medium hover:text-indigo-900 transition block">
                         <span class="absolute left-0 top-0 text-base">
                             <i class="far fa-heart"></i>
                         </span>
@@ -123,7 +126,8 @@
                             {{ __('titles.logout') }}
                         </span>
                     </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                    <form id="logout-form" action="{{ route('logout') }}"
+                        method="POST" class="hidden">
                         @csrf
                     </form>
                 </div>
@@ -132,7 +136,7 @@
             <!-- profile links end -->
         </div>
         <!-- sidebar end -->
-    @yield('content-profile')
+        @yield('content-profile')
     </div>
     <!-- account wrapper end -->
 @endsection

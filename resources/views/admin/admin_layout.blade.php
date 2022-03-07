@@ -147,6 +147,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </li>
                             </ul>
                         </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-book"></i>
+                                <span>{{ __('titles.order') }}</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a
+                                        href="{{ route('orders.index') }}">{{ __('titles.all-var', ['name' => __('titles.order')]) }}</a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
