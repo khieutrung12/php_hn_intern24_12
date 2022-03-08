@@ -74,15 +74,15 @@
                             {{ __('titles.My order history') }}
                         </span>
                     </a>
-                    <a href="#"
+                    <a href="{{ route('viewStatusOrder', ['idUser' => Auth::user()->id, 'idStatus' => config('app.confirmed')]) }}"
                         class="hover:text-indigo-900 transition block capitalize ml-8">
                         {{ __('titles.Completed') }}
                     </a>
-                    <a href="#"
+                    <a href="{{ route('viewStatusOrder', ['idUser' => Auth::user()->id, 'idStatus' => config('app.canceled')]) }}"
                         class="hover:text-indigo-900 transition block capitalize ml-8">
                         {{ __('titles.Cancelled') }}
                     </a>
-                    <a href="#"
+                    <a href="{{ route('viewStatusOrder', ['idUser' => Auth::user()->id, 'idStatus' => config('app.unconfirmed')]) }}"
                         class="hover:text-indigo-900 transition block capitalize ml-8">
                         {{ __('titles.Unconfirmed') }}
                     </a>

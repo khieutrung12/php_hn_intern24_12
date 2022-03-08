@@ -30,3 +30,10 @@ if (!function_exists('vndFormat')) {
         return number_format($money, 0, ',', '.') . ' VND';
     }
 }
+
+if (!function_exists('formatDate')) {
+    function formatDate($date)
+    {
+        return date('H:i d.m.Y', strtotime($date));
+    }
+}
