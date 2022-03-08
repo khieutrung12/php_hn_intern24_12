@@ -157,4 +157,10 @@ return [
     'info-delivery' => 'Delivery information',
     'list-order-details' => 'List order details',
     'change-status-order' => 'Change status of order',
+    'your-order' => 'Your order',
+    'total_product_price' => 'Total product price',
+    'total_payment' => 'Total payment',
+    'transport_fee' => 'Transport fee',
+    'order_date' => 'Order date',
+    'order_processing_date' => 'Order processing date',
 ];

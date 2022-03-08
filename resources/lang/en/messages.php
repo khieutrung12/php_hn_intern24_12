@@ -30,5 +30,6 @@ return [
     receive an email confirmation when your order is completed.',
     'unconfirmed' => 'Unconfirmed',
     'confirmed' => 'Confirmed',
-    'canceled' => 'Cancel'
+    'canceled' => 'Cancel',
+    'your-order' => 'Your order information',
 ];

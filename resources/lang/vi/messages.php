@@ -30,5 +30,6 @@ return [
     Bạn sẽ nhận được email thông báo khi đơn hàng thành công',
     'unconfirmed' => 'Chưa xác nhận',
     'confirmed' => 'Đã xác nhận',
-    'canceled' => 'Đã hủy bỏ'
+    'canceled' => 'Đã hủy bỏ',
+    'your-order' => 'Thông tin đơn hàng của bạn',
 ];

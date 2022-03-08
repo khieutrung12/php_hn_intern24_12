@@ -49,4 +49,5 @@ mix.js("resources/js/jquery.dcjqaccordion.2.7.js", "public/js")
     .js("resources/js/jquery.nicescroll.js", "public/js")
     .js("resources/js/scripts.js", "public/js")
     .copy("resources/js/cart_update.js", "public/js/cart_update.js")
+    .copy("resources/js/style_ajax.js", "public/js/style_ajax.js")
     .copy("resources/js/style.js", "public/js/style.js");
