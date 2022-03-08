@@ -63,4 +63,6 @@ Route::group(['prefix' => 'profile', 'middleware' => ['auth', 'user']], function
     Route::get('/password/{id}/edit', [ChangePasswordController::class, 'edit'])->name('password.edit');
     Route::put('/password/{id}', [ChangePasswordController::class, 'change'])->name('password.change');
     Route::get('/orders/{id}', [UserController::class, 'viewOrders'])->name('viewOrders');
+    Route::get('/view-order/{id}', [UserController::class, 'viewDetailOrder'])->name('viewDetailOrder');
+    Route::get('/view-status-order/{idUser}/{idStatus}', [UserController::class, 'viewStatusOrder'])->name('viewStatusOrder');
 });

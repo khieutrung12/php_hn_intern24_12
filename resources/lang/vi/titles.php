@@ -158,4 +158,10 @@ return [
     'info-delivery' => 'Thông tin nhận hàng',
     'list-order-details' => 'Xem chi tiết đơn hàng',
     'change-status-order' => 'Thay đổi trạng thái đơn hàng',
+    'your-order' => 'Đơn hàng của bạn',
+    'total_product_price' => "Tổng giá trị sản phẩm",
+    'total_payment' => 'Tổng thanh toán',
+    'transport_fee' => 'Phí vận chuyển',
+    'order_date' => 'Ngày đặt',
+    'order_processing_date' => 'Ngày xử lý đơn',
 ];

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Gender;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Gender;
 use Illuminate\Http\Request;
-use App\Http\Requests\User\UpdateRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\User\UpdateRequest;
 
 class UserController extends Controller
 {
@@ -56,10 +57,39 @@ class UserController extends Controller
                 'gender_id' => $request->input('gender'),
                 'phone' => $request->input('phone'),
                 'avatar' => $newAvatarName,
-        ]);
+            ]);
 
         return redirect()
             ->route('profile.edit', $id)
             ->with('message', __('messages.update'));
+    }
+
+    public function viewOrders($id)
+    {
+        $users = User::findorfail($id);
+        $orders = Order::where('user_id', $users->id)->orderby('created_at', 'DESC')
+            ->paginate(config('app.limit'));
+
+        return view('user.profile.order.orders')->with(compact('orders'));
+    }
+
+    public function viewDetailOrder($id)
+    {
+        $order = Order::findorfail($id);
+
+        return view('user.profile.order.view_order')->with(compact('order'));
+    }
+
+    public function viewStatusOrder($idUser, $isSatus)
+    {
+        $users = User::findorfail($idUser);
+        $orders = Order::where([
+            ['user_id', $users->id],
+            ['order_status_id', $isSatus],
+        ])
+            ->orderby('created_at', 'DESC')
+            ->paginate(config('app.limit'));
+
+        return view('user.profile.order.orders')->with(compact('orders'));
     }
 }
