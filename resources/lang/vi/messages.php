@@ -32,4 +32,9 @@ return [
     'confirmed' => 'Đã xác nhận',
     'canceled' => 'Đã hủy bỏ',
     'your-order' => 'Thông tin đơn hàng của bạn',
+    'old-password' => 'Bạn đã sử dụng mật khẩu cũ!',
+    'something-wrong' => 'Đã xảy ra sự cố!',
+    'add-success' => 'Thêm phiếu giảm giá thành công!',
+    'edit-success' => 'Sửa phiếu giảm giá thành công!',
+    'delete-success' => 'Xóa thành công!',
 ];

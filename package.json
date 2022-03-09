@@ -23,5 +23,8 @@
         "tailwindcss": "^1.8",
         "tailwindcss-plugins": "^0.3.0",
         "vue-template-compiler": "^2.6.11"
+    },
+    "dependencies": {
+        "sweetalert2": "^11.4.4"
     }
 }
