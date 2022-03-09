@@ -1,4 +1,29 @@
 $(function () {
+    $("#vouchers-table").DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '/admin/vouchers/list',
+        pageLength: 5,
+        aLengthMenu: [[5, 10, 25, 50, -1],[5, 10, 25, 50, "All"]],
+        columns: [
+            {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'name', name: 'name'},
+            {data: 'code', name: 'code'},
+            {data: 'quantity', name: 'quantity'},
+            {data: 'value', name: 'value'},
+            {data: 'condition_min_price', name: 'condition_min_price'},
+            {data: 'maximum_reduction', name: 'maximum_reduction'},
+            {data: 'start_date', name: 'start_date'},
+            {data: 'end_date', name: 'end_date'},
+            {data: 'actions', name: 'actions', orderable: false, searchable: false},
+        ],
+    }).on('draw', function () {
+        $('input[name="voucher_checkbox"]').each(function () {this.checked = false;});
+        $('input[name="main_checkbox"]').prop(this.checked = false);
+        $('button#deleteAllBtn').addClass('hidden');
+    });
+
     $('#form_add_voucher').on('submit', function (e) {
         e.preventDefault();
 

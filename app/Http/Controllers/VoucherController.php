@@ -4,10 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Models\Voucher;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Voucher\StoreRequest;
 
 class VoucherController extends Controller
 {
+    /**
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function index()
+    {
+        $vouchers = Voucher::all();
+
+        return view('admin.voucher.index', [
+            'vouchers' => $vouchers,
+        ]);
+    }
+
+    public function fetch()
+    {
+        $vouchers = Voucher::all();
+
+        return Datatables::of($vouchers)
+            ->addIndexColumn()
+            ->addColumn('actions', function ($row) {
+                return view('components.action_voucher', ['id' => $row['id']]);
+            })
+            ->addColumn('checkbox', function ($row) {
+                return view('components.checkbox_voucher', ['id' => $row['id']]);
+            })
+            ->rawColumns(['actions', 'checkbox'])
+            ->make(true);
+    }
+    
     /**
      * Store a newly created resource in storage.
      *
