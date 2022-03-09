@@ -9,11 +9,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Models\Voucher;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,8 @@ Route::group(['middleware' => ['auth', 'user']], function () {
     Route::get('/count-product', [CartController::class, 'countProduct'])->name('countProduct');
     Route::post('/add-more-product/{id}', [CartController::class, 'addMoreProduct'])->name('addMoreProduct');
     Route::post('/add-quantity/{id}', [CartController::class, 'addMoreProduct'])->name('addQuantity');
+    Route::post('/carts/apply-voucher', [CartController::class, 'applyVoucher'])->name('carts.apply.voucher');
+    Route::delete('/carts/delete-voucher', [CartController::class, 'deleteVoucher'])->name('carts.delete.voucher');
     Route::resource('/carts', CartController::class);
     Route::get('/checkout', [OrderController::class, 'infoCheckout'])->name('checkout');
     Route::resource('orders', OrderController::class)->only(['store']);
@@ -55,6 +59,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::get('/all-cancel-order', [OrderController::class, 'allCancelOrder'])->name('allCancelOrder');
     Route::get('/view-cancel-order/{id}', [OrderController::class, 'viewCancelOrder'])->name('viewCancelOrder');
     Route::resource('orders', OrderController::class)->only(['index', 'show', 'edit', 'update']);
+});
+
+Route::group(['prefix' => 'admin/vouchers', 'middleware' => ['auth', 'admin']], function () {
+    Route::get('/', [VoucherController::class, 'index'])->name('vouchers.index');
+    Route::post('/', [VoucherController::class, 'store'])->name('vouchers.store');
+    Route::get('/list', [VoucherController::class, 'fetch'])->name('voucher.fetch');
+    Route::post('/edit', [VoucherController::class, 'edit'])->name('vouchers.edit');
+    Route::patch('/update', [VoucherController::class, 'update'])->name('vouchers.update');
+    Route::delete('/delete', [VoucherController::class, 'delete'])->name('vouchers.delete');
+    Route::delete('/delete-list', [VoucherController::class, 'deleteList'])->name('vouchers.delete.list');
 });
 
 Route::group(['prefix' => 'profile', 'middleware' => ['auth', 'user']], function () {
