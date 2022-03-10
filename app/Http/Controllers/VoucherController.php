@@ -6,6 +6,7 @@ use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Voucher\StoreRequest;
+use App\Http\Requests\Voucher\UpdateRequest;
 
 class VoucherController extends Controller
 {
@@ -66,6 +67,48 @@ class VoucherController extends Controller
 
         return response()->json([
             'message' => __('messages.add-success'),
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $request)
+    {
+        $voucher = Voucher::find($request->voucher_id);
+
+        return response()->json([
+            'voucher' => $voucher,
+        ]);
+    }
+
+    public function update(UpdateRequest $request)
+    {
+        $voucher = Voucher::find($request->cid);
+        if ($voucher->name == $request->name) {
+            $code = $voucher->code;
+        } else {
+            $code = createCode($request->name);
+        }
+
+        $result = Voucher::where('id', $request->cid)
+            ->update([
+                'code' => $code,
+                'name' => $request->name,
+                'quantity' => $request->quantity,
+                'value' => $request->value,
+                'condition_min_price' => $request->condition_min_price,
+                'maximum_reduction' => $request->maximum_reduction,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+        ]);
+
+        return response()->json([
+            'message' => __('messages.edit_success'),
         ]);
     }
 }
