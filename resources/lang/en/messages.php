@@ -33,7 +33,8 @@ return [
     'canceled' => 'Cancel',
     'your-order' => 'Your order information',
     'something-wrong' => 'Something went wrong!',
-    'add-success' => 'Voucher Added Successfully!',
-    'edit-success' => 'Voucher Edited Successfully!',
+    'add-success' => 'Added Successfully!',
+    'edit-success' => 'Edited Successfully!',
     'delete-success' => 'Delete Successfully!',
+    'cant-delete' => 'Can not delete',
 ];

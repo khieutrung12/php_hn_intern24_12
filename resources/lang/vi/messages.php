@@ -37,4 +37,5 @@ return [
     'add-success' => 'Thêm phiếu giảm giá thành công!',
     'edit-success' => 'Sửa phiếu giảm giá thành công!',
     'delete-success' => 'Xóa thành công!',
+    'cant-delete' => 'Không thể xóa',
 ];

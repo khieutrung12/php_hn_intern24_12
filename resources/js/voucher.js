@@ -107,4 +107,130 @@ $(function () {
             }
         });
     });
+
+    $(document).on('click', '#deleteVoucherBtn', function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        var voucher_id = $(this).data('id');
+        var url = '/admin/vouchers/delete';
+
+        Swal.fire({
+            title: 'Are you sure?',
+            html: 'You want to <b>delete</b> this voucher',
+            showCancelButton: true,
+            showCloseButton: true,
+            cancelButtonText: 'Cancel',
+            confirmButtonText: 'Delete',
+            cancelButtonColor: '#d33',
+            confirmButtonColor: '#556ee6',
+            width: 400,
+            allowOutsideClick: false
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    data: {
+                        voucher_id: voucher_id
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.code == 200) {
+                            $('#vouchers-table').DataTable().ajax.reload(null, false);
+                            toastr.success(response.message);
+                        }
+                    },
+                    error: function (xhr) {
+                        var err = JSON.parse(xhr.responseText);
+                        toastr.error(err.message);
+                    }
+                });
+            }
+        })
+    });
+
+    $(document).on('click', 'input[name="main_checkbox"]', function () {
+        if (this.checked) {
+            $('input[name="voucher_checkbox"]').each(function () {
+                this.checked = true;
+            });
+        } else {
+            $('input[name="voucher_checkbox"]').each(function () {
+                this.checked = false;
+            });
+        }
+        toggleDeleteAllBtn();
+    });
+
+    $(document).on('change', 'input[name="voucher_checkbox"]', function () {
+        if ($('input[name="voucher_checkbox"]').length == $('input[name="voucher_checkbox"]:checked').length) {
+            $('input[name="main_checkbox"]').prop('checked', true);
+        } else {
+            $('input[name="main_checkbox"]').prop('checked', false);
+        }
+        toggleDeleteAllBtn();
+    });
+
+    function toggleDeleteAllBtn() {
+        if ($('input[name="voucher_checkbox"]:checked').length > 0) {
+            $('button#deleteAllBtn').text('Delete (' + $('input[name="voucher_checkbox"]:checked').length + ')').removeClass('hidden');
+        } else {
+            $('button#deleteAllBtn').addClass('hidden');
+        }
+    }
+
+    $(document).on('click', 'button#deleteAllBtn', function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        
+        var checkedVouchers = [];
+        $('input[name="voucher_checkbox"]:checked').each(function () {
+            checkedVouchers.push($(this).data('id'))
+        });
+
+        var url = '/admin/vouchers/delete-list';
+        if (checkedVouchers.length > 0) {
+            Swal.fire({
+                title: 'Are you sure?',
+                html: 'You want to delete <b>('+ checkedVouchers.length +')</b> vouchers',
+                showCancelButton: true,
+                showCloseButton: true,
+                cancelButtonText: 'Cancel',
+                confirmButtonText: 'Delete',
+                cancelButtonColor: '#d33',
+                confirmButtonColor: '#556ee6',
+                width: 400,
+                allowOutsideClick: false
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: url,
+                        type: 'DELETE',
+                        data: {
+                            voucher_id: checkedVouchers
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.code == 200) {
+                                $('#vouchers-table').DataTable().ajax.reload(null, false);
+                                toastr.success(response.message);
+                            }
+                        },
+                        error: function (xhr) {
+                            var err = JSON.parse(xhr.responseText);
+                            toastr.error(err.message);
+                        }
+                    });
+                }
+            });
+        }
+    });
+    
 });

@@ -10,7 +10,6 @@ class Voucher extends Model
     use HasFactory;
 
     protected $fillable = [
-        'code',
         'name',
         'quantity',
         'value',
@@ -28,5 +27,24 @@ class Voucher extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function discount($total)
+    {
+        $current = date('Y-m-d');
+
+        if (strtotime($current) >= strtotime($this->start_date)
+            && strtotime($current) <= strtotime($this->end_date)
+            && $total >= $this->condition_min_price
+            && $this->quantity > 0) {
+            $discount = ($this->value / 100) * $total;
+            if ($discount > $this->maximum_reduction) {
+                return $this->maximum_reduction;
+            } else {
+                return $discount;
+            }
+        }
+
+        return null;
     }
 }
