@@ -180,4 +180,5 @@ return [
     'carts.index' => 'Carts',
     'password.edit' => 'Change Password',
     'checkout' => 'Checkout',
+    'voucher' => 'Voucher',
 ];

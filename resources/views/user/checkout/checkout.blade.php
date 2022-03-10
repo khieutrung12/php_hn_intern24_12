@@ -12,6 +12,17 @@
     </head>
 
     <body>
+        <!-- breadcrum -->
+        <div class="py-4 container flex gap-3 items-center">
+            <a href="index.html" class="text-indigo-900 text-base">
+                <i class="fas fa-home"></i>
+            </a>
+            <span class="text-sm text-gray-400"><i class="fas fa-chevron-right"></i></span>
+            <p class="text-gray-600 font-medium uppercase">
+                {{ __('titles.checkout') }}
+            </p>
+        </div>
+        <!-- breadcrum end -->
         <!-- checkout wrapper -->
         <div class="container lg:grid grid-cols-12 gap-6 items-start pb-16 pt-4">
             <!-- checkout form -->
@@ -29,10 +40,11 @@
                     Session::put('mess', null);
                 @endphp
             @endif
-            <div
-                class="lg:col-span-4 border border-gray-200 px-4 py-4 rounded mt-6 lg:mt-0">
-                <h4 class="text-gray-800 text-lg mb-4 font-medium uppercase">ORDER
-                    SUMMARY</h4>
+            <div class="lg:col-span-4 border border-gray-200 px-4 py-4 rounded mt-6 lg:mt-0 shadow-md">
+                <h4 class="text-gray-800 text-lg mb-4 font-medium uppercase">
+                    ORDER SUMMARY
+                </h4>
+
                 @foreach ($carts as $id => $cartItem)
                     @php
                         $total += $cartItem['quantity'] * $cartItem['price'];
@@ -51,44 +63,59 @@
                         </div>
                     </div>
                 @endforeach
+
                 <div class="flex justify-between border-b border-gray-200 mt-1">
                     <h4 class="text-gray-800 font-medium my-3 uppercase">
                         {{ __('titles.Subtotal') }}
                     </h4>
                     <h4 class="text-gray-800 font-medium my-3 uppercase">
-                        {{ vndFormat($total) }}</h4>
+                        {{ vndFormat($total) }}
+                    </h4>
                 </div>
+
                 <div class="flex justify-between border-b border-gray-200">
                     <h4 class="text-gray-800 font-medium my-3 uppercase">
                         {{ __('titles.Delivery') }}
                     </h4>
                     <h4 class="text-gray-800 font-medium my-3 uppercase">
-                        {{ __('titles.Free') }}</h4>
+                        {{ __('titles.Free') }}
+                    </h4>
                 </div>
+
+                @if ($percent != 0)
+                <div class="flex justify-between border-b border-gray-200">
+                    <h4 class="text-gray-800 font-medium my-3 uppercase">
+                        {{ __('titles.Voucher') . ' (' . $percent . config('voucher.discount') . ')' }}
+                    <h4 class="text-gray-800 font-medium my-3 uppercase">
+                        {{ vndFormat($discount) }}
+                    </h4>
+                </div>
+                @endif
+
                 <div class="flex justify-between">
                     <h4 class="text-gray-800 font-semibold my-3 uppercase">
                         {{ __('titles.Total') }}
                     </h4>
                     <h4 class="text-gray-800 font-semibold my-3 uppercase">
-                        {{ vndFormat($total) }}
+                        {{ vndFormat($total + $discount) }}
                     </h4>
                 </div>
 
                 <!-- checkout -->
                 <a href="#" id="checkout"
-                    class="bg-primary border border-primary text-white px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
-                 hover:text-primary transition text-sm w-full block text-center">
+                    class="bg-indigo-900 border border-indigo-900 text-white px-4 py-3 font-medium rounded-md uppercase hover:bg-transparent
+                 hover:text-indigo-900 transition text-sm w-full block text-center">
                     {{ __('titles.place-order') }}
 
                 </a>
                 <!-- checkout end -->
             </div>
-            <div class="lg:col-span-8 border border-gray-200 px-4 py-4 rounded">
+            <div class="lg:col-span-8 border border-gray-200 px-4 py-4 rounded shadow-md">
                 <form role="form" action="{{ route('orders.store') }}"
                     method="post" id="form-checkout">
                     @csrf
                     <h3 class="text-lg font-medium capitalize mb-4">
-                        checkout
+                        {{ __('titles.checkout') }}
                     </h3>
 
                     <div class="space-y-4">
@@ -150,10 +177,6 @@
                 </form>
             </div>
             <!-- checkout form end -->
-
-            <!-- order summary -->
-
-            <!-- order summary end -->
         </div>
     </body>
 

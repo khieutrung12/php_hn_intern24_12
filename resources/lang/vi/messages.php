@@ -34,8 +34,12 @@ return [
     'your-order' => 'Thông tin đơn hàng của bạn',
     'old-password' => 'Bạn đã sử dụng mật khẩu cũ!',
     'something-wrong' => 'Đã xảy ra sự cố!',
+    'apply-success' => 'Áp dụng giảm giá thành công',
     'add-success' => 'Thêm phiếu giảm giá thành công!',
     'edit-success' => 'Sửa phiếu giảm giá thành công!',
     'delete-success' => 'Xóa thành công!',
     'cant-delete' => 'Không thể xóa',
+    'voucher-doesnt-exist' => 'Phiếu giảm giá',
+    'condition-not-satisfied' => 'Không thỏa mãn điều kiện',
+    'voucher has been used' => 'Phiếu giảm giá đã được sử dụng',
 ];

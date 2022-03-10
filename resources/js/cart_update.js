@@ -112,10 +112,69 @@ function addQuantity() {
     });
 }
 
+function applyVoucher() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    var url = $('#form_apply_voucher').data('url_apply_voucher');
+    let total = $('input[name="total"]').val();
+    let coupon = $('input[name="coupon"]').val();
+
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: {
+            total: total,
+            coupon: coupon,
+        },
+        dataType: 'json',
+        beforeSend: function () {
+            $(document).find('span.error-text').text('');
+            $('#form_apply_voucher')[0].reset();
+        },
+        success: function (response) {
+            if (response.code == 200) {
+                $('#form_apply_voucher')[0].reset();
+                $("#cart_wrapper").html(response.format);
+                toastr.success(response.message);
+            }    
+        }
+    });
+}
+
+function deleteVoucher() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    var voucher_id = $(this).data('id');
+    var url = '/carts/delete-voucher';
+
+    $.ajax({
+        type: "DELETE",
+        url: url,
+        data: {
+            id: voucher_id,
+        },
+        success: function (response) {
+            if (response.code === 200) {
+                $("#cart_wrapper").html(response.format).text();
+                toastr.success(response.message);
+            }
+        }
+    });
+}
+
 $(function () {
     $(document).on("click", ".cart_update", updateCart);
     $(document).on("click", ".cart_delete", deleteCart);
     $(document).on("click", ".add_to_cart", addToCart);
     $(document).on("click", ".add_more_product", addMoreProduct);
-    $(document).on("click", ".add_quantity", addQuantity);
+    $(document).on("click", "#delete_voucher", deleteVoucher);
+    $(document).on("click", "#btn_apply_voucher", applyVoucher);
 });

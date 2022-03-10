@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Voucher;
 use App\Models\Shipping;
 use App\Models\OrderStatus;
 use Illuminate\Support\Str;
@@ -50,6 +51,9 @@ class OrderController extends Controller
         if (Session::has('cart')) {
             $order_status = config('app.startOrderStatus');
             $code = Str::random(config('app.limitRandomString'));
+            $data = Session::get('data');
+            $voucher_id  = $data['voucher']->id;
+
             $shipping = Shipping::create([
                 'name' => $request->name,
                 'address' => $request->address,
@@ -58,13 +62,18 @@ class OrderController extends Controller
                 'email' => $request->email,
             ]);
 
+            $voucher = Voucher::where('id', $voucher_id)
+                ->update([ 'quantity' => $data['voucher']->quantity - 1]);
+
             $orders = Order::create([
                 'user_id' => $request->user_id,
                 'order_status_id' => $order_status,
                 'code' => $code,
                 'sum_price' => $request->sum_price,
                 'shipping_id' => $shipping->id,
+                'voucher_id' => $voucher_id,
             ]);
+            
             $order_product = [];
             if (Session::has('cart')) {
                 $carts = session()->get('cart');
@@ -78,6 +87,7 @@ class OrderController extends Controller
             }
             OrderProduct::insert($order_product);
             session()->forget('cart');
+            session()->forget('data');
 
             return view('user.checkout.order_complete');
         } else {
@@ -156,11 +166,22 @@ class OrderController extends Controller
     public function infoCheckout()
     {
         $carts = [];
-        if (Session::has('cart')) {
-            $carts = session()->get('cart');
+        $discount = 0;
+        $percent = 0;
+
+        if (Session::has('data')) {
+            $data = session()->get('data');
+            $carts = $data['carts'];
+            $discount = $data['discount'];
+            $percent = $data['percent'];
+            session()->put('cart', $carts);
         }
 
-        return view('user.checkout.checkout')->with(compact('carts'));
+        return view('user.checkout.checkout', [
+            'carts' => $carts,
+            'discount' => $discount,
+            'percent' => $percent,
+        ]);
     }
 
     public function allCancelOrder()
