@@ -181,4 +181,5 @@ return [
     'carts.index' => 'Giỏ hàng',
     'password.edit' => 'Thay đổi mật khẩu',
     'checkout' => 'Thanh toán',
+    'voucher' => 'Phiếu giảm gía',
 ];

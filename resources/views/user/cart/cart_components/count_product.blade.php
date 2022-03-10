@@ -1,5 +1,5 @@
-@if (Session::has('cart'))
-    <span id="update_count_product">{{ count(Session::get('cart')) }}</span>
+@if (Session::has('data'))
+    <span id="update_count_product">{{ count(Session::get('data')['carts']) }}</span>
 @else
     <span>0</span>
 @endif

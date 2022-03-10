@@ -37,4 +37,8 @@ return [
     'edit-success' => 'Edited Successfully!',
     'delete-success' => 'Delete Successfully!',
     'cant-delete' => 'Can not delete',
+    'voucher-doesnt-exist' => 'Voucher does not exist',
+    'condition-not-satisfied' => 'Condition is not satisfied',
+    'voucher has been used' => 'Voucher has been used',
+    'apply-success' => 'Apply voucher successfully',
 ];

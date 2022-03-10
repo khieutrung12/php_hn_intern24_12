@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
@@ -15,27 +18,31 @@ class CartController extends Controller
      */
     public function index()
     {
-        $carts = session()->get('cart');
+        $data = session()->get('data');
 
-        return view('user.cart.cart')->with(compact('carts'));
+        return view('user.cart.cart')->with(compact('data'));
     }
-
 
     public function addToCart($id)
     {
         $product = Product::findorfail($id);
-        $cart = session()->get('cart');
-        if (isset($cart[$id]['quantity'])) {
-            $cart[$id]['quantity'] = $cart[$id]['quantity'] + 1;
+        $data = session()->get('data');
+        if (isset($data['carts'][$id]['quantity'])) {
+            $data['carts'][$id]['quantity'] = $data['carts'][$id]['quantity'] + 1;
         } else {
-            $cart[$id] = [
+            $data['carts'][$id] = [
                 'name' => $product->name,
                 'price' => $product->price,
                 'quantity' => 1,
                 'image_thumbnail' => $product->image_thumbnail,
             ];
         }
-        session()->put('cart', $cart);
+        if (!isset($data['discount'])) {
+            $data['discount'] = 0;
+            $data['percent'] = 0;
+        }
+
+        session()->put('data', $data);
 
         return response()->json([
             'code' => 200,
@@ -47,11 +54,12 @@ class CartController extends Controller
     public function updateCart(Request $request)
     {
         if ($request->id && $request->quantity) {
-            $carts = session()->get('cart');
-            $carts[$request->id]['quantity'] = $request->quantity;
-            session()->put('cart', $carts);
-            $carts = session()->get('cart');
-            $cartComponent = view('user.cart.cart_components.cart_components', compact('carts'))->render();
+            $data = session()->get('data');
+            $data['carts'][$request->id]['quantity'] = $request->quantity;
+            session()->put('data', $data);
+            $data = session()->get('data');
+
+            $cartComponent = view('user.cart.cart_components.cart_components', compact('data'))->render();
 
             return response()->json([
                 'cart_component' => $cartComponent,
@@ -64,11 +72,12 @@ class CartController extends Controller
     public function deleteCart(Request $request)
     {
         if ($request->id) {
-            $carts = session()->get('cart');
-            unset($carts[$request->id]);
-            session()->put('cart', $carts);
-            $carts = session()->get('cart');
-            $cartComponent = view('user.cart.cart_components.cart_components', compact('carts'))->render();
+            $data = session()->get('data');
+            unset($data['carts'][$request->id]);
+            session()->put('data', $data);
+            $data = session()->get('data');
+
+            $cartComponent = view('user.cart.cart_components.cart_components', compact('data'))->render();
 
             return response()->json([
                 'cart_component' => $cartComponent,
@@ -80,9 +89,9 @@ class CartController extends Controller
 
     public function countProduct()
     {
-        $carts = session()->get('cart');
-        session()->put('cart', $carts);
-        $carts = session()->get('cart');
+        $data = session()->get('data');
+        session()->put('data', $data);
+        $data = session()->get('data');
         $count_product = view('user.cart.cart_components.count_product')->render();
 
         return response()->json([
@@ -95,23 +104,95 @@ class CartController extends Controller
     {
         if ($request->quantity) {
             $product = Product::findorfail($id);
-            $cart = session()->get('cart');
-            if (isset($cart[$id]['quantity'])) {
-                $cart[$id]['quantity'] = $cart[$id]['quantity'] + $request->quantity;
+            $data = session()->get('data');
+            if (isset($data['carts'][$id]['quantity'])) {
+                $data['carts'][$id]['quantity'] = $data['carts'][$id]['quantity'] + $request->quantity;
             } else {
-                $cart[$id] = [
+                $data['carts'][$id] = [
                     'name' => $product->name,
                     'price' => $product->price,
                     'quantity' => $request->quantity,
                     'image_thumbnail' => $product->image_thumbnail,
                 ];
             }
-            session()->put('cart', $cart);
+            session()->put('data', $data);
 
             return response()->json([
                 'code' => 200,
                 'messageCart' =>  trans('messages.add-success', ['name' => __('titles.product')]),
             ], 200);
         }
+    }
+
+    public function applyVoucher(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'coupon' => 'required|alpha_num',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('carts.index')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $voucher = Voucher::where('code', $request->coupon)->first();
+        if ($voucher == null) {
+            return redirect()->route('carts.index')
+                        ->withErrors(['coupon' => __('messages.voucher-doesnt-exist')])
+                        ->withInput();
+        }
+
+        if ($voucher->discount($request->total) == null) {
+            return redirect()->route('carts.index')
+                        ->withErrors(['coupon' => __('messages.condition-not-satisfied')])
+                        ->withInput();
+        }
+
+        $orders = auth()->user()->orders;
+        foreach ($orders as $order) {
+            if ($order['voucher_id'] == $voucher->id) {
+                return redirect()->route('carts.index')
+                        ->withErrors(['coupon' => __('messages.voucher has been used')])
+                        ->withInput();
+            }
+        }
+
+        $discount = ($voucher->discount($request->total)) * (-1);
+        $percent = $voucher->value;
+
+        $data = session()->get('data');
+
+        $data['discount'] = $discount;
+        $data['percent'] = $percent;
+        $data['voucher'] = $voucher;
+
+        session()->put('data', $data);
+        $data = session()->get('data');
+        $format = view('user.cart.cart_components.cart_components', compact('data'))->render();
+
+        return response()->json([
+            'format' => $format,
+            'message' => __('messages.apply-success'),
+            'code' => 200,
+        ], 200);
+    }
+
+    public function deleteVoucher(Request $request)
+    {
+        $data = Session()->get('data');
+
+        unset($data['voucher']);
+        $data['discount'] = 0;
+        $data['percent'] = 0;
+        session()->put('data', $data);
+        $data = session()->get('data');
+
+        $format = view('user.cart.cart_components.cart_components', compact('data'))->render();
+
+        return response()->json([
+            'code' => 200,
+            'message' => __('messages.delete-success'),
+            'format' => $format,
+        ], 200);
     }
 }
