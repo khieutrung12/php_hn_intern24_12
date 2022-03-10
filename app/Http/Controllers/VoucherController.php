@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -11,10 +12,10 @@ use App\Http\Requests\Voucher\UpdateRequest;
 class VoucherController extends Controller
 {
     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $vouchers = Voucher::all();
@@ -39,7 +40,7 @@ class VoucherController extends Controller
             ->rawColumns(['actions', 'checkbox'])
             ->make(true);
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -66,8 +67,9 @@ class VoucherController extends Controller
         }
 
         return response()->json([
+            'code' => 200,
             'message' => __('messages.add-success'),
-        ]);
+        ], 200);
     }
 
     /**
@@ -108,7 +110,56 @@ class VoucherController extends Controller
         ]);
 
         return response()->json([
-            'message' => __('messages.edit_success'),
-        ]);
+            'code' => 200,
+            'message' => __('messages.edit-success'),
+        ], 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Request $request)
+    {
+        $order = Order::where('voucher_id', $request->voucher_id)->first();
+
+        if ($order == null) {
+            $result = Voucher::find($request->voucher_id)->delete();
+
+            if ($result) {
+                return response()->json([
+                    'code' => 200,
+                    'message' => __('messages.delete-success'),
+                ], 200);
+            }
+        }
+
+        return response()->json([
+            'code' => 403,
+            'message' => __('messages.cant-delete'),
+        ], 403);
+    }
+
+    public function deleteList(Request $request)
+    {
+        foreach ($request->voucher_id as $id) {
+            if (Order::where('voucher_id', $id)->first() != null) {
+                return response()->json([
+                    'code' => 403,
+                    'message' => __('messages.cant-delete'),
+                ], 403);
+            }
+        }
+
+        $result = Voucher::whereIn('id', $request->voucher_id)->delete();
+
+        if ($result) {
+            return response()->json([
+                'code' => 200,
+                'message' => __('messages.success-delete'),
+            ], 200);
+        }
     }
 }
