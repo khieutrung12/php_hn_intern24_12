@@ -1,10 +1,10 @@
-<div class="container lg:grid grid-cols-12 gap-6 items-start pb-16 pt-4 update_cart_url delete_cart_url"
+<div class="container lg:grid grid-cols-12 gap-6 items-start pb-16 pt-4 update_cart_url delete_cart_url m-auto"
     data-url="{{ route('updateCart') }}"
     data-url_delete="{{ route('deleteCart') }}">
     <!-- product cart -->
     <div class="xl:col-span-9 lg:col-span-8 ">
         <!-- cart title -->
-        <div class="bg-gray-200 py-2 pl-12 pr-20 xl:pr-28 mb-4 hidden md:flex shadow-md">
+        <div class="bg-gray-200 py-2 pl-12 pr-20 xl:pr-28 mb-4 hidden md:flex shadow-2xl">
             <p class="text-gray-600 text-center mr-8"> {{ __('titles.product') }}
             </p>
             <p class="text-gray-600 text-center ml-80 mr-16 xl:mr-24">
@@ -16,7 +16,7 @@
         </div>
         <!-- cart title end -->
         <!-- shipping carts -->
-        <div class="space-y-4">
+        <div class="space-y-8">
             @php
                 $total = 0;
             @endphp
@@ -25,7 +25,7 @@
                     @php
                         $total += $cartItem['quantity'] * $cartItem['price'];
                     @endphp
-                    <div class="shadow-md flex items-center md:justify-between gap-4 md:gap-6 p-4 border border-gray-200 rounded flex-wrap md:flex-nowrap">
+                    <div class="shadow-2xl flex items-center md:justify-between gap-4 md:gap-6 p-4 border border-gray-200 rounded flex-wrap md:flex-nowrap">
                         <!-- cart image -->
                         <div class="w-32 flex-shrink-0 style-image">
                             <img src="{{ asset('images/uploads/products/' . $cartItem['image_thumbnail']) }}"
@@ -83,7 +83,7 @@
     <!-- order summary -->
     @if (isset($data['carts']) && sizeOf($data['carts']) != 0)
         <!-- order summary -->
-        <div class="xl:col-span-3 lg:col-span-4 border border-gray-200 px-4 py-4 rounded mt-6 lg:mt-0 shadow-md" id="order-summary">
+        <div class="xl:col-span-3 lg:col-span-4 border border-gray-200 px-4 py-4 rounded mt-6 lg:mt-0 shadow-2xl" id="order-summary">
 
             <h4 class="text-gray-800 text-lg mb-6 font-medium uppercase">
                 {{ __('titles.Order summary') }}
@@ -149,14 +149,6 @@
                     </div>
                 </form>
             @endif
-            {{-- @php
-                $orders = auth()->user()->orders;
-                foreach ($orders as $order) {
-                    if ($order->voucher_id == 22) {
-                        dd('true');
-                    }
-                }
-            @endphp --}}
             <!-- searchbar end -->
             <!-- checkout -->
             <a href="{{ route('checkout') }}"

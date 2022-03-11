@@ -1,7 +1,7 @@
 @extends('user.profile.layouts.profile')
 @section('content-profile')
     <!-- account content -->
-    <div class="col-span-9 shadow rounded px-6 pt-5 pb-7 mt-6 lg:mt-0 bg-white">
+    <div class="col-span-9 shadow-2xl rounded px-6 pt-5 pb-7 mt-6 lg:mt-0 bg-white">
         <h3
             class="text-lg font-medium capitalize mb-12 mx-6 pt-3.5 pb-8 border border-l-0 border-t-0 border-r-0">
             {{ __('titles.your-order') }}: {{ $orders->total() }}
@@ -26,9 +26,9 @@
             </button>
             <div class="mb-10">
                 @foreach ($order->products as $product)
-                    <a href="{{ route('show', ['product' => $product->id]) }}">
+                    <a href="{{ route('show', ['product' => $product->slug]) }}">
                         <div
-                            class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-4xl bg-gray-100 ">
+                            class="max-w-md mx-auto bg-white rounded-xl shadow-2xl-md overflow-hidden md:max-w-4xl bg-gray-100 ">
                             <div class="md:flex">
                                 <div class="md:shrink-0">
                                     <img class="h-48 w-full object-cover md:h-full md:w-48"

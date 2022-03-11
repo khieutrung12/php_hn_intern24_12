@@ -1,7 +1,7 @@
 @extends('user.profile.layouts.profile')
 @section('content-profile')
     <!-- account content -->
-    <div class="col-span-9 shadow rounded px-6 pt-5 pb-7 mt-6 lg:mt-0 bg-white">
+    <div class="col-span-9 shadow-2xl rounded px-6 pt-5 pb-7 mt-6 lg:mt-0 bg-white">
         <form action="{{ route('profile.update', $user->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
