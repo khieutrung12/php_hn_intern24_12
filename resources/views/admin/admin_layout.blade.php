@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    <meta charset="utf-8">
     <title>Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -43,18 +45,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </div>
             </div>
             <!--logo end-->
-
             <div class="top-nav clearfix">
                 <!--search & user info start-->
                 <ul class="nav pull-right top-menu">
                     <li>
-                        <a
-                            href="{{ route('lang', ['locale' => 'en']) }}">En</a>
-
-                    </li>
-                    <li>
-                        <a
-                            href="{{ route('lang', ['locale' => 'vi']) }}">Vi</a>
+                        <div class="locale">
+                            <span class="current-locale">
+                                {{ App::getLocale() }}
+                            </span>
+                            @foreach (config('languages') as $key => $lang)
+                                @if ($key != App::getLocale())
+                                    <a href="{{ route('lang', ['locale' => $key]) }}" class="btn-locale">
+                                        {{ $key }}
+                                    </a>
+                                @endif
+                            @endforeach
+                        </div>
                     </li>
                     <!-- user login dropdown start-->
                     <li class="dropdown">
@@ -64,15 +70,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <span class="username">
                                 {{ Auth()->user()->name }}
                             </span>
-                            <b class="caret"></b>
                         </a>
 
                         <ul class="dropdown-menu extended logout">
-                            <li><a href="#"><i
-                                        class=" fa fa-suitcase"></i>{{ __('titles.profile') }}</a>
+                            <li>
+                                <a href="{{ route('home') }}">
+                                    <i class="fa-solid fa-house"></i>
+                                    {{ __('titles.home') }}
+                                </a>
                             </li>
-                            <li><a href="#"><i class="fa fa-cog"></i>
-                                    {{ __('titles.settings') }}</a></li>
+                            <li>
+                                <a href="#">
+                                    <i class=" fa fa-suitcase"></i>
+                                    {{ __('titles.profile') }}
+                                </a>
+                            </li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -108,7 +120,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <!-- Brand -->
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-book"></i>
+                                <i class="fa-solid fa-registered"></i>
                                 <span>{{ __('titles.brand') }}</span>
                             </a>
                             <ul class="sub">
@@ -124,7 +136,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <!-- Category -->
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-book"></i>
+                                <i class="fa-solid fa-rectangle-list"></i>
                                 <span>{{ __('titles.category') }}</span>
                             </a>
                             <ul class="sub">
@@ -140,7 +152,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <!-- Product -->
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-book"></i>
+                                <i class="fa-solid fa-box-open"></i>
                                 <span>{{ __('titles.product') }}</span>
                             </a>
                             <ul class="sub">
@@ -154,7 +166,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </li>
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-book"></i>
+                                <i class="fa-solid fa-cart-flatbed"></i>
                                 <span>{{ __('titles.order') }}</span>
                             </a>
                             <ul class="sub">
@@ -167,7 +179,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <!-- Voucher -->
                         <li class="sub-menu">
                             <a href="{{ route('vouchers.index') }}">
-                                <i class="fa fa-book"></i>
+                                <i class="fa-brands fa-cc-discover"></i>
                                 <span>{{ __('titles.Voucher') }}</span>
                             </a>
                         </li>
@@ -182,17 +194,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <section class="wrapper">
                 @yield('admin_content')
             </section>
-            <!-- footer -->
-            <div class="footer">
-                <div class="wthree-copyright">
-                    <p>© TECHNOLOGY WORLD - All Rights Reserved
-                </div>
-            </div>
-            <!-- / footer -->
         </section>
         <!--main content end-->
     </section>
     <script src="{{ asset('bower_components/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('bower_components/jquery.i18n/src/jquery.i18n.js') }}"></script>
+    <script src="{{ asset('bower_components/jquery.i18n/src/jquery.i18n.messagestore.js') }}"></script>
     <script src="{{ asset('bower_components/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.js') }}"></script>
     <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>

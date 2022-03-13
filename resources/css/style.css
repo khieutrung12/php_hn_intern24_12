@@ -90,7 +90,7 @@ img.style-all-image {
     width: 240px;
     height: 100%;
     position: fixed;
-    background: rgba(52, 48, 48, 0.78);
+    background: #313A46;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
@@ -268,11 +268,12 @@ ul.sidebar-menu li a.active i {
     transition: all 0.3s ease-in-out;
 }
 .footer {
-    background: #d19a98;
+    background: black;
     padding: 20px;
+    bottom: 0;
 }
 .footer p {
-    color: #fff;
+    color: gray;
     letter-spacing: 1px;
 }
 .footer p a {
@@ -285,7 +286,7 @@ ul.sidebar-menu li a.active i {
     left: 0;
     right: 0;
     z-index: 1002;
-    background: rgb(240, 188, 180);
+    background: white;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
@@ -296,16 +297,17 @@ ul.sidebar-menu li a.active i {
 }
 .fixed-top {
     position: fixed;
-    box-shadow: 1px 0 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 3px 0 27px rgba(0, 0, 0, 0.15);
 }
 .wrapper {
     display: inline-block;
     margin-top: 80px;
     padding: 15px;
     width: 100%;
+    background:#F9FAFD;
 }
 .brand {
-    background: #8b5c7e;
+    background: #313A46;
     float: left;
     width: 240px;
     height: 80px;
@@ -315,7 +317,7 @@ a.logo {
     font-size: 32px;
     color: #fff;
     float: left;
-    margin: 20px 0 0 25px;
+    margin: 20px 0 0 60px;
     text-transform: uppercase;
 }
 a.logo:hover,
@@ -346,22 +348,20 @@ ul.top-menu > li > a {
     background: #8b5c7e;
     padding: 4px 8px;
     margin-right: 15px;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    padding-right: 8px !important;
 }
 ul.top-menu > li > a:hover,
 ul.top-menu > li > a:focus {
-    background: #fa9fa4;
+    background: rgb(218, 223, 219);
     text-decoration: none;
     color: #fff !important;
-    padding-right: 8px !important;
 }
 .nav .open > a,
 .nav .open > a:focus,
 .nav .open > a:hover {
-    background: #fa9fa4 !important;
+    box-shadow: 5px 10px 18px rgb(218, 223, 219);
     color: #fff !important;
+    border-left: 1px solid #e8edfa;
+    border-right: 1px solid #e8edfa;
 }
 .notify-row .badge {
     position: absolute;
@@ -504,7 +504,7 @@ ul.top-menu > li > a:focus {
     font-size: 11px;
 }
 .top-nav {
-    margin-top: 20px;
+    margin-top: 0px;
 }
 .top-nav img {
     border-radius: 50%;
@@ -560,9 +560,6 @@ ul.top-menu > li > a:focus {
     background: #f1f2f7 !important;
     border-radius: 5px;
 }
-.dropdown-menu.extended.logout > li > a:hover i {
-    color: #ffa2a2;
-}
 .dropdown-menu.extended.logout > li > a i {
     font-size: 17px;
 }
@@ -570,17 +567,18 @@ ul.top-menu > li > a:focus {
     padding-right: 10px;
 }
 .top-nav .username {
-    font-size: 13px;
-    color: #fff;
+    font-size: 15px;
+    color: #99A7AD;
+    margin-left: 3px;
 }
 .top-nav ul.top-menu > li > a {
-    border-radius: 100px;
-    -webkit-border-radius: 100px;
-    padding: 0px;
+    padding: 23px 45px 24px 28px;
+    top: 0;
     background: none;
     margin-right: 0;
-    border: 1px solid #8b5c7e;
-    background: #8b5c7e;
+    background: #FAFBFD;
+    border-left: 1px solid #e8edfa;
+    border-right: 1px solid #e8edfa;
 }
 .top-nav ul.top-menu > li.language > a {
     margin-top: -2px;
@@ -602,13 +600,10 @@ ul.top-menu > li > a:focus {
 }
 .top-nav ul.top-menu > li > a:hover,
 .top-nav ul.top-menu > li > a:focus {
-    border: 1px solid #fa9fa4;
-    background: #fa9fa4 !important;
-    border-radius: 100px;
-    -webkit-border-radius: 100px;
+    box-shadow: 5px 10px 18px rgb(218, 223, 219);
 }
 .top-nav .dropdown-menu.extended.logout {
-    top: 50px;
+    top: 82px;
 }
 .top-nav .nav .caret {
     border-bottom-color: #a4aaba;
@@ -673,25 +668,22 @@ ul.top-menu > li > a:focus {
 /*--sidebar toggle---*/
 .sidebar-toggle-box {
     float: left;
-    margin-top: 23px;
+    margin-top: 20px;
     margin-left: -15px;
-    background: #8b5c7e;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
     width: 32px;
     height: 32px;
     position: absolute;
-    right: -15px;
+    right: -50px;
 }
 .sidebar-toggle-box .fa-bars {
     cursor: pointer;
     display: inline-block;
-    font-size: 15px;
+    font-size: 25px;
     padding: 8px 8px 8px 9px;
-    color: #fff;
+    color: black;
 }
-.sidebar-toggle-box:hover {
-    background: #fa9fa4;
+.sidebar-toggle-box .fa-bars:hover {
+    color: gray;
 }
 .hide-left-bar {
     margin-left: -240px !important;
@@ -868,6 +860,9 @@ ul.top-menu > li > a:focus {
 }
 .panel {
     border: none !important;
+    margin: 10px 20px;;
+    box-shadow: 5px 10px 18px rgb(218, 223, 219);
+    padding: 30px ;
 }
 .agileinfo-grap {
     padding: 2em;
@@ -3537,4 +3532,79 @@ span.text-alert {
     width: 100%;
     text-align: center;
     font-weight: bold;
+}
+.page-title {
+    font-size: 18px;
+    margin: 0;
+    margin-left: 25px;
+    line-height: 75px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #6c757d;
+}
+a.btn-add {
+    color: #fff;
+    background-color: #fa5c7c;
+    border-color: #fa5c7c;
+    box-shadow: 0 2px 6px 0 rgba(250,92,124,.5);
+    text-align: center;
+    vertical-align: middle;
+    padding: .45rem .9rem;
+    font-size: .9rem;
+    border-radius: .15rem;
+}
+a.btn-add:hover {
+    background: #D54E69;
+}
+
+.dataTables_wrapper {
+    margin-top: 30px;
+}
+.dataTables_wrapper .dataTables_filter {
+    margin-bottom: 30px;
+}
+
+table.vouchers-table {
+    margin-top: 30px;
+}
+.dataTables_wrapper .dataTables_filter input[type="search"] {
+    border: 1px solid #dee2e6;
+    appearance: none;
+    border-radius: 4px;
+    padding: 4px;
+    background-clip: padding-box;
+    width: auto !important;
+}
+.dataTables_wrapper .dataTables_filter input[type="search"]:focus {
+    outline: 1px solid #cad8e6;
+}
+.table > thead > tr > th {
+    text-align: center;
+    background-color: #EEF2F7;
+}
+.table > tbody > tr > td {
+    vertical-align:middle;
+}
+div.locale {
+    margin-top: 25px;
+    margin-right: 30px;
+}
+.current-locale {
+    text-transform: uppercase;
+    padding: 10px;
+    background: rgb(218, 223, 219);
+    border-radius: 8px;
+}
+a.btn-locale {
+    padding: 10px 15px;
+    text-transform: uppercase;
+    margin-left: 30px;
+    color: #000;
+}
+a.btn-locale:hover {
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 10px 15px;
+    background: rgb(218, 223, 219);
 }
