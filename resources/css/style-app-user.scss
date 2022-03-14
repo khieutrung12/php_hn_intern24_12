@@ -13,7 +13,7 @@
     opacity: 1;
 }
 
-@for $i from 0 through 40 {
+@for $i from 0 through 100 {
     div.dropdown-1-#{$i} div.dropdown-1-sub-#{$i}{
         display: none;
     }
@@ -31,24 +31,23 @@
     }
 }
 
-.top-9 {
-    top: 40px;
+$count: 9;
+$px: 40;
+@while $count < 200 {
+    .top-#{$count} {
+        top: #{$px}px;
+    }
+
+    $count: $count + 9;
+    $px: $px + 40;
 }
 
 .top-12 {
     top: 50px;
 }
 
-.top-18 {
-    top: 77px;
-}
-
 .top-21 {
     top: 90px;
-}
-
-.top-27 {
-    top: 118px;
 }
 
 .top-30 {

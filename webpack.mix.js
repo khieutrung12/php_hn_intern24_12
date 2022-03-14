@@ -51,7 +51,9 @@ mix.js("resources/js/jquery.dcjqaccordion.2.7.js", "public/js")
     .copy("resources/js/cart_update.js", "public/js/cart_update.js")
     .copy("resources/js/voucher.js", "public/js/voucher.js")
     .copy("resources/js/style.js", "public/js/style.js")
-    .copy("resources/js/style_ajax.js", "public/js/style_ajax.js");
+    .copy("resources/js/style_ajax.js", "public/js/style_ajax.js")
+    .copy("resources/js/style_ajax.js", "public/js/style_ajax.js")
+    .copy("resources/js/search.js", "public/js/search.js");
 
 mix.copy("resources/i18n/en.json", "public/i18n/en.json")
     .copy("resources/i18n/vi.json", "public/i18n/vi.json");

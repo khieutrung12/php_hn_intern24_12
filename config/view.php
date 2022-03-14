@@ -33,4 +33,11 @@ return [
         realpath(storage_path('framework/views'))
     ),
 
+    'index' => 0,
+
+    'space_level_1' => 3,
+
+    'space_level_2' => 0,
+
+    'space_step' => 9,
 ];
