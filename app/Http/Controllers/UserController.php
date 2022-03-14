@@ -28,7 +28,7 @@ class UserController extends Controller
                 ->with('message', __('messages.result'));
         }
 
-        return view('user.profile.edit', [
+        return view('user.profile.profile.edit', [
             'user' => $user,
             'genders' => $genders,
         ]);

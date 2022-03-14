@@ -162,4 +162,27 @@ class VoucherController extends Controller
             ], 200);
         }
     }
+
+    public function walletVoucher()
+    {
+        $vouchers = Voucher::where([
+            ['start_date', '<=', date('Y-m-d')],
+            ['end_date', '>=', date('Y-m-d')],
+            ['quantity', '>', 0]
+        ])->get();
+
+        return view('user.profile.voucher.index', [
+            'vouchers' => $vouchers,
+        ]);
+    }
+
+    public function useVoucher($code)
+    {
+        if (Session()->get('data')) {
+            Session()->forget('code');
+        }
+        Session()->put('code', $code);
+
+        return redirect()->route('shop');
+    }
 }

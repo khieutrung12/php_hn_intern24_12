@@ -20,7 +20,7 @@ class ChangePasswordController extends Controller
                 ->with('message', __('messages.result'));
         }
 
-        return view('user.profile.change_password', [
+        return view('user.profile.profile.change_password', [
             'user' => $user,
         ]);
     }

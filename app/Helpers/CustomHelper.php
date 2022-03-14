@@ -64,3 +64,18 @@ if (!function_exists('createCode')) {
         return $str;
     }
 }
+
+if (!function_exists('vndKFormat')) {
+    function vndKFormat($money)
+    {
+        if ($money != 0 && $money % 1000 == 0) {
+            if ($money % 1000000 == 0) {
+                return '₫' . ($money / 1000000) . 'tr';
+            } else {
+                return '₫' . ($money / 1000) . 'k';
+            }
+        }
+
+        return '₫' . $money;
+    }
+}
