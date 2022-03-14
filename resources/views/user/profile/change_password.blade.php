@@ -1,7 +1,7 @@
 @extends('user.profile.layouts.profile')
 @section('content-profile')
     <!-- account content -->
-    <div class="col-span-5 shadow rounded px-6 pt-5 pb-7 mt-6 lg:mt-0 bg-white">
+    <div class="col-span-5 shadow-2xl rounded px-6 pt-5 pb-7 mt-6 lg:mt-0 bg-white">
         <form action="{{ route('password.change', Auth::user()->id) }}" method="POST">
             @csrf
             @method('PUT')

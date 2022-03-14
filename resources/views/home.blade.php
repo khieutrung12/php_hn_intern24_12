@@ -10,7 +10,7 @@
             </h1>
             <!-- banner button -->
             <div class="mt-36">
-                <a href="{{ route('shop') }}" class=" bg-indigo-900 border border-indigo-900 text-white px-8 py-3 font-medium rounded-md uppercase hover:bg-gray-200
+                <a href="{{ route('shop') }}" class="text-xl bg-indigo-900 border border-indigo-900 text-white px-8 py-3 font-medium rounded-md uppercase hover:bg-gray-200
                hover:text-indigo-900 transition">
                     {{ __('titles.Shop now') }}
                 </a>

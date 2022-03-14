@@ -18,7 +18,7 @@
         <!-- sidebar -->
         <div class="col-span-3">
             <!-- account profile -->
-            <div class="px-4 py-5 shadow flex items-center gap-4 bg-white">
+            <div class="px-4 py-5 shadow-2xl flex items-center gap-4 bg-white">
                 <div class="flex-shrink-0">
                     @if (Auth::user()->avatar != null)
                         <img src="{{ asset('avatars/' . Auth::user()->avatar) }}"
@@ -40,7 +40,7 @@
 
             <!-- profile links -->
             <div
-                class="mt-6 bg-white shadow rounded p-4 divide-y divide-gray-200 space-y-4 text-gray-600">
+                class="mt-6 bg-white shadow-2xl rounded p-4 divide-y divide-gray-200 space-y-4 text-gray-600">
                 <!-- single link -->
                 <div class="space-y-3 pl-8 py-2">
 
