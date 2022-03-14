@@ -1,3 +1,11 @@
 .number-width {
     width: 60px;
 }
+.subcategory {
+    width: 800px;
+    height: 40px;
+    background-color: white;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}

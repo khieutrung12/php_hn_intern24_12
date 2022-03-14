@@ -18,8 +18,10 @@
         charset="utf-8"></script>
 
     <!-- Styles -->
-    <link href="{{ asset('bower_components/font-awesome/css/all.css') }}" rel="stylesheet">
-    <link href="{{ asset('bower_components/toastr/toastr.css') }}" rel="stylesheet">
+    <link href="{{ asset('bower_components/font-awesome/css/all.css') }}"
+        rel="stylesheet">
+    <link href="{{ asset('bower_components/toastr/toastr.css') }}"
+        rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="{{ mix('css/style-app-user.css') }}" rel="stylesheet">
 </head>
@@ -39,7 +41,7 @@
         <!-- mobile menu end -->
 
         @yield('content')
-        
+
         <!-- footer -->
         @include('layouts.footer')
         <!-- footer end -->
@@ -58,7 +60,8 @@
     </div>
     <script src="{{ asset('bower_components/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('bower_components/toastr/toastr.js') }}"></script>
-    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.js') }}">
+    </script>
     <script src="{{ asset('js/jquery.dcjqaccordion.2.7.js') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/cart_update.js') }}"></script>

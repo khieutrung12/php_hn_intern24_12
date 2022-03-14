@@ -22,7 +22,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $all_product = Product::orderby('created_at', 'DESC')->paginate(config('app.limit'));
+        $all_product = Product::with('brand', 'category')->orderby('created_at', 'DESC')
+            ->paginate(config('app.limit'));
 
         return view('admin.product.all_product')->with(compact('all_product'));
     }
@@ -35,8 +36,7 @@ class ProductController extends Controller
     public function create()
     {
         $brands = Brand::all();
-        $categories = Category::with('parentCategory.parentCategory')
-            ->whereHas('parentCategory.parentCategory')
+        $categories = Category::whereNull('parent_id')
             ->get();
 
         return view('admin.product.add_product')->with(compact('brands', 'categories'));
@@ -57,7 +57,6 @@ class ProductController extends Controller
         $slug = createSlug($request->name);
         $product = Product::create([
             'brand_id' => $request->brand_id,
-            'category_id' => $request->category_id,
             'name' => $request->name,
             'slug' => $slug,
             'quantity' => $request->quantity,
@@ -65,6 +64,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'image_thumbnail' => $new_image_name,
         ]);
+        $product->category()->sync($request->input('categories', []));
         if ($request->hasFile('images')) {
             $data = [];
             $files = $request->file('images');
@@ -137,7 +137,6 @@ class ProductController extends Controller
         }
         $product->update([
             'brand_id' => $request->brand_id,
-            'category_id' => $request->category_id,
             'name' => $request->name,
             'slug' => $slug,
             'price' => $request->price,
@@ -145,6 +144,7 @@ class ProductController extends Controller
             'description' => $request->description,
             'image_thumbnail' => $filename,
         ]);
+        $product->category()->sync($request->input('categories', []));
         if ($request->hasfile('images')) {
             $data = [];
             $images = Image::where('product_id', $product->id)->get();
