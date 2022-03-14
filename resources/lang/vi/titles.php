@@ -182,4 +182,7 @@ return [
     'password.edit' => 'Thay đổi mật khẩu',
     'checkout' => 'Thanh toán',
     'voucher' => 'Phiếu giảm gía',
+    'viewOrders' => 'Lịch sử mua hàng',
+    'show' => 'Xem chi tiết sản phẩm',
+    'orders.store' => 'Đặt hàng thành công',
 ];

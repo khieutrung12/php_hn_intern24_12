@@ -36,7 +36,7 @@ return [
     'something-wrong' => 'Đã xảy ra sự cố!',
     'apply-success' => 'Áp dụng giảm giá thành công',
     'cant-delete' => 'Không thể xóa',
-    'voucher-doesnt-exist' => 'Phiếu giảm giá',
+    'voucher-doesnt-exist' => 'Phiếu giảm giá không tồn tại',
     'condition-not-satisfied' => 'Không thỏa mãn điều kiện',
     'voucher has been used' => 'Phiếu giảm giá đã được sử dụng',
     'result-search' => 'Kết quả tìm kiếm cho ',
@@ -45,4 +45,5 @@ return [
     'suggestion_1' => '- Kiểm tra lỗi chính tả',
     'suggestion_2' => '- Sử dụng từ khóa khác cùng nghĩa',
     'suggestion_3' => '- Hãy thử bằng từ khóa nghĩa rộng hơn',
+    'voucher-used' => 'Phiếu giảm giá đã được sử dụng',
 ];

@@ -8,6 +8,7 @@ use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Voucher\ApplyRequest;
 
 class CartController extends Controller
 {
@@ -33,6 +34,7 @@ class CartController extends Controller
             $data['carts'][$id] = [
                 'name' => $product->name,
                 'price' => $product->price,
+                'total_product' => $product->quantity,
                 'quantity' => 1,
                 'image_thumbnail' => $product->image_thumbnail,
             ];
@@ -111,6 +113,7 @@ class CartController extends Controller
                 $data['carts'][$id] = [
                     'name' => $product->name,
                     'price' => $product->price,
+                    'total_product' => $product->quantity,
                     'quantity' => $request->quantity,
                     'image_thumbnail' => $product->image_thumbnail,
                 ];
@@ -124,17 +127,8 @@ class CartController extends Controller
         }
     }
 
-    public function applyVoucher(Request $request)
+    public function applyVoucher(ApplyRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'coupon' => 'required|alpha_num',
-        ]);
-        if ($validator->fails()) {
-            return redirect()->route('carts.index')
-                        ->withErrors($validator)
-                        ->withInput();
-        }
-
         $voucher = Voucher::where('code', $request->coupon)->first();
         if ($voucher == null) {
             return redirect()->route('carts.index')
@@ -152,7 +146,7 @@ class CartController extends Controller
         foreach ($orders as $order) {
             if ($order['voucher_id'] == $voucher->id) {
                 return redirect()->route('carts.index')
-                        ->withErrors(['coupon' => __('messages.voucher has been used')])
+                        ->withErrors(['coupon' => __('messages.voucher-used')])
                         ->withInput();
             }
         }
@@ -167,14 +161,8 @@ class CartController extends Controller
         $data['voucher'] = $voucher;
 
         session()->put('data', $data);
-        $data = session()->get('data');
-        $format = view('user.cart.cart_components.cart_components', compact('data'))->render();
 
-        return response()->json([
-            'format' => $format,
-            'message' => __('messages.apply-success', ['name' => __('titles.voucher')]),
-            'code' => 200,
-        ], 200);
+        return redirect()->route('carts.index');
     }
 
     public function deleteVoucher(Request $request)
@@ -185,14 +173,7 @@ class CartController extends Controller
         $data['discount'] = 0;
         $data['percent'] = 0;
         session()->put('data', $data);
-        $data = session()->get('data');
 
-        $format = view('user.cart.cart_components.cart_components', compact('data'))->render();
-
-        return response()->json([
-            'code' => 200,
-            'message' => __('messages.delete-success', ['name' => __('titles.voucher')]),
-            'format' => $format,
-        ], 200);
+        return redirect()->route('carts.index');
     }
 }

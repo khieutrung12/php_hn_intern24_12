@@ -87,14 +87,13 @@
                 <h3 class="text-base text-gray-800 mb-1">
                     {{ __('titles.Quantity') }}
                 </h3>
-                <div
-                    class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max-content absolute">
-                    <button id="decrement" onclick="stepper('decrement')"
+                <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max-content absolute"  >
+                    <button id="decrement_{{ $product->id }}" onclick="stepper('decrement_{{ $product->id }}')"
                         class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer hover:bg-indigo-900 hover:text-white select-none">-</button>
-                    <input id="input-number" type="number" min="1" value="1"
-                        readonly
-                        class="appearance-none h-8 w-10 flex items-center justify-center cursor-not-allowed text-center">
-                    <button id="increment" onclick="stepper('increment')"
+                    <input id="input-number_{{ $product->id }}" type="number" min="1" max="{{ $product->quantity }}"
+                        readonly value="1"
+                        class="appearance-none h-8 w-15 flex items-center justify-center cursor-not-allowed text-center">
+                    <button id="increment_{{ $product->id }}" onclick="stepper('increment_{{ $product->id }}')"
                         class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer hover:bg-indigo-900 hover:text-white select-none">+</button>
                 </div>
                 <div class="text-gray-400 ml-32 pt-2">
@@ -104,6 +103,7 @@
             <!-- {{ __('titles.Add to Cart') }} button -->
             <div class="flex gap-3 border-b border-gray-200 pb-5 mt-10">
                 <a href="{{ route('carts.index') }}"
+                    data-id="{{ $product->id }}"
                     data-url="{{ route('addMoreProduct', ['id' => $product->id]) }}"
                     class="bg-indigo-900 border border-indigo-900 text-white px-8 py-2 font-medium rounded uppercase 
                     hover:bg-transparent hover:text-indigo-900 transition text-sm flex items-center add_quantity">
@@ -114,7 +114,8 @@
                 <a href="#"
                     class="bg-indigo-900 border border-indigo-900 text-white px-8 py-2 font-medium rounded uppercase 
                     hover:bg-transparent hover:text-indigo-900 transition text-sm flex items-center add_more_product"
-                    data-url="{{ route('addMoreProduct', ['id' => $product->id]) }}">
+                    data-url="{{ route('addMoreProduct', ['id' => $product->id]) }}"
+                    data-id="{{ $product->id }}">
                     <span class="mr-2"><i
                             class="fa-solid fa-cart-shopping"></i></span>
                     {{ __('titles.Add to Cart') }}

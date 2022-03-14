@@ -36,7 +36,7 @@ return [
     'cant-delete' => 'Can not delete',
     'voucher-doesnt-exist' => 'Voucher does not exist',
     'condition-not-satisfied' => 'Condition is not satisfied',
-    'voucher has been used' => 'Voucher has been used',
+    'voucher-used' => 'Voucher has been used',
     'apply-success' => 'Apply voucher successfully',
     'result-search' => 'Search result for ',
     'No Results Found' => 'No Results Found',
