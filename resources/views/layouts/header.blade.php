@@ -7,13 +7,15 @@
         </a>
         <!-- logo end -->
         <!-- searchbar -->
-        <form class=" xl:max-w-xl lg:max-w-lg lg:flex relative hidden w-96" role="search">
+        <form class=" xl:max-w-xl lg:max-w-lg lg:flex relative hidden w-96"
+            role="search">
             <input type="text" id="input-search"
                 class="pl-12 w-full border-2 border-indigo-900 py-3 px-3 rounded-lg focus:border-opacity-0 shadow-2xl"
-                placeholder="{{ '     ' . __('titles.Search')  }}">
-            <i class="fas fa-search text-gray-300 text-lg absolute mt-3 ml-6"></i>
-
-            <div class="search-ajax-result w-full shadow transition z-50 divide-y divide-gray-300 divide-dashed bg-white absolute mt-14 rounded-md">
+                placeholder="{{ '     ' . __('titles.Search') }}">
+            <i
+                class="fas fa-search text-gray-300 text-lg absolute mt-3 ml-6"></i>
+            <div
+                class="search-ajax-result w-full shadow transition z-50 divide-y divide-gray-300 divide-dashed bg-white absolute mt-14 rounded-md">
             </div>
         </form>
         <!-- searchbar end -->
@@ -42,13 +44,17 @@
                         <span
                             class="absolute left-7 bottom-7 w-5 h-5 rounded-full flex items-center justify-center bg-indigo-900 text-white text-xs count_product"
                             data-url_count_product="{{ route('countProduct') }}">
-                            @include('user.cart.cart_components.count_product')
+                            @include(
+                                'user.cart.cart_components.count_product'
+                            )
                         </span>
                     @else
                         <span
                             class="absolute left-7 bottom-7 w-5 h-5 rounded-full flex items-center justify-center bg-indigo-900 text-white text-xs count_product"
                             data-url_count_product="{{ route('countProduct') }}">
-                            @include('user.cart.cart_components.count_product')
+                            @include(
+                                'user.cart.cart_components.count_product'
+                            )
                         </span>
                     @endif
                     <div class="text-2xl">

@@ -64,11 +64,10 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">
                                     {{ __('titles.description') }}</label>
-                                <textarea type="text" name="description"
-                                    class="form-control"
+                                <textarea type="text" name="description" class="form-control"
                                     id="add_product_ckeditor">
-                                                    {{ old('description') }}
-                                                    </textarea>
+                                    {{ old('description') }}
+                                    </textarea>
                                 @error('description')
                                     <span class="text-alert">
                                         {{ __($message, ['name' => __('titles.description')]) }}</span>
@@ -88,18 +87,20 @@
                             <div class="form-group">
                                 <label for="exampleInputPassword1">
                                     {{ __('titles.name-var', ['name' => __('titles.category')]) }}</label>
-                                <select name="category_id"
-                                    class="form-control select2">
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}"
-                                            {{ $category->id ? 'selected' : '' }}>
-                                            {{ $category->parentCategory->parentCategory->name }}
-                                            /
-                                            {{ $category->parentCategory->name }}
-                                            / {{ $category->name }}</option>
-                                    @endforeach
-                                </select>
                             </div>
+                            <select name="categories[]" class="subcategory"
+                                id="demo" multiple="multiple">
+                                @foreach ($categories as $key => $category)
+                                    @foreach ($category->childCategories as $childCategory)
+                                        @foreach ($childCategory->childCategories as $childChildCategory)
+                                            <option
+                                                value="{{ $childChildCategory->id }}">
+                                                {{ $childChildCategory->parentCategory->parentCategory->name }}--{{ $childChildCategory->parentCategory->name }}--{{ $childChildCategory->name }}
+                                            </option>
+                                        @endforeach
+                                    @endforeach
+                                @endforeach
+                            </select>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">
                                     {{ __('titles.image-thumbnail') }}</label>
@@ -131,4 +132,23 @@
             </section>
         </div>
     </div>
+@endsection
+@section('multiple_select_categories')
+    <script>
+        $(function() {
+            $('#demo').multiselect({
+                nonSelectedText: 'Select Categories',
+                enableHTML: true,
+                enableCaseInsensitiveFiltering: true,
+                buttonClass: 'subcategory',
+            });
+            $('#demo1').multiselect({
+                nonSelectedText: 'Select Categories',
+                enableHTML: true,
+                enableCaseInsensitiveFiltering: true,
+                buttonClass: 'subcategory',
+                selectAllValue: 'multiselect-all'
+            });
+        });
+    </script>
 @endsection

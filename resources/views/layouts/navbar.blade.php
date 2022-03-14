@@ -4,45 +4,44 @@
             <!-- all category -->
             <div class="bg-indigo-900 flex items-center relative"
                 id="button-dropdown">
-                <button
-                    class="cursor-pointer text-white w-full px-12 py-4"
+                <button class="cursor-pointer text-white w-full px-12 py-4"
                     type="button">
                     <i class="fas fa-bars"></i>
                     <span
                         class="capitalize ml-2">{{ __('titles.All categories') }}</span>
                 </button>
 
-                <div class="dropdown absolute left-0 top-full w-full bg-white shadow-md py-3 transition z-50 divide-y divide-gray-300 divide-dashed">
+                <div
+                    class="dropdown absolute left-0 top-full w-full bg-white shadow-md py-3 transition z-50 divide-y divide-gray-300 divide-dashed">
                     @php
-                        $space_level_1 = config('view.space_level_1');
-                        $index = config('view.index');
+                        $sub_1 = 3;
+                        $i = 0;
                     @endphp
                     @foreach ($categories as $category)
                         @if ($category->parent_id == null)
-                            <div
-                                class="dropdown-1-{{ $index }}">
-                                <a href="#"
+                            <div class="dropdown-1-{{ $i }}">
+                                <a href="{{ route('categories', ['category' => $category->slug]) }}"
                                     class="relative px-6 py-3 flex items-center hover:bg-gray-100 hover:text-indigo-900 transition text-sm">
                                     {{ $category->name }}
                                 </a>
                                 @if ($category->childCategories->toArray())
                                     <div
-                                        class="dropdown-1-sub-{{ $index }} absolute left-full w-full top-{{ $space_level_1 }} bg-white shadow-md transition z-50 divide-y divide-gray-300 divide-dashed">
+                                        class="dropdown-1-sub-{{ $i }} absolute left-full w-full top-{{ $sub_1 }} bg-white shadow-md transition z-50 divide-y divide-gray-300 divide-dashed">
                                         @php
-                                            $space_level_2 = config('view.space_level_2');
+                                            $sub_2 = 0;
                                         @endphp
                                         @foreach ($category->childCategories as $sub_category)
                                             <div
-                                                class="dropdown-2-{{ $index }}">
-                                                <a href="#"
+                                                class="dropdown-2-{{ $i }}">
+                                                <a href="{{ route('categories', ['category' => $category->slug, 'childCategory' => $sub_category->slug]) }}"
                                                     class="px-6 py-3 flex items-center hover:bg-gray-100 hover:text-indigo-900 transition text-sm">
                                                     {{ $sub_category->name }}
                                                 </a>
                                                 @if ($sub_category->childCategories->toArray())
                                                     <div
-                                                        class="dropdown-2-sub-{{ $index }} absolute left-full w-full top-{{ $space_level_2 }} bg-white shadow-md transition z-50 divide-y divide-gray-300 divide-dashed">
+                                                        class="dropdown-2-sub-{{ $i }} absolute left-full w-full top-{{ $sub_2 }} bg-white shadow-md transition z-50 divide-y divide-gray-300 divide-dashed">
                                                         @foreach ($sub_category->childCategories as $sub)
-                                                            <a href="#"
+                                                            <a href="{{ route('categories', ['category' => $category->slug,'childCategory' => $sub_category->slug,'childCategory2' => $sub->slug]) }}"
                                                                 class="dropdown-sub-3 px-6 py-3 flex items-center hover:bg-gray-100 hover:text-indigo-900 transition text-sm">
                                                                 {{ $sub->name }}
                                                             </a>
@@ -51,7 +50,7 @@
                                                 @endif
                                             </div>
                                             @php
-                                                $space_level_2 += config('view.space_step');
+                                                $sub_2 += 9;
                                             @endphp
                                         @endforeach
                                     </div>
@@ -60,18 +59,16 @@
                             </div>
                         @endif
                         @php
-                            $space_level_1 += config('view.space_step');
-                            $index++;
+                            $sub_1 += 9;
+                            $i++;
                         @endphp
                     @endforeach
                 </div>
             </div>
             <!-- all category end -->
             <!-- nav menu -->
-            <div
-                class="flex items-center justify-between flex-grow pl-12">
-                <div
-                    class="flex items-center space-x-6 text-base capitalize">
+            <div class="flex items-center justify-between flex-grow pl-12">
+                <div class="flex items-center space-x-6 text-base capitalize">
                     <a href="{{ route('home') }}"
                         class="text-gray-200 hover:text-white transition">
                         {{ __('titles.Home') }}
@@ -89,8 +86,7 @@
                         {{ __('titles.Contact us') }}
                     </a>
                 </div>
-                <nav
-                    class="space-x-4 text-gray-300 text-sm sm:text-base">
+                <nav class="space-x-4 text-gray-300 text-sm sm:text-base">
                     <span
                         class="rounded-md cursor-default text-sm font-normal text-teal-800 uppercase bg-gray-200 px-4 py-2">
                         {{ App::getLocale() }}

@@ -29,8 +29,9 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
 
         view()->composer('layouts.app', function ($view) {
-            $categories = Category::all();
-            $view->with('categories', $categories);
+            $categories = Category::with('childCategories.childCategories')->get();
+            $categories =
+                $view->with('categories', $categories);
         });
     }
 }

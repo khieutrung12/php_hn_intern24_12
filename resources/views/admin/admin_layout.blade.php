@@ -20,15 +20,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         }
     </script>
     <!-- bootstrap-css -->
-    <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-dt/css/jquery.dataTables.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bower_components/toastr/toastr.css') }}">
-    <link href="{{ asset('css/style.css') }}" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet"
+        href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('bower_components/datatables.net-dt/css/jquery.dataTables.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('bower_components/toastr/toastr.css') }}">
+    <link href="{{ asset('css/style.css') }}" rel='stylesheet'
+        type='text/css' />
     <link href="{{ asset('css/style-responsive.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/style-custom.css') }}" rel="stylesheet" />
     <link
         href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
         rel='stylesheet' type='text/css'>
-    <link href="{{ asset('bower_components/font-awesome/css/all.css') }}" rel="stylesheet">
+    <link href="{{ asset('bower_components/font-awesome/css/all.css') }}"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="{{ asset('bower_components/bootstrap-multiselect/dist/css/bootstrap-multiselect.css') }}"
+        type="text/css">
 </head>
 
 <body>
@@ -201,8 +210,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="{{ asset('bower_components/jquery.i18n/src/jquery.i18n.js') }}"></script>
     <script src="{{ asset('bower_components/jquery.i18n/src/jquery.i18n.messagestore.js') }}"></script>
     <script src="{{ asset('bower_components/ckeditor/ckeditor.js') }}"></script>
-    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.js') }}"></script>
-    <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.js') }}">
+    </script>
+    <script
+        src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}">
+    </script>
     <script src="{{ asset('js/jquery.dcjqaccordion.2.7.js') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/jquery.nicescroll.js') }}"></script>
@@ -210,7 +222,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="{{ asset('bower_components/toastr/toastr.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/voucher.js') }}"></script>
-    
+    <script type="text/javascript"
+        src="{{ asset('bower_components/bootstrap-multiselect/dist/js/bootstrap-multiselect.js') }}">
+    </script>
+    @yield('multiple_select_categories')
 </body>
 
 </html>

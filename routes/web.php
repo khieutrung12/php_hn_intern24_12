@@ -37,6 +37,10 @@ Route::get('/search-product', [HomeController::class, 'search'])->name('search.p
 Route::get('/search-list-products/{key}', [HomeController::class, 'searchList'])->name('search.list.products');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 Route::get('/shop/{product}', [ShopController::class, 'show'])->name('show');
+Route::get(
+    '/category/{category}/{childCategory:slug?}/{childCategory2?}',
+    [HomeController::class, 'categories']
+)->name('categories');
 
 Route::group(['middleware' => ['auth', 'user']], function () {
     Route::post('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('addToCart');
