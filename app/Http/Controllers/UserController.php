@@ -67,7 +67,8 @@ class UserController extends Controller
     public function viewOrders($id)
     {
         $users = User::findorfail($id);
-        $orders = Order::where('user_id', $users->id)->orderby('created_at', 'DESC')
+        $orders = Order::where('user_id', $users->id)->with('products', 'orderStatus')
+            ->orderby('created_at', 'DESC')
             ->paginate(config('app.limit'));
 
         return view('user.profile.order.orders')->with(compact('orders'));
@@ -86,7 +87,7 @@ class UserController extends Controller
         $orders = Order::where([
             ['user_id', $users->id],
             ['order_status_id', $isSatus],
-        ])
+        ])->with('products', 'orderStatus')
             ->orderby('created_at', 'DESC')
             ->paginate(config('app.limit'));
 

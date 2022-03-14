@@ -103,6 +103,14 @@
                                 </th>
                             </tr>
                         @endforeach
+                        @if ($order->voucher != null)
+                            <tr>
+                                <td colspan="2">
+                                    {{ __('titles.Voucher') }}:
+                                    {{ $order->voucher->value }}%
+                                </td>
+                            </tr>
+                        @endif
                         <tr>
 
                             <td colspan="2">

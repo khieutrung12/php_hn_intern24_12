@@ -118,6 +118,10 @@ class CartController extends Controller
                     'image_thumbnail' => $product->image_thumbnail,
                 ];
             }
+            if (!isset($data['discount'])) {
+                $data['discount'] = 0;
+                $data['percent'] = 0;
+            }
             session()->put('data', $data);
 
             return response()->json([
@@ -132,22 +136,22 @@ class CartController extends Controller
         $voucher = Voucher::where('code', $request->coupon)->first();
         if ($voucher == null) {
             return redirect()->route('carts.index')
-                        ->withErrors(['coupon' => __('messages.voucher-doesnt-exist')])
-                        ->withInput();
+                ->withErrors(['coupon' => __('messages.voucher-doesnt-exist')])
+                ->withInput();
         }
 
         if ($voucher->discount($request->total) == null) {
             return redirect()->route('carts.index')
-                        ->withErrors(['coupon' => __('messages.condition-not-satisfied')])
-                        ->withInput();
+                ->withErrors(['coupon' => __('messages.condition-not-satisfied')])
+                ->withInput();
         }
 
         $orders = auth()->user()->orders;
         foreach ($orders as $order) {
             if ($order['voucher_id'] == $voucher->id) {
                 return redirect()->route('carts.index')
-                        ->withErrors(['coupon' => __('messages.voucher-used')])
-                        ->withInput();
+                    ->withErrors(['coupon' => __('messages.voucher-used')])
+                    ->withInput();
             }
         }
 

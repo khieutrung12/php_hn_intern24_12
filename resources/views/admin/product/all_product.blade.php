@@ -50,7 +50,11 @@
                                         class="style-image">
                                 </td>
                                 <td>{{ $pro->brand->name }}</td>
-                                <td>{{ $pro->category->name }}</td>
+                                <td>
+                                    @foreach ($pro->category as $name)
+                                        {{ $name->name }}<br>
+                                    @endforeach
+                                </td>
                                 <td>
                                     <a href="{{ route('products.edit', ['product' => $pro->id]) }}"
                                         class="active styling-edit"
