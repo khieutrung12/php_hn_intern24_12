@@ -73,7 +73,6 @@
                             name="start_date">
                         <span class="text-danger error-text error_start_date"></span>
                     </div>
-
                     <div class="form-group mb-3">
                         <label for="end_date">
                             {{ __('titles.end_date') }}
@@ -82,8 +81,8 @@
                             type="date"
                             class="end_date form-control"
                             max="{{ date('Y-m-d', strtotime('+3 year', strtotime(date('Y-m-d')))) }}"
-                            min="{{ date('Y-m-d', strtotime('-3 year', strtotime(date('Y-m-d')))) }}"
-                            name="end_date">
+                            min=""
+                            name="end_date" id="id_end_date">
                         <span class="text-danger error-text error_end_date"></span>
                     </div>
                 </div>

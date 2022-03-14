@@ -20,7 +20,8 @@ yarn-error.log
 /public/js 
 /public/mix-manifest.json
 /public/bower_components
-/public/images
+/public/images/uploads
 /public/webfonts
 /public/imagess
 /public/avatars
+/public/i18n
