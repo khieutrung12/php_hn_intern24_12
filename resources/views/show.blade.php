@@ -67,19 +67,12 @@
                         {{ $product->brand->name }}
                     </span>
                 </p>
-                <p class="space-x-2">
-                    <span class="text-gray-800 font-semibold">
-                        {{ __('titles.Category') }}:
-                    </span>
-                    <span class="text-gray-600">
-                        {{ $product->category->name }}
-                    </span>
-                </p>
             </div>
             <div class="mt-20 flex items-baseline gap-5 bg-gray-50 py-8 pl-5">
                 <span class="text-indigo-900 font-semibold text-3xl">
                     {{ vndFormat($product->price) }}
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="_token"
+                        value="{{ csrf_token() }}">
                 </span>
             </div>
             <!-- quantity -->
@@ -165,7 +158,7 @@
         <div class="lg:w-4/5 xl:w-3/5 pt-8">
             <div class="space-y-5 text-gray-600 text-lg">
                 <p class="leading-6">
-                    {{ $product->description }}
+                    {!! $product->description !!}
                 </p>
             </div>
         </div>

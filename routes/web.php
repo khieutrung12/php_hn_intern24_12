@@ -39,7 +39,7 @@ Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 Route::get('/shop/{product}', [ShopController::class, 'show'])->name('show');
 Route::get(
     '/category/{category}/{childCategory:slug?}/{childCategory2?}',
-    [HomeController::class, 'categories']
+    [HomeController::class, 'searchByCategory']
 )->name('categories');
 
 Route::group(['middleware' => ['auth', 'user']], function () {

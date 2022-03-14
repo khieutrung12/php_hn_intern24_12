@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -54,5 +55,30 @@ class HomeController extends Controller
             'key' => $key,
             'action' => 'search',
         ]);
+    }
+
+    public function searchByCategory($category, Category $childCategory = null, $childCategory2 = null)
+    {
+        $ids  = collect();
+        $brands = Brand::all();
+        if ($childCategory2) {
+            $subCategory = $childCategory->childCategories()->where('slug', $childCategory2)->firstOrFail();
+            $ids = collect($subCategory->id);
+        } elseif ($childCategory) {
+            $ids = $childCategory->childCategories->pluck('id');
+        } elseif ($category) {
+            $category = Category::where('slug', $category)->with('childCategories.childCategories')->get();
+            foreach ($category as $subCategory) {
+                foreach ($subCategory->childCategories as $subSubCategory) {
+                    $ids = $ids->merge($subSubCategory->childCategories->pluck('id'));
+                }
+            }
+        }
+        $products = Product::whereHas('category', function ($query) use ($ids) {
+            $query->whereIn('category_id', $ids);
+        })
+            ->get();
+
+        return view('shop')->with(compact('products', 'brands'));
     }
 }

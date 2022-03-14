@@ -24,7 +24,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::whereNotIn('order_status_id', [config('app.canceled')])
+        $orders = Order::with('orderStatus')->whereNotIn('order_status_id', [config('app.canceled')])
             ->orderby('created_at', 'DESC')->paginate(config('app.limit'));
 
         return view('admin.order.all_order')->with(compact('orders'));
@@ -58,9 +58,9 @@ class OrderController extends Controller
             } else {
                 $voucher_id  = $data['voucher']->id;
                 $voucher = Voucher::where('id', $voucher_id)
-                    ->update([ 'quantity' => $data['voucher']->quantity - 1]);
+                    ->update(['quantity' => $data['voucher']->quantity - 1]);
             }
-
+            $sum_price = Session::get('subTotal');
             $shipping = Shipping::create([
                 'name' => $request->name,
                 'address' => $request->address,
@@ -73,11 +73,11 @@ class OrderController extends Controller
                 'user_id' => $request->user_id,
                 'order_status_id' => $order_status,
                 'code' => $code,
-                'sum_price' => $request->sum_price,
+                'sum_price' => $sum_price,
                 'shipping_id' => $shipping->id,
                 'voucher_id' => $voucher_id,
             ]);
-            
+
             $order_product = [];
             if (Session::has('cart')) {
                 $carts = session()->get('cart');
@@ -92,6 +92,7 @@ class OrderController extends Controller
             OrderProduct::insert($order_product);
             session()->forget('cart');
             session()->forget('data');
+            session()->forget('subTotal');
 
             return view('user.checkout.order_complete');
         } else {
@@ -137,25 +138,36 @@ class OrderController extends Controller
     {
         $order = Order::findorfail($id);
         $order_status_id = $request->order_status_id;
-        if ($order_status_id == config('app.confirmed')) {
-            foreach ($order->products as $key => $product) {
-                DB::table('products')->where('id', $product->id)
-                    ->decrement('quantity', $product->pivot->product_sales_quantity);
+        if ($order->order_status_id != $order_status_id) {
+            if ($order_status_id == config('app.confirmed')) {
+                foreach ($order->products as $key => $product) {
+                    DB::table('products')->where('id', $product->id)
+                        ->decrement('quantity', $product->pivot->product_sales_quantity);
+                    DB::table('products')->where('id', $product->id)
+                        ->increment('sold', $product->pivot->product_sales_quantity);
+                }
+            } elseif ($order_status_id != config('app.confirmed') && $order_status_id != config('app.canceled')) {
+                foreach ($order->products as $key => $product) {
+                    DB::table('products')->where('id', $product->id)
+                        ->increment('quantity', $product->pivot->product_sales_quantity);
+                    DB::table('products')->where('id', $product->id)
+                        ->decrement('sold', $product->pivot->product_sales_quantity);
+                }
             }
-        } elseif ($order_status_id != config('app.confirmed') && $order_status_id != config('app.canceled')) {
-            foreach ($order->products as $key => $product) {
-                DB::table('products')->where('id', $product->id)
-                    ->increment('quantity', $product->pivot->product_sales_quantity);
+            if ($order_status_id == config('app.canceled')) {
+                if ($order->voucher != null) {
+                    DB::table('vouchers')->where('id', $order->voucher->id)
+                        ->increment('quantity', 1);
+                }
             }
+            $order->update([
+                'order_status_id' => $request->order_status_id,
+            ]);
+            $request->session()->flash('mess', __('messages.update-success', ['name' => __('titles.order')]));
         }
-        $order->update([
-            'order_status_id' => $request->order_status_id,
-        ]);
-        $request->session()->flash('mess', __('messages.update-success', ['name' => __('titles.order')]));
 
         return redirect()->route('orders.index');
     }
-
     /**
      * Remove the specified resource from storage.
      *

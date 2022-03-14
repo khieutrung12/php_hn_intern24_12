@@ -24,6 +24,7 @@
                             </th>
                             <th>{{ __('titles.order') }}</th>
                             <th>{{ __('titles.status') }}</th>
+                            <th>{{ __('titles.order_date') }}</th>
                             <th class="width-css"></th>
                         </tr>
                     </thead>
@@ -46,6 +47,9 @@
                                         <span class="text-danger stt">
                                             {{ __('messages.canceled') }}</span>
                                     @endif
+                                </td>
+                                <td>
+                                    {{ formatDate($order->created_at) }}
                                 </td>
                                 <td>
                                     <a href="{{ route('orders.edit', ['order' => $order->id]) }}"
