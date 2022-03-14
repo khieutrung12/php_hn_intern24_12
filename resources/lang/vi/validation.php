@@ -16,4 +16,5 @@ return [
     'digits_between' => ':name phải nằm trong khoảng từ :min đến :max chữ số.',
     'integer' => ':name phải thuộc kiểu số nguyên.',
     'numeric' => ':name phải là chữ số.',
+    'email' => 'Email phải là một địa chỉ email hợp lệ.',
 ];

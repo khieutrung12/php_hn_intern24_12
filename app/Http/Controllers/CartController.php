@@ -172,7 +172,7 @@ class CartController extends Controller
 
         return response()->json([
             'format' => $format,
-            'message' => __('messages.apply-success'),
+            'message' => __('messages.apply-success', ['name' => __('titles.voucher')]),
             'code' => 200,
         ], 200);
     }
@@ -191,7 +191,7 @@ class CartController extends Controller
 
         return response()->json([
             'code' => 200,
-            'message' => __('messages.delete-success'),
+            'message' => __('messages.delete-success', ['name' => __('titles.voucher')]),
             'format' => $format,
         ], 200);
     }

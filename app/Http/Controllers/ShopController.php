@@ -11,24 +11,20 @@ class ShopController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
         $brands = Brand::all();
         $products = Product::all();
 
         return view('shop', [
-            'categories' => $categories,
             'brands' => $brands,
             'products' => $products,
         ]);
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $categories = Category::all();
-        $product = Product::find($id);
+        $product = Product::where('slug', $slug)->first();
 
         return view('show', [
-            'categories' => $categories,
             'product' => $product,
         ]);
     }

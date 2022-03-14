@@ -18,6 +18,7 @@ if (!function_exists('createSlug')) {
         $str = preg_replace("/(Đ)/", 'D', $str);
         $str = preg_replace("/(\“|\”|\‘|\’|\,|\!|\&|\;|\@|\#|\%|\~|\`|\=|\_|\'|\]|\[|\}|\{|\)|\(|\+|\^)/", '-', $str);
         $str = preg_replace("/( )/", '-', $str);
+        $str = $str . microtime();
         $str = strtolower($str);
 
         return $str;

@@ -234,6 +234,7 @@ return [
 
     ],
     'limit' => 9,
+    'limit_search' => 5,
     'limitRandomString' => 6,
     'startOrderStatus' => 2,
     'confirmed' => 1,
