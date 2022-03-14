@@ -181,4 +181,7 @@ return [
     'password.edit' => 'Change Password',
     'checkout' => 'Checkout',
     'voucher' => 'Voucher',
+    'viewOrders' => 'View Orders',
+    'show' => 'Show',
+    'orders.store' => 'Order Complete',
 ];

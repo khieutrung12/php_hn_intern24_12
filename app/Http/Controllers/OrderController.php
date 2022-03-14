@@ -52,7 +52,14 @@ class OrderController extends Controller
             $order_status = config('app.startOrderStatus');
             $code = Str::random(config('app.limitRandomString'));
             $data = Session::get('data');
-            $voucher_id  = $data['voucher']->id;
+
+            if (!isset($data['voucher'])) {
+                $voucher_id  = null;
+            } else {
+                $voucher_id  = $data['voucher']->id;
+                $voucher = Voucher::where('id', $voucher_id)
+                    ->update([ 'quantity' => $data['voucher']->quantity - 1]);
+            }
 
             $shipping = Shipping::create([
                 'name' => $request->name,
@@ -61,9 +68,6 @@ class OrderController extends Controller
                 'note' => $request->note,
                 'email' => $request->email,
             ]);
-
-            $voucher = Voucher::where('id', $voucher_id)
-                ->update([ 'quantity' => $data['voucher']->quantity - 1]);
 
             $orders = Order::create([
                 'user_id' => $request->user_id,

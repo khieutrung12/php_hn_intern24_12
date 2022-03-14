@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'alpha_num' => ':name chỉ được bao gồm chữ và số.',
     'confirmed' => 'Mật khẩu không trùng khớp',
     'max' => [
         'string' => ':name không được nhiều hơn :max ký tự',
