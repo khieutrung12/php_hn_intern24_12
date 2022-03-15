@@ -1,6 +1,8 @@
 @extends('admin.admin_layout')
 @section('admin_content')
     <div class="table-agile-info">
+        <a href="{{ route('brands.create') }}" class="btn btn-danger"
+            role="button">{{ __('titles.add-brand') }}</a>
         <div class="panel panel-default">
             <div class="panel-heading">
                 {{ __('titles.all-brand') }}
@@ -17,7 +19,7 @@
                         Session::put('mess', null);
                     @endphp
                 @endif
-                <table class="table table-striped b-t b-light">
+                <table class="table table-striped b-t b-light" id="brands_table">
                     <thead>
                         <tr>
                             <th class="width-css">
@@ -67,11 +69,18 @@
                     </div>
                     <div class="col-sm-7 text-right text-center-xs">
                         <ul class="pagination pagination-sm m-t-none m-b-none">
-                            {{ $all_brand->links() }}
+                            {{-- {{ $all_brand->links() }} --}}
                         </ul>
                     </div>
                 </div>
             </footer>
         </div>
     </div>
+@endsection
+@section('dataTable')
+    <script>
+        $(function() {
+            $("#brands_table").DataTable();
+        });
+    </script>
 @endsection

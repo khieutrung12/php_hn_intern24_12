@@ -18,7 +18,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $all_brand = Brand::orderby('created_at', 'DESC')->paginate(config('app.limit'));
+        $all_brand = Brand::orderby('created_at', 'DESC')->get();
 
         return view('admin.brand.all_brand')->with(compact('all_brand'));
     }

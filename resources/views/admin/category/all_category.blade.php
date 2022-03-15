@@ -1,6 +1,8 @@
 @extends('admin.admin_layout')
 @section('admin_content')
     <div class="table-agile-info">
+        <a href="{{ route('categories.create') }}" class="btn btn-danger"
+            role="button">{{ __('titles.add-var', ['name' => __('titles.category')]) }}</a>
         <div class="panel panel-default">
             <div class="panel-heading">
                 {{ __('titles.all-var', ['name' => __('titles.category')]) }}
@@ -17,7 +19,7 @@
                         Session::put('mess', null);
                     @endphp
                 @endif
-                <table class="table table-striped b-t b-light">
+                <table class="table table-striped b-t b-light" id="categories_table">
                     <thead>
                         <tr>
                             <th></th>
@@ -30,16 +32,28 @@
                     </thead>
                     <tbody>
                         @foreach ($allCategory as $key => $category)
-                            @include('admin.category.index_row',
-                            compact('category','key'))
+                            @include(
+                                'admin.category.index_row',
+                                compact('category', 'key')
+                            )
 
                             @foreach ($category->childCategories as $childCategory)
-                                @include('admin.category.index_row', ['category' =>
-                                $childCategory, 'prefix' => '-----'])
+                                @include(
+                                    'admin.category.index_row',
+                                    [
+                                        'category' => $childCategory,
+                                        'prefix' => '-----',
+                                    ]
+                                )
 
                                 @foreach ($childCategory->childCategories as $childCategory)
-                                    @include('admin.category.index_row', ['category'
-                                    => $childCategory, 'prefix' => '-----------'])
+                                    @include(
+                                        'admin.category.index_row',
+                                        [
+                                            'category' => $childCategory,
+                                            'prefix' => '-----------',
+                                        ]
+                                    )
                                 @endforeach
                             @endforeach
                         @endforeach
@@ -56,4 +70,11 @@
             </footer>
         </div>
     </div>
+@endsection
+@section('dataTable')
+    <script>
+        $(function() {
+            $("#categories_table").DataTable();
+        });
+    </script>
 @endsection

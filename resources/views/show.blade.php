@@ -80,13 +80,16 @@
                 <h3 class="text-base text-gray-800 mb-1">
                     {{ __('titles.Quantity') }}
                 </h3>
-                <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max-content absolute"  >
-                    <button id="decrement_{{ $product->id }}" onclick="stepper('decrement_{{ $product->id }}')"
+                <div
+                    class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max-content absolute">
+                    <button id="decrement_{{ $product->id }}"
+                        onclick="stepper('decrement_{{ $product->id }}')"
                         class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer hover:bg-indigo-900 hover:text-white select-none">-</button>
-                    <input id="input-number_{{ $product->id }}" type="number" min="1" max="{{ $product->quantity }}"
-                        readonly value="1"
+                    <input id="input-number_{{ $product->id }}" type="number"
+                        min="1" max="{{ $product->quantity }}" readonly value="1"
                         class="appearance-none h-8 w-15 flex items-center justify-center cursor-not-allowed text-center">
-                    <button id="increment_{{ $product->id }}" onclick="stepper('increment_{{ $product->id }}')"
+                    <button id="increment_{{ $product->id }}"
+                        onclick="stepper('increment_{{ $product->id }}')"
                         class="h-8 w-8 text-xl flex items-center justify-center cursor-pointer hover:bg-indigo-900 hover:text-white select-none">+</button>
                 </div>
                 <div class="text-gray-400 ml-32 pt-2">

@@ -65,9 +65,9 @@
     <script src="{{ asset('js/jquery.dcjqaccordion.2.7.js') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/cart_update.js') }}"></script>
-    <script src="{{ asset('js/style_ajax.js') }}"></script>
     <script src="{{ asset('js/search.js') }}"></script>
     <script src="{{ asset('js/customer_voucher.js') }}"></script>
+    <script src="{{ asset('js/style_ajax.js') }}"></script>
 </body>
 
 </html>

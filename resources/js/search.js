@@ -1,7 +1,6 @@
 $(function () {
     $('#input-search').keyup(function () {
         var _text = $(this).val();
-
         if (_text != '') {
             $.ajax({
                 method: 'GET',
