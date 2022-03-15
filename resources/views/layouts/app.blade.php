@@ -67,6 +67,7 @@
     <script src="{{ asset('js/cart_update.js') }}"></script>
     <script src="{{ asset('js/style_ajax.js') }}"></script>
     <script src="{{ asset('js/search.js') }}"></script>
+    <script src="{{ asset('js/customer_voucher.js') }}"></script>
 </body>
 
 </html>

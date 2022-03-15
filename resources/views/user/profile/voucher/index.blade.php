@@ -8,11 +8,13 @@
         </h3>
         <!-- page title end -->
         <!-- navbarmenu -->
-        <div class="flex py-3 bg-gray-200 space-x-20 pl-10 mb-6 ">
-            <a href="#" class=" hover:text-indigo-900 focus:text-indigo-900">Latest</a>
-            <a href="#" class=" hover:text-indigo-900 focus:text-indigo-900">Expiring</a>
+        <div class="flex py-3 bg-gray-200 space-x-20 pl-10 mb-6 shadow">
         </div>
         <!-- navbarmenu end-->
+        <!-- modal show voucher-->
+        <div class="show">
+        </div>
+        <!-- modal show voucher end-->
         <!-- list voucher -->
         <div class="flex flex-wrap">
             @php
@@ -56,7 +58,7 @@
                                 @endif
                             @endif
                         </span>
-                        <a href="#" class=" text-blue-300">
+                        <a href="#" id="btn_show" class=" text-blue-300" data-code="{{ $voucher->code }}">
                             {{ __('titles.t&c') }}
                         </a>
                     </div>

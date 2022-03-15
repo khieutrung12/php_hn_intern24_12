@@ -114,7 +114,7 @@
                     {{ __('titles.Add to Cart') }}
                 </a>
                 <a href="#"
-                    class="border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase 
+                    class="hidden border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase 
                     hover:bg-transparent hover:text-indigo-900 transition text-sm">
                     <span class="mr-2"><i
                             class="far fa-heart"></i></span>

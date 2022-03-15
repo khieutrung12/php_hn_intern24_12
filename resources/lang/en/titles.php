@@ -194,4 +194,9 @@ return [
     'expiring' => 'Expiring',
     'hour' => 'hours',
     'minute' => 'minutes',
+    'all' => 'All',
+    'reward' => 'Reward',
+    'ok' => 'OK',
+    'to' => 'to',
+    'date' => 'Date',
 ];

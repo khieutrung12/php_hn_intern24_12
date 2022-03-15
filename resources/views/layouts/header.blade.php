@@ -24,7 +24,7 @@
             <div class="space-x-10 flex items-center justify-center">
                 <!-- Wish List -->
                 <a href="#"
-                    class="block text-center text-gray-700 hover:text-indigo-900 transition relative">
+                    class="hidden text-center text-gray-700 hover:text-indigo-900 transition relative">
                     <span
                         class="absolute left-7 bottom-7 w-5 h-5 rounded-full flex items-center justify-center bg-indigo-900 text-white text-xs">
                         5

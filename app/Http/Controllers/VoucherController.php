@@ -165,11 +165,21 @@ class VoucherController extends Controller
 
     public function walletVoucher()
     {
-        $vouchers = Voucher::where([
-            ['start_date', '<=', date('Y-m-d')],
-            ['end_date', '>=', date('Y-m-d')],
-            ['quantity', '>', 0]
-        ])->get();
+        $orders = Order::select('voucher_id')
+            ->where('user_id', Auth()->user()->id)
+            ->whereNotNull('voucher_id')->get();
+
+        $array = [];
+        foreach ($orders as $order) {
+            array_push($array, $order->voucher_id);
+        }
+
+        $vouchers = Voucher::whereNotIn('id', $array)
+            ->where([
+                ['start_date', '<=', date('Y-m-d')],
+                ['end_date', '>=', date('Y-m-d')],
+                ['quantity', '>', 0],
+            ])->get();
 
         return view('user.profile.voucher.index', [
             'vouchers' => $vouchers,
@@ -184,5 +194,14 @@ class VoucherController extends Controller
         Session()->put('code', $code);
 
         return redirect()->route('shop');
+    }
+
+    public function showVoucher(Request $request)
+    {
+        $voucher = Voucher::where('code', $request->code)->first();
+
+        return view('user.profile.voucher.show', [
+            'voucher' => $voucher,
+        ]);
     }
 }
