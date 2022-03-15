@@ -195,4 +195,9 @@ return [
     'expiring' => 'Hết hạn',
     'hour' => 'giờ',
     'minute' => 'phút',
+    'all' => 'Tất cả',
+    'reward' => 'Ưu đãi',
+    'ok' => 'OK',
+    'to' => 'đến',
+    'date' => 'Ngày',
 ];

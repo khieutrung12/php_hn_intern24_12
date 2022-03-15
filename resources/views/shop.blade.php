@@ -111,7 +111,7 @@
                                     <i class="fas fa-search"></i>
                                 </a>
                                 <a href="#"
-                                    class="text-white text-lg w-9 h-9 rounded-full bg-indigo-900 hover:bg-gray-800 transition flex items-center justify-center">
+                                    class="hidden text-white text-lg w-9 h-9 rounded-full bg-indigo-900 hover:bg-gray-800 transition flex items-center justify-center">
                                     <i class="far fa-heart"></i>
                                 </a>
                             </div>

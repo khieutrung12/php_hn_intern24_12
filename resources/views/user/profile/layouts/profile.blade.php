@@ -102,7 +102,7 @@
                 </div>
                 <!-- vouchers link end -->
                 <!-- single link -->
-                <div class="pl-8 pb-2 pt-5">
+                <div class="pl-8 pb-2 pt-5 hidden">
                     <a href="#"
                         class="relative medium capitalize text-gray-800 font-medium hover:text-indigo-900 transition block">
                         <span class="absolute left-0 top-0 text-base">
