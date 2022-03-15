@@ -8,7 +8,7 @@
                 </span>
                 <span class="block text-xs"><br /></span>
                 <span class="text-sm text-gray-500">
-                    {{ $product->category->name }}
+                    {{ vndFormat($product->price) }}
                 </span>
             </div>
         </a>

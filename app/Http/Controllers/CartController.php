@@ -133,6 +133,10 @@ class CartController extends Controller
 
     public function applyVoucher(ApplyRequest $request)
     {
+        if (Session()->get('code')) {
+            Session()->forget('code');
+        }
+        
         $voucher = Voucher::where('code', $request->coupon)->first();
         if ($voucher == null) {
             return redirect()->route('carts.index')

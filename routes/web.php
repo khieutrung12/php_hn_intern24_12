@@ -54,6 +54,8 @@ Route::group(['middleware' => ['auth', 'user']], function () {
     Route::resource('/carts', CartController::class);
     Route::get('/checkout', [OrderController::class, 'infoCheckout'])->name('checkout');
     Route::resource('orders', OrderController::class)->only(['store']);
+    Route::get('/voucher-wallet', [VoucherController::class, 'walletVoucher'])->name('user.voucher.wallet');
+    Route::get('/use-voucher/{code}', [VoucherController::class, 'useVoucher'])->name('user.use.voucher');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {

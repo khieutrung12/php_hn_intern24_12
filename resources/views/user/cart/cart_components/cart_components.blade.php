@@ -1,5 +1,5 @@
 @if (Session::get('data'))
-    <div class="container lg:grid grid-cols-12 gap-6 items-start pb-16 pt-4 update_cart_url delete_cart_url"
+    <div class="container lg:grid grid-cols-12 gap-6 items-start pb-16 pt-4 update_cart_url delete_cart_url m-auto"
         data-url="{{ route('updateCart') }}"
         data-url_delete="{{ route('deleteCart') }}">
         <!-- product cart -->

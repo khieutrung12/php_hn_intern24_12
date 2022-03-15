@@ -88,9 +88,9 @@
                     </a>
                 </div>
                 <!-- single link end -->
-                <!-- single link -->
+                <!-- vouchers link -->
                 <div class="space-y-3 pl-8 pb-2 pt-5">
-                    <a href="#"
+                    <a href="{{ route('user.voucher.wallet') }}"
                         class="relative medium capitalize text-gray-800 font-medium hover:text-indigo-900 transition block">
                         <span class="absolute left-0 top-0 text-base">
                             <i class="far fa-credit-card"></i>
@@ -100,7 +100,7 @@
                         </span>
                     </a>
                 </div>
-                <!-- single link end -->
+                <!-- vouchers link end -->
                 <!-- single link -->
                 <div class="pl-8 pb-2 pt-5">
                     <a href="#"

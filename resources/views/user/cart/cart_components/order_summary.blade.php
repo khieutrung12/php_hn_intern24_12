@@ -61,7 +61,12 @@
                 <input type="hidden" name="total" value="{{ $total }}">
                 <input type="text"
                     class="pl-4 w-full border border-r-0 border-indigo-900 py-2 px-3 rounded-l-md focus:ring-indigo-900 focus:border-indigo-900 text-sm"
-                    placeholder="Coupon" value="{{ old('coupon') }}"
+                    placeholder="Coupon"
+                    @if (Session()->get('code'))
+                        value={{ Session()->get('code') }}
+                    @else
+                        value="{{ old('coupon') }}"
+                    @endif
                     name="coupon" id="coupon">
                 <button type="submit"
                     id="btn_apply_voucher"
