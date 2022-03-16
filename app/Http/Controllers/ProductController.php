@@ -23,7 +23,7 @@ class ProductController extends Controller
     public function index()
     {
         $all_product = Product::with('brand', 'category')->orderby('created_at', 'DESC')
-            ->paginate(config('app.limit'));
+            ->get();
 
         return view('admin.product.all_product')->with(compact('all_product'));
     }

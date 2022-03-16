@@ -17,7 +17,8 @@
                         Session::put('mess', null);
                     @endphp
                 @endif
-                <table class="table table-striped b-t b-light">
+                <table class="table table-striped b-t b-light"
+                    id="orders_cancel_table">
                     <thead>
                         <tr>
                             <th class="width-css">
@@ -72,4 +73,11 @@
             </footer>
         </div>
     </div>
+@endsection
+@section('dataTable')
+    <script>
+        $(function() {
+            $("#orders_cancel_table").DataTable();
+        });
+    </script>
 @endsection

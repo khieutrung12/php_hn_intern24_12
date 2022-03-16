@@ -162,6 +162,9 @@
 @endsection
 @section('multiple_select_categories')
     <script>
+        CKEDITOR.replace('ckeditor');
+        CKEDITOR.replace('add_product_ckeditor');
+        CKEDITOR.replace('desc_product_ckeditor');
         $(function() {
             $('#demo').multiselect({
                 nonSelectedText: 'Select Categories',

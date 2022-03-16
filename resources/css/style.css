@@ -90,7 +90,7 @@ img.style-all-image {
     width: 240px;
     height: 100%;
     position: fixed;
-    background: #313A46;
+    background: #313a46;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
@@ -304,10 +304,10 @@ ul.sidebar-menu li a.active i {
     margin-top: 80px;
     padding: 15px;
     width: 100%;
-    background:#F9FAFD;
+    background: #f9fafd;
 }
 .brand {
-    background: #313A46;
+    background: #313a46;
     float: left;
     width: 240px;
     height: 80px;
@@ -568,7 +568,7 @@ ul.top-menu > li > a:focus {
 }
 .top-nav .username {
     font-size: 15px;
-    color: #99A7AD;
+    color: #99a7ad;
     margin-left: 3px;
 }
 .top-nav ul.top-menu > li > a {
@@ -576,7 +576,7 @@ ul.top-menu > li > a:focus {
     top: 0;
     background: none;
     margin-right: 0;
-    background: #FAFBFD;
+    background: #fafbfd;
     border-left: 1px solid #e8edfa;
     border-right: 1px solid #e8edfa;
 }
@@ -860,9 +860,9 @@ ul.top-menu > li > a:focus {
 }
 .panel {
     border: none !important;
-    margin: 10px 20px;;
+    margin: 10px 20px;
     box-shadow: 5px 10px 18px rgb(218, 223, 219);
-    padding: 30px ;
+    padding: 30px;
 }
 .agileinfo-grap {
     padding: 2em;
@@ -3547,15 +3547,15 @@ a.btn-add {
     color: #fff;
     background-color: #fa5c7c;
     border-color: #fa5c7c;
-    box-shadow: 0 2px 6px 0 rgba(250,92,124,.5);
+    box-shadow: 0 2px 6px 0 rgba(250, 92, 124, 0.5);
     text-align: center;
     vertical-align: middle;
-    padding: .45rem .9rem;
-    font-size: .9rem;
-    border-radius: .15rem;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.9rem;
+    border-radius: 0.15rem;
 }
 a.btn-add:hover {
-    background: #D54E69;
+    background: #d54e69;
 }
 
 .dataTables_wrapper {
@@ -3580,11 +3580,10 @@ table.vouchers-table {
     outline: 1px solid #cad8e6;
 }
 .table > thead > tr > th {
-    text-align: center;
-    background-color: #EEF2F7;
+    background-color: #eef2f7;
 }
 .table > tbody > tr > td {
-    vertical-align:middle;
+    vertical-align: middle;
 }
 div.locale {
     margin-top: 25px;

@@ -68,6 +68,8 @@
                         </form>
                     </div>
                 </div>
+                <a href="{{ route('categories.index') }}" class="btn btn-danger"
+                    role="button">{{ __('titles.back_all_category') }}</a>
             </section>
         </div>
     </div>

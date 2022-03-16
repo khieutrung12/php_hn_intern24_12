@@ -200,4 +200,6 @@ return [
     'ok' => 'OK',
     'to' => 'đến',
     'date' => 'Ngày',
+    'back_all_brand' => 'Quay laị xem thương hiệu',
+    'back_all_category' => 'Quay laị xem danh mục',
 ];

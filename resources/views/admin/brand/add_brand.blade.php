@@ -47,6 +47,8 @@
                         </form>
                     </div>
                 </div>
+                <a href="{{ route('brands.index') }}" class="btn btn-danger"
+                    role="button">{{ __('titles.back_all_brand') }}</a>
             </section>
         </div>
     </div>

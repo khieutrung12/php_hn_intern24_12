@@ -64,7 +64,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </span>
                             @foreach (config('languages') as $key => $lang)
                                 @if ($key != App::getLocale())
-                                    <a href="{{ route('lang', ['locale' => $key]) }}" class="btn-locale">
+                                    <a href="{{ route('lang', ['locale' => $key]) }}"
+                                        class="btn-locale">
                                         {{ $key }}
                                     </a>
                                 @endif
@@ -128,34 +129,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <!-- Dashboard -->
                         <!-- Brand -->
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="{{ route('brands.index') }}">
                                 <i class="fa-solid fa-registered"></i>
                                 <span>{{ __('titles.brand') }}</span>
                             </a>
-                            <ul class="sub">
-                                <li><a
-                                        href="{{ route('brands.create') }}">{{ __('titles.add-brand') }}</a>
-                                </li>
-                                <li><a
-                                        href="{{ route('brands.index') }}">{{ __('titles.all-brand') }}</a>
-                                </li>
-                            </ul>
                         </li>
                         <!-- Brand -->
                         <!-- Category -->
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="{{ route('categories.index') }}">
                                 <i class="fa-solid fa-rectangle-list"></i>
                                 <span>{{ __('titles.category') }}</span>
                             </a>
-                            <ul class="sub">
-                                <li><a
-                                        href="{{ route('categories.create') }}">{{ __('titles.add-var', ['name' => __('titles.category')]) }}</a>
-                                </li>
-                                <li><a
-                                        href="{{ route('categories.index') }}">{{ __('titles.all-var', ['name' => __('titles.category')]) }}</a>
-                                </li>
-                            </ul>
                         </li>
                         <!-- Category -->
                         <!-- Product -->
@@ -174,15 +159,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </ul>
                         </li>
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="{{ route('orders.index') }}">
                                 <i class="fa-solid fa-cart-flatbed"></i>
                                 <span>{{ __('titles.order') }}</span>
                             </a>
-                            <ul class="sub">
-                                <li><a
-                                        href="{{ route('orders.index') }}">{{ __('titles.all-var', ['name' => __('titles.order')]) }}</a>
-                                </li>
-                            </ul>
                         </li>
                         <!-- Product -->
                         <!-- Voucher -->
@@ -207,8 +187,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!--main content end-->
     </section>
     <script src="{{ asset('bower_components/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('bower_components/jquery.i18n/src/jquery.i18n.js') }}"></script>
-    <script src="{{ asset('bower_components/jquery.i18n/src/jquery.i18n.messagestore.js') }}"></script>
+    <script src="{{ asset('bower_components/jquery.i18n/src/jquery.i18n.js') }}">
+    </script>
+    <script
+        src="{{ asset('bower_components/jquery.i18n/src/jquery.i18n.messagestore.js') }}">
+    </script>
     <script src="{{ asset('bower_components/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.js') }}">
     </script>
@@ -226,6 +209,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         src="{{ asset('bower_components/bootstrap-multiselect/dist/js/bootstrap-multiselect.js') }}">
     </script>
     @yield('multiple_select_categories')
+    @yield('dataTable')
 </body>
 
 </html>

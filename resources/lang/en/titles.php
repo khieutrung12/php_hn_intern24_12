@@ -199,4 +199,6 @@ return [
     'ok' => 'OK',
     'to' => 'to',
     'date' => 'Date',
+    'back_all_brand' => 'Back to all brand',
+    'back_all_category' => 'Back to all category',
 ];

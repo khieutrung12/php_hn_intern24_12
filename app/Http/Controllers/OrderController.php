@@ -25,7 +25,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with('orderStatus')->whereNotIn('order_status_id', [config('app.canceled')])
-            ->orderby('created_at', 'DESC')->paginate(config('app.limit'));
+            ->orderby('created_at', 'DESC')->get();
 
         return view('admin.order.all_order')->with(compact('orders'));
     }
@@ -52,6 +52,8 @@ class OrderController extends Controller
             $order_status = config('app.startOrderStatus');
             $code = Str::random(config('app.limitRandomString'));
             $data = Session::get('data');
+            $carts = session()->get('cart');
+            $order_product = [];
 
             if (!isset($data['voucher'])) {
                 $voucher_id  = null;
@@ -77,16 +79,23 @@ class OrderController extends Controller
                 'shipping_id' => $shipping->id,
                 'voucher_id' => $voucher_id,
             ]);
-
-            $order_product = [];
-            if (Session::has('cart')) {
-                $carts = session()->get('cart');
-                foreach ($carts as $key => $cart) {
+            foreach ($carts as $key => $cart) {
+                $prd = Product::findorfail($key);
+                if ($prd['quantity'] >= $cart['quantity']) {
                     $order_product[$key] = [
                         'order_id' => $orders->id,
                         'product_id' => $key,
                         'product_sales_quantity' => $cart['quantity'],
                     ];
+                } else {
+                    session()->forget('cart');
+                    session()->forget('data');
+                    session()->forget('subTotal');
+                    $orders->delete();
+                    $shipping->delete();
+                    Session::flash('mess', __('messages.error'));
+
+                    return back();
                 }
             }
             OrderProduct::insert($order_product);

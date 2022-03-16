@@ -17,7 +17,7 @@
                         Session::put('mess', null);
                     @endphp
                 @endif
-                <table class="table table-striped b-t b-light">
+                <table class="table table-striped b-t b-light" id="orders_table">
                     <thead>
                         <tr>
                             <th class="width-css">
@@ -71,11 +71,17 @@
                     </div>
                     <div class="col-sm-7 text-right text-center-xs">
                         <ul class="pagination pagination-sm m-t-none m-b-none">
-                            {{ $orders->links() }}
                         </ul>
                     </div>
                 </div>
             </footer>
         </div>
     </div>
+@endsection
+@section('dataTable')
+    <script>
+        $(function() {
+            $("#orders_table").DataTable();
+        });
+    </script>
 @endsection
