@@ -150,7 +150,7 @@ class CartController extends Controller
                 ->withInput();
         }
 
-        $orders = auth()->user()->orders;
+        $orders = Order::where('user_id', auth()->user()->id)->get();
         foreach ($orders as $order) {
             if ($order['voucher_id'] == $voucher->id) {
                 return redirect()->route('carts.index')

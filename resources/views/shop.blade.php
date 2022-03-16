@@ -27,7 +27,7 @@
                             @foreach ($brands as $name => $qualitity)
                                 <div class="flex items-center">
                                     <input type="checkbox" id="Dominik"
-                                        class="text-indigo-900 focus:ring-0 rounded-sm cursor-pointer">
+                                        class="hidden text-indigo-900 focus:ring-0 rounded-sm cursor-pointer">
                                     <label for="Dominik"
                                         class="text-gray-600 ml-3 cursor-pointer hover:text-indigo-900 hover:font-medium">
                                         {{ $name }}
@@ -41,7 +41,7 @@
                             @foreach ($brands as $brand)
                                 <div class="flex items-center">
                                     <input type="checkbox" id="Dominik"
-                                        class="text-indigo-900 focus:ring-0 rounded-sm cursor-pointer hover:font-medium">
+                                        class="hidden text-indigo-900 focus:ring-0 rounded-sm cursor-pointer hover:font-medium">
                                     <label for="Dominik"
                                         class="text-gray-600 ml-3 cursor-pointer hover:text-indigo-900 hover:font-medium">
                                         {{ $brand->name }}
@@ -56,7 +56,7 @@
                 </div>
                 <!-- brand filter end -->
                 <!-- price filter -->
-                <div class="pt-4 mx-3">
+                <div class="hidden pt-4 mx-3">
                     <h3 class="text-xl text-gray-800 mb-5 uppercase font-medium">
                         {{ __('titles.Price') }}</h3>
                     <div class="mt-4 flex items-center">
@@ -89,7 +89,7 @@
             @endif
             <!-- result search end -->
             <!-- sorting -->
-            <div class="mb-4 flex items-center justify-end relative border-indigo-700">
+            <div class="hidden mb-4 flex items-center justify-end relative border-indigo-700">
                 <select class=" shadow-md w-44 bg-white text-sm text-gray-600 px-4 py-3 border border-gray-300 shadow-2xl-sm rounded focus:border-opacity-0 focus:border-indigo-900">
                     @foreach (config('sortproduct') as $key => $sort)
                         <option value="{{ $key }}">
@@ -104,7 +104,7 @@
                     <div class="button-product rounded bg-white shadow-2xl overflow-hidden">
                         <div class="relative">
                             <img src="{{ asset('images/uploads/products/' . $product->image_thumbnail) }}"
-                                class="w-96 h-96">
+                                class="w-80 h-80">
                             <div class="product absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center gap-2 opacity-0 transition">
                                 <a href="{{ route('show', $product->slug) }}"
                                     class="text-white text-lg w-9 h-9 rounded-full bg-indigo-900 hover:bg-gray-800 transition flex items-center justify-center">

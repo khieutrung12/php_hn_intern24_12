@@ -201,4 +201,6 @@ return [
     'date' => 'Date',
     'back_all_brand' => 'Back to all brand',
     'back_all_category' => 'Back to all category',
+    'top-new-arrival' => 'top new arrival',
+    'see-more' => 'See more',
 ];

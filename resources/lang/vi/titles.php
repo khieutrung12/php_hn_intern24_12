@@ -202,4 +202,6 @@ return [
     'date' => 'Ngày',
     'back_all_brand' => 'Quay laị xem thương hiệu',
     'back_all_category' => 'Quay laị xem danh mục',
+    'top-new-arrival' => 'Sản phẩm mới',
+    'see-more' => 'Xem thêm',
 ];

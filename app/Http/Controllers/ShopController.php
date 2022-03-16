@@ -11,8 +11,9 @@ class ShopController extends Controller
 {
     public function index()
     {
-        $brands = Brand::all();
-        $products = Product::all();
+        $brands = Brand::with('products')->get();
+        $products = Product::orderby('created_at', 'DESC')
+            ->paginate(config('app.limit'));
 
         return view('shop', [
             'brands' => $brands,
@@ -22,7 +23,9 @@ class ShopController extends Controller
 
     public function show($slug)
     {
-        $product = Product::where('slug', $slug)->first();
+        $product = Product::where('slug', $slug)
+            ->with('brand')
+            ->first();
 
         return view('show', [
             'product' => $product,
