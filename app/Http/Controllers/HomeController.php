@@ -16,7 +16,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $topNew = Product::orderby('created_at', 'DESC')
+            ->take(config('app.limit_top_new'))->get();
+
+        return view('home', [
+            'topNew' => $topNew,
+        ]);
     }
 
     public function search(Request $request)
