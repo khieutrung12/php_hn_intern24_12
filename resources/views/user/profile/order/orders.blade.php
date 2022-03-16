@@ -10,11 +10,12 @@
         @foreach ($orders as $order)
             <h1 class="font-bold">#{{ $order->code }}</h1>
             <h1 class="font-normal my-2">{{ formatDate($order->created_at) }}</h1>
-            <button
-                class="bg-transparent text-blue-700 font-semibold hover:text-white py-2 rounded my-2">
-                <a class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold 
-                hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded my-2"
-                    href="{{ route('viewDetailOrder', ['id' => $order->id]) }}">
+            <div class="flex">
+                <a class="py-2 px-2 font-bold border-2 rounded border-black"
+                    href="{{ route('viewDetailOrder', ['id' => $order->id]) }}">{{ __('titles.view_order') }}</a>
+                <span
+                    class="bg-transparent text-blue-700 font-semibold 
+                    py-2 px-4 flex items-center justify-end flex-grow">
                     @if ($order->orderStatus->id === config('app.unconfirmed'))
                         {{ __('messages.unconfirmed') }}
                     @elseif($order->orderStatus->id === config('app.confirmed'))
@@ -22,8 +23,8 @@
                     @else
                         {{ __('messages.canceled') }}
                     @endif
-                </a>
-            </button>
+                </span>
+            </div>
             <div class="mb-10">
                 @foreach ($order->products as $product)
                     <a href="{{ route('show', ['product' => $product->slug]) }}">

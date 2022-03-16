@@ -203,4 +203,5 @@ return [
     'back_all_category' => 'Back to all category',
     'top-new-arrival' => 'top new arrival',
     'see-more' => 'See more',
+    'view_order' => 'View order',
 ];
