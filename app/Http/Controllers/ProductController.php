@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
+use App\Repositories\Brand\BrandRepositoryInterface;
+use App\Repositories\Image\ImageRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Category\CategoryRepositoryInterface;
 
 class ProductController extends Controller
 {
@@ -20,10 +24,26 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $productRepo;
+    protected $imageRepo;
+    protected $brandRepo;
+    protected $categoryRepo;
+
+    public function __construct(
+        ProductRepositoryInterface $productRepo,
+        ImageRepositoryInterface $imageRepo,
+        BrandRepositoryInterface $brandRepo,
+        CategoryRepositoryInterface $categoryRepo
+    ) {
+        $this->productRepo = $productRepo;
+        $this->imageRepo = $imageRepo;
+        $this->brandRepo = $brandRepo;
+        $this->categoryRepo = $categoryRepo;
+    }
+
     public function index()
     {
-        $all_product = Product::with('brand', 'category')->orderby('created_at', 'DESC')
-            ->get();
+        $all_product = $this->productRepo->getProduct();
 
         return view('admin.product.all_product')->with(compact('all_product'));
     }
@@ -35,9 +55,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $brands = Brand::all();
-        $categories = Category::whereNull('parent_id')
-            ->get();
+        $brands = $this->brandRepo->getAll();
+        $categories = $this->categoryRepo->getCategoryWhereNull();
+
 
         return view('admin.product.add_product')->with(compact('brands', 'categories'));
     }
@@ -55,16 +75,10 @@ class ProductController extends Controller
             $request->image_thumbnail->extension();
         $request->image_thumbnail->move(public_path($uploaded_image), $new_image_name);
         $slug = createSlug($request->name);
-        $product = Product::create([
-            'brand_id' => $request->brand_id,
-            'name' => $request->name,
-            'slug' => $slug,
-            'quantity' => $request->quantity,
-            'description' => $request->description,
-            'price' => $request->price,
-            'image_thumbnail' => $new_image_name,
-        ]);
-        $product->category()->sync($request->input('categories', []));
+        $product = $request->all();
+        $product['slug'] = $slug;
+        $product['image_thumbnail'] = $new_image_name;
+        $product = $this->productRepo->createProduct($product, $request->input('categories', []));
         if ($request->hasFile('images')) {
             $data = [];
             $files = $request->file('images');
@@ -76,7 +90,7 @@ class ProductController extends Controller
                     'image' => $imageName,
                 ];
             }
-            Image::insert($data);
+            $this->imageRepo->createMultipleImage($data);
         }
         $request->session()->flash('mess', __('messages.add-success', ['name' => __('titles.category')]));
 
@@ -102,11 +116,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $edit_product = Product::findorfail($id);
-        $brands = Brand::all();
-        $categories = Category::with('parentCategory.parentCategory')
-            ->whereHas('parentCategory.parentCategory')
-            ->get();
+        $edit_product = $this->productRepo->find($id);
+        $brands = $this->brandRepo->getAll();
+        $categories = $this->categoryRepo->getCategoryWithParent();
 
         return view('admin.product.edit_product')->with(compact('edit_product', 'brands', 'categories'));
     }
@@ -121,7 +133,8 @@ class ProductController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $uploaded_image = "images/uploads/products/";
-        $product = Product::findorfail($id);
+        $product = $this->productRepo->find($id);
+        $productNew = $request->all();
         $slug = createSlug($request->name);
         if ($request->hasfile('image_thumbnail')) {
             $destination = $uploaded_image . $product->image_thumbnail;
@@ -135,25 +148,18 @@ class ProductController extends Controller
         } else {
             $filename = $request->image_thumbnail_save;
         }
-        $product->update([
-            'brand_id' => $request->brand_id,
-            'name' => $request->name,
-            'slug' => $slug,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-            'description' => $request->description,
-            'image_thumbnail' => $filename,
-        ]);
-        $product->category()->sync($request->input('categories', []));
+        $productNew['slug'] = $slug;
+        $productNew['image_thumbnail'] = $filename;
+        $this->productRepo->updateProduct($id, $productNew, $request->input('categories', []));
         if ($request->hasfile('images')) {
             $data = [];
-            $images = Image::where('product_id', $product->id)->get();
+            $images = $this->imageRepo->getImageByProductId($product->id);
             foreach ($images as $image) {
                 if (File::exists($uploaded_image . $image->image)) {
                     File::delete($uploaded_image . $image->image);
                 }
             }
-            Image::where('product_id', $product->id)->delete();
+            $this->imageRepo->deleteMultipleImage($product->id);
             $files = $request->file('images');
             foreach ($files as $key => $file) {
                 $extension = $file->getClientOriginalExtension();
@@ -164,8 +170,9 @@ class ProductController extends Controller
                     'image' => $filename,
                 ];
             }
-            Image::insert($data);
+            $this->imageRepo->createMultipleImage($data);
         }
+
         $request->session()->flash('mess', __('messages.update-success', ['name' => __('titles.category')]));
 
         return Redirect::to(route('products.index'));
@@ -180,18 +187,19 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $dir_images = 'images/uploads/products/';
-        $product = Product::findorfail($id);
+        $product = $this->productRepo->find($id);
         $destination =  $dir_images . $product->image_thumbnail;
         if (File::exists($destination)) {
             File::delete($destination);
         }
-        $images = Image::where('product_id', $product->id)->get();
+        $images = $this->imageRepo->getImageByProductId($product->id);
         foreach ($images as $image) {
             if (File::exists($dir_images . $image->image)) {
                 File::delete($dir_images . $image->image);
             }
         }
-        $product->delete();
+        $this->productRepo->delete($id);
+
         Session::flash('mess', __('messages.delete-success', ['name' => __('titles.product')]));
 
         return Redirect::to(route('products.index'));
@@ -200,7 +208,7 @@ class ProductController extends Controller
     public function deleteimage($id)
     {
         $dir_images = 'images/uploads/products/';
-        $images = Image::findorfail($id);
+        $images = $this->imageRepo->find($id);
         if (File::exists($dir_images  . $images->image)) {
             File::delete($dir_images  . $images->image);
         }
