@@ -24,11 +24,6 @@ class Voucher extends Model
         return $this->hasOne(Order::class);
     }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function discount($total)
     {
         $current = date('Y-m-d');
