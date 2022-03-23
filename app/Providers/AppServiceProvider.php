@@ -6,6 +6,14 @@ use App\Models\Category;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\Brand\BrandRepository;
+use App\Repositories\Image\ImageRepository;
+use App\Repositories\Product\ProductRepository;
+use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Brand\BrandRepositoryInterface;
+use App\Repositories\Image\ImageRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Category\CategoryRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,7 +24,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(
+            BrandRepositoryInterface::class,
+            BrandRepository::class
+        );
+        $this->app->singleton(
+            CategoryRepositoryInterface::class,
+            CategoryRepository::class
+        );
+        $this->app->singleton(
+            ProductRepositoryInterface::class,
+            ProductRepository::class
+        );
+        $this->app->singleton(
+            ImageRepositoryInterface::class,
+            ImageRepository::class
+        );
     }
 
     /**
