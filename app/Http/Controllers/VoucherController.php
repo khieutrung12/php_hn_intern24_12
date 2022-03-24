@@ -8,9 +8,22 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\Voucher\StoreRequest;
 use App\Http\Requests\Voucher\UpdateRequest;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\Voucher\VoucherRepositoryInterface;
 
 class VoucherController extends Controller
 {
+    protected $voucherRepo;
+    protected $orderRepo;
+
+    public function __construct(
+        VoucherRepositoryInterface $voucherRepo,
+        OrderRepositoryInterface $orderRepo
+    ) {
+        $this->voucherRepo = $voucherRepo;
+        $this->orderRepo = $orderRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +31,7 @@ class VoucherController extends Controller
      */
     public function index()
     {
-        $vouchers = Voucher::all();
+        $vouchers = $this->voucherRepo->getAll();
 
         return view('admin.voucher.index', [
             'vouchers' => $vouchers,
@@ -27,7 +40,7 @@ class VoucherController extends Controller
 
     public function fetch()
     {
-        $vouchers = Voucher::all();
+        $vouchers = $this->voucherRepo->getAll();
 
         return Datatables::of($vouchers)
             ->addIndexColumn()
@@ -49,7 +62,7 @@ class VoucherController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $result = Voucher::insert([
+        $result = $this->voucherRepo->insertVoucher([
             'code' => createCode($request->name),
             'name' => $request->name,
             'quantity' => $request->quantity,
@@ -68,7 +81,7 @@ class VoucherController extends Controller
 
         return response()->json([
             'code' => 200,
-            'message' => __('messages.add-success'),
+            'message' => __('messages.add-success', ['name' => __('titles.voucher')]),
         ], 200);
     }
 
@@ -81,7 +94,7 @@ class VoucherController extends Controller
      */
     public function edit(Request $request)
     {
-        $voucher = Voucher::find($request->voucher_id);
+        $voucher = $this->voucherRepo->find($request->voucher_id);
 
         return response()->json([
             'voucher' => $voucher,
@@ -90,15 +103,14 @@ class VoucherController extends Controller
 
     public function update(UpdateRequest $request)
     {
-        $voucher = Voucher::find($request->cid);
+        $voucher = $this->voucherRepo->find($request->cid);
         if ($voucher->name == $request->name) {
             $code = $voucher->code;
         } else {
             $code = createCode($request->name);
         }
 
-        $result = Voucher::where('id', $request->cid)
-            ->update([
+        $result = $this->voucherRepo->update($request->cid, [
                 'code' => $code,
                 'name' => $request->name,
                 'quantity' => $request->quantity,
@@ -111,7 +123,7 @@ class VoucherController extends Controller
 
         return response()->json([
             'code' => 200,
-            'message' => __('messages.edit-success'),
+            'message' => __('messages.update-success', ['name' => __('titles.voucher')]),
         ], 200);
     }
 
@@ -123,15 +135,15 @@ class VoucherController extends Controller
      */
     public function delete(Request $request)
     {
-        $order = Order::where('voucher_id', $request->voucher_id)->first();
+        $order = $this->orderRepo->findByVoucherId($request->voucher_id);
 
         if ($order == null) {
-            $result = Voucher::find($request->voucher_id)->delete();
+            $result = $this->voucherRepo->delete($request->voucher_id);
 
             if ($result) {
                 return response()->json([
                     'code' => 200,
-                    'message' => __('messages.delete-success'),
+                    'message' => __('messages.delete-success', ['name' => __('titles.voucher')]),
                 ], 200);
             }
         }
@@ -145,7 +157,7 @@ class VoucherController extends Controller
     public function deleteList(Request $request)
     {
         foreach ($request->voucher_id as $id) {
-            if (Order::where('voucher_id', $id)->first() != null) {
+            if ($this->orderRepo->findByVoucherId($request->voucher_id) != null) {
                 return response()->json([
                     'code' => 403,
                     'message' => __('messages.cant-delete'),
@@ -153,33 +165,26 @@ class VoucherController extends Controller
             }
         }
 
-        $result = Voucher::whereIn('id', $request->voucher_id)->delete();
+        $result = $this->voucherRepo->deleteListVoucher($request->voucher_id);
 
         if ($result) {
             return response()->json([
                 'code' => 200,
-                'message' => __('messages.success-delete'),
+                'message' => __('messages.delete-success', ['name' => __('titles.voucher')]),
             ], 200);
         }
     }
 
     public function walletVoucher()
     {
-        $orders = Order::select('voucher_id')
-            ->where('user_id', Auth()->user()->id)
-            ->whereNotNull('voucher_id')->get();
+        $orders = $this->orderRepo->getVoucherIdByUserId(Auth()->user()->id);
 
         $array = [];
         foreach ($orders as $order) {
             array_push($array, $order->voucher_id);
         }
 
-        $vouchers = Voucher::whereNotIn('id', $array)
-            ->where([
-                ['start_date', '<=', date('Y-m-d')],
-                ['end_date', '>=', date('Y-m-d')],
-                ['quantity', '>', 0],
-            ])->get();
+        $vouchers = $this->voucherRepo->findByCondition($array);
 
         return view('user.profile.voucher.index', [
             'vouchers' => $vouchers,
@@ -198,7 +203,7 @@ class VoucherController extends Controller
 
     public function showVoucher(Request $request)
     {
-        $voucher = Voucher::where('code', $request->code)->first();
+        $voucher = $this->voucherRepo->findByCode($request->code);
 
         return view('user.profile.voucher.show', [
             'voucher' => $voucher,

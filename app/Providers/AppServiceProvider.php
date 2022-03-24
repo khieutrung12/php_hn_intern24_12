@@ -8,10 +8,14 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Brand\BrandRepository;
 use App\Repositories\Image\ImageRepository;
+use App\Repositories\Order\OrderRepository;
+use App\Repositories\Voucher\VoucherRepository;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Brand\BrandRepositoryInterface;
 use App\Repositories\Image\ImageRepositoryInterface;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\Voucher\VoucherRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 
@@ -39,6 +43,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             ImageRepositoryInterface::class,
             ImageRepository::class
+        );
+        $this->app->singleton(
+            VoucherRepositoryInterface::class,
+            VoucherRepository::class
+        );
+        $this->app->singleton(
+            OrderRepositoryInterface::class,
+            OrderRepository::class
         );
     }
 
