@@ -9,6 +9,7 @@
         "doctrine/dbal": "2.*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "laravel/dusk": "^6.22",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
@@ -21,7 +22,7 @@
         "fakerphp/faker": "^1.9.1",
         "laravel-frontend-presets/tailwindcss": "^4.3",
         "laravel/sail": "^1.0.1",
-        "mockery/mockery": "^1.4.4",
+        "mockery/mockery": "^1.5",
         "nunomaduro/collision": "^5.10",
         "phpunit/phpunit": "^9.5"
     },

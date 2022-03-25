@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Category;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
+use Laravel\Dusk\DuskServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Brand\BrandRepository;
 use App\Repositories\Image\ImageRepository;
@@ -52,6 +53,10 @@ class AppServiceProvider extends ServiceProvider
             OrderRepositoryInterface::class,
             OrderRepository::class
         );
+
+        if ($this->app->environment('local', 'testing')) {
+            $this->app->register(DuskServiceProvider::class);
+        }
     }
 
     /**
