@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\File;
+
 if (!function_exists('createSlug')) {
     function createSlug($str)
     {
@@ -77,5 +80,19 @@ if (!function_exists('vndKFormat')) {
         }
 
         return '₫' . $money;
+    }
+}
+
+if (!function_exists('storeImage')) {
+    function storeImage($getFile, $name = null)
+    {
+        $new_image_name = time() . '-' . rand(0, 119) . '-' .  $name . '.' .
+            $getFile->extension();
+        $getFile->move(public_path(config('path.PRODUCT_UPLOAD_PATH')), $new_image_name);
+        if (File::exists(config('path.PRODUCT_UPLOAD_PATH') . $new_image_name)) {
+            return $new_image_name;
+        } else {
+            return false;
+        }
     }
 }

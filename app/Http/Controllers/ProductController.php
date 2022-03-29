@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Faker\Factory;
 use App\Models\Brand;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
@@ -58,7 +64,6 @@ class ProductController extends Controller
         $brands = $this->brandRepo->getAll();
         $categories = $this->categoryRepo->getCategoryWhereNull();
 
-
         return view('admin.product.add_product')->with(compact('brands', 'categories'));
     }
 
@@ -70,42 +75,29 @@ class ProductController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $uploaded_image = "images/uploads/products";
-        $new_image_name = time() . '-' . rand(0, 119) . '-' .  $request->name . '.' .
-            $request->image_thumbnail->extension();
-        $request->image_thumbnail->move(public_path($uploaded_image), $new_image_name);
+        $new_image_name = $this->productRepo->storeImageProduct($request->image_thumbnail, $request->name);
         $slug = createSlug($request->name);
         $product = $request->all();
         $product['slug'] = $slug;
         $product['image_thumbnail'] = $new_image_name;
         $product = $this->productRepo->createProduct($product, $request->input('categories', []));
-        if ($request->hasFile('images')) {
+        if ($request->has('images')) {
             $data = [];
-            $files = $request->file('images');
+            $files = $request->images;
             foreach ($files as $key => $file) {
-                $imageName = time() . '-' . rand(0, 119) . $file->getClientOriginalName();
-                $file->move(public_path($uploaded_image), $imageName);
+                $imageName = $this->productRepo->storeImageProduct($file, $request->name);
                 $data[$key] = [
-                    'product_id' => $product->id,
+                    'product_id' => $product['id'],
                     'image' => $imageName,
                 ];
             }
             $this->imageRepo->createMultipleImage($data);
         }
-        $request->session()->flash('mess', __('messages.add-success', ['name' => __('titles.category')]));
 
-        return Redirect::route('products.create');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return Redirect::route('products.create')->with('mess', __(
+            'messages.add-success',
+            ['name' => __('titles.category')]
+        ));
     }
 
     /**
@@ -132,50 +124,42 @@ class ProductController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
-        $uploaded_image = "images/uploads/products/";
         $product = $this->productRepo->find($id);
         $productNew = $request->all();
         $slug = createSlug($request->name);
-        if ($request->hasfile('image_thumbnail')) {
-            $destination = $uploaded_image . $product->image_thumbnail;
-            if (File::exists($destination)) {
-                File::delete($destination);
-            }
-            $file = $request->file('image_thumbnail');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . '-' . rand(0, 119) . '-' .  $request->name . '.' . $extension;
-            $file->move($uploaded_image, $filename);
+        if ($request->has('image_thumbnail')) {
+            $destination = config('path.PRODUCT_UPLOAD_PATH') . $product->image_thumbnail;
+            $this->productRepo->deleteFileImage($destination);
+            $filename = $this->productRepo->storeImageProduct($request->image_thumbnail, $request->name);
         } else {
             $filename = $request->image_thumbnail_save;
         }
         $productNew['slug'] = $slug;
         $productNew['image_thumbnail'] = $filename;
         $this->productRepo->updateProduct($id, $productNew, $request->input('categories', []));
-        if ($request->hasfile('images')) {
+        if ($request->has('images')) {
             $data = [];
             $images = $this->imageRepo->getImageByProductId($product->id);
             foreach ($images as $image) {
-                if (File::exists($uploaded_image . $image->image)) {
-                    File::delete($uploaded_image . $image->image);
-                }
+                $destination = config('path.PRODUCT_UPLOAD_PATH') . $image->image;
+                $this->productRepo->deleteFileImage($destination);
             }
             $this->imageRepo->deleteMultipleImage($product->id);
-            $files = $request->file('images');
+            $files = $request->images;
             foreach ($files as $key => $file) {
-                $extension = $file->getClientOriginalExtension();
-                $filename = time() . '-' . rand(0, 119) . '-' .   '.' . $extension;
-                $file->move($uploaded_image, $filename);
+                $imageName = $this->productRepo->storeImageProduct($file, $request->name);
                 $data[$key] = [
                     'product_id' => $product->id,
-                    'image' => $filename,
+                    'image' => $imageName,
                 ];
             }
             $this->imageRepo->createMultipleImage($data);
         }
 
-        $request->session()->flash('mess', __('messages.update-success', ['name' => __('titles.category')]));
-
-        return Redirect::to(route('products.index'));
+        return Redirect::to(route('products.index'))->with('mess', __(
+            'messages.update-success',
+            ['name' => __('titles.category')]
+        ));
     }
 
     /**
@@ -186,17 +170,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $dir_images = 'images/uploads/products/';
         $product = $this->productRepo->find($id);
-        $destination =  $dir_images . $product->image_thumbnail;
-        if (File::exists($destination)) {
-            File::delete($destination);
-        }
+        $destination =  config('path.PRODUCT_UPLOAD_PATH') . $product->image_thumbnail;
+        $this->productRepo->deleteFileImage($destination);
         $images = $this->imageRepo->getImageByProductId($product->id);
         foreach ($images as $image) {
-            if (File::exists($dir_images . $image->image)) {
-                File::delete($dir_images . $image->image);
-            }
+            $destination =  config('path.PRODUCT_UPLOAD_PATH') . $image->image;
+            $this->productRepo->deleteFileImage($destination);
         }
         $this->productRepo->delete($id);
 
@@ -207,13 +187,12 @@ class ProductController extends Controller
 
     public function deleteimage($id)
     {
-        $dir_images = 'images/uploads/products/';
         $images = $this->imageRepo->find($id);
-        if (File::exists($dir_images  . $images->image)) {
-            File::delete($dir_images  . $images->image);
-        }
+        $destination =  config('path.PRODUCT_UPLOAD_PATH') . $images->image;
+        $this->productRepo->deleteFileImage($destination);
         $images->delete();
 
+        Session::flash('mess', __('messages.delete-success', ['name' => __('titles.product')]));
         return back();
     }
 }
