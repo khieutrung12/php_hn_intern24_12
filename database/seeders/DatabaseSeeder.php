@@ -7,6 +7,7 @@ use Database\Seeders\GenderDatabaseSeeder;
 use Database\Seeders\OrderStatusDatabaseSeeder;
 use Database\Seeders\RoleDatabaseSeeder;
 use Database\Seeders\CategoryDatabaseSeeder;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -21,6 +22,8 @@ class DatabaseSeeder extends Seeder
             RoleDatabaseSeeder::class,
             OrderStatusDatabaseSeeder::class,
             CategoryDatabaseSeeder::class,
+            UserDatabaseSeeder::class,
+            BrandDatabaseSeeder::class,
         ]);
     }
 }
