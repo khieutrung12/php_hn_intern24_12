@@ -96,14 +96,26 @@ class VoucherController extends Controller
     {
         $voucher = $this->voucherRepo->find($request->voucher_id);
 
+        if ($voucher) {
+            return response()->json([
+                'code' => 200,
+                'voucher' => $voucher,
+            ], 200);
+        }
+
         return response()->json([
-            'voucher' => $voucher,
+            'message' => __('messages.No Results Found'),
         ]);
     }
 
     public function update(UpdateRequest $request)
     {
         $voucher = $this->voucherRepo->find($request->cid);
+        if (!$voucher) {
+            return response()->json([
+                'message' => __('messages.No Results Found'),
+            ]);
+        }
         if ($voucher->name == $request->name) {
             $code = $voucher->code;
         } else {
@@ -120,11 +132,16 @@ class VoucherController extends Controller
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
         ]);
-
+        if ($result) {
+            return response()->json([
+                'code' => 200,
+                'message' => __('messages.update-success', ['name' => __('titles.voucher')]),
+            ], 200);
+        }
+        
         return response()->json([
-            'code' => 200,
-            'message' => __('messages.update-success', ['name' => __('titles.voucher')]),
-        ], 200);
+            'message' => __('messages.something-wrong'),
+        ]);
     }
 
     /**
@@ -146,6 +163,10 @@ class VoucherController extends Controller
                     'message' => __('messages.delete-success', ['name' => __('titles.voucher')]),
                 ], 200);
             }
+
+            return response()->json([
+                'message' => __('messages.something-wrong'),
+            ]);
         }
 
         return response()->json([
@@ -173,6 +194,10 @@ class VoucherController extends Controller
                 'message' => __('messages.delete-success', ['name' => __('titles.voucher')]),
             ], 200);
         }
+
+        return response()->json([
+            'message' => __('messages.something-wrong'),
+        ]);
     }
 
     public function walletVoucher()
@@ -180,8 +205,10 @@ class VoucherController extends Controller
         $orders = $this->orderRepo->getVoucherIdByUserId(Auth()->user()->id);
 
         $array = [];
-        foreach ($orders as $order) {
-            array_push($array, $order->voucher_id);
+        if ($orders != null) {
+            foreach ($orders as $order) {
+                array_push($array, $order->voucher_id);
+            }
         }
 
         $vouchers = $this->voucherRepo->findByCondition($array);
@@ -193,7 +220,7 @@ class VoucherController extends Controller
 
     public function useVoucher($code)
     {
-        if (Session()->get('data')) {
+        if (Session()->get('code')) {
             Session()->forget('code');
         }
         Session()->put('code', $code);
