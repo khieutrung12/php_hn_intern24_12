@@ -27,7 +27,7 @@
 
                         <input id="email" type="email"
                             class="form-input w-full @error('email') border-indigo-900 @enderror" name="email"
-                            value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            value="{{ old('email') }}" autocomplete="email" autofocus>
 
                         @error('email')
                         <p class="text-indigo-900 text-xs italic mt-4">
@@ -42,8 +42,7 @@
                         </label>
 
                         <input id="password" type="password"
-                            class="form-input w-full @error('password') border-indigo-900 @enderror" name="password"
-                            required>
+                            class="form-input w-full @error('password') border-indigo-900 @enderror" name="password">
 
                         @error('password')
                         <p class="text-indigo-900 text-xs italic mt-4">
@@ -62,7 +61,7 @@
                     </div>
 
                     <div class="flex flex-wrap">
-                        <button type="submit"
+                        <button type="submit" id="btnLogin"
                         class="w-full select-none font-bold whitespace-no-wrap p-3 rounded-lg text-base leading-normal no-underline text-gray-100 bg-indigo-900  hover:bg-indigo-800 sm:py-4">
                             {{ __('titles.login') }}
                         </button>
@@ -70,7 +69,7 @@
                         @if (Route::has('register'))
                         <p class="w-full text-xs text-center text-gray-700 my-6 sm:text-sm sm:my-8">
                             {{ __("messages.none-account?") }}
-                            <a class="text-indigo-900 hover:text-white no-underline hover:underline" href="{{ route('register') }}">
+                            <a id="register" class="text-indigo-900 hover:text-white no-underline hover:underline" href="{{ route('register') }}">
                                 {{ __('titles.register') }}
                             </a>
                         </p>
