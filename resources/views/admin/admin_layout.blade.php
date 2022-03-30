@@ -96,7 +96,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('logout') }}"
+                                <a href="{{ route('logout') }}" dusk="logout"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fa fa-key"></i>
                                     {{ __('titles.logout') }}
