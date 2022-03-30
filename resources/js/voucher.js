@@ -69,17 +69,21 @@ $(function () {
         $('#editVoucher').find('form')[0].reset();
         $('#editVoucher').find('span.error-text').text('');
         $.post('/admin/vouchers/edit', {voucher_id: voucher_id}, function (data) {
-            $('#editVoucher').find('input[name="cid"]').val(data.voucher.id);
-            $('#editVoucher').find('input[name="name"]').val(data.voucher.name);
-            $('#editVoucher').find('input[name="code"]').val(data.voucher.code);
-            $('#editVoucher').find('input[name="quantity"]').val(data.voucher.quantity);
-            $('#editVoucher').find('input[name="value"]').val(data.voucher.value);
-            $('#editVoucher').find('input[name="condition_min_price"]').val(data.voucher.condition_min_price);
-            $('#editVoucher').find('input[name="maximum_reduction"]').val(data.voucher.maximum_reduction);
-            $('#editVoucher').find('input[name="start_date"]').val(data.voucher.start_date);
-            $('#editVoucher').find('input[name="end_date"]').val(data.voucher.end_date);
-            input.min = data.voucher.start_date;
-            $('#editVoucher').modal('show');
+            if (data.code == 200) {
+                $('#editVoucher').find('input[name="cid"]').val(data.voucher.id);
+                $('#editVoucher').find('input[name="name"]').val(data.voucher.name);
+                $('#editVoucher').find('input[name="code"]').val(data.voucher.code);
+                $('#editVoucher').find('input[name="quantity"]').val(data.voucher.quantity);
+                $('#editVoucher').find('input[name="value"]').val(data.voucher.value);
+                $('#editVoucher').find('input[name="condition_min_price"]').val(data.voucher.condition_min_price);
+                $('#editVoucher').find('input[name="maximum_reduction"]').val(data.voucher.maximum_reduction);
+                $('#editVoucher').find('input[name="start_date"]').val(data.voucher.start_date);
+                $('#editVoucher').find('input[name="end_date"]').val(data.voucher.end_date);
+                input.min = data.voucher.start_date;
+                $('#editVoucher').modal('show');
+            } else {
+                toastr.error(data.message);
+            }
         }, 'json');
     });
     

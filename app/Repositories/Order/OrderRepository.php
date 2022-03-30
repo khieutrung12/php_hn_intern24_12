@@ -20,7 +20,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
 
     public function getVoucherIdByUserId($user_id)
     {
-        return $this->model->select('voucher_id')
+        return $this->model
             ->where('user_id', $user_id)
             ->whereNotNull('voucher_id')->get();
     }
