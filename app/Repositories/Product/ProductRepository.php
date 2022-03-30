@@ -4,6 +4,7 @@ namespace App\Repositories\Product;
 
 use App\Models\Product;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\File;
 use App\Repositories\Product\ProductRepositoryInterface;
 
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
@@ -12,6 +13,23 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         return Product::class;
     }
+
+    public function storeImageProduct($getFile, $name)
+    {
+        $result = storeImage($getFile, $name);
+        return $result;
+    }
+
+    public function deleteFileImage($destination)
+    {
+        if (File::exists($destination)) {
+            File::delete($destination);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     public function getProduct()
     {
