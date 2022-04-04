@@ -2,13 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Repositories\Brand\BrandRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 
 class HomeController extends Controller
 {
+    protected $productRepo;
+    protected $brandRepo;
+
+    public function __construct(
+        BrandRepositoryInterface $brandRepo,
+        ProductRepositoryInterface $productRepo
+    ) {
+        $this->brandRepo = $brandRepo;
+        $this->productRepo = $productRepo;
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -16,8 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $topNew = Product::orderby('created_at', 'DESC')
-            ->take(config('app.limit_top_new'))->get();
+        $topNew = $this->productRepo->getProductTopNew();
 
         return view('home', [
             'topNew' => $topNew,
@@ -26,8 +37,7 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        $products = Product::where('name', 'LIKE', '%' . $request->name . '%')
-            ->take(config('app.limit_search'))->get();
+        $products = $this->productRepo->search($request->name);
 
         return view('layouts.search', [
             'products' => $products,
@@ -37,9 +47,7 @@ class HomeController extends Controller
 
     public function searchList($key)
     {
-        $products = Product::where('name', 'LIKE', '%' . $key . '%')
-            ->with('brand')
-            ->paginate(config('app.limit'));
+        $products = $this->productRepo->searchList($key);
 
         if (count($products) == 0) {
             return view('error_search');
@@ -65,7 +73,7 @@ class HomeController extends Controller
     public function searchByCategory($category, Category $childCategory = null, $childCategory2 = null)
     {
         $ids  = collect();
-        $brands = Brand::all();
+        $brands = $this->brandRepo->getAll();
         if ($childCategory2) {
             $subCategory = $childCategory->childCategories()->where('slug', $childCategory2)->firstOrFail();
             $ids = collect($subCategory->id);

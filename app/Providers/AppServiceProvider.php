@@ -7,15 +7,19 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Laravel\Dusk\DuskServiceProvider;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\User\UserRepository;
 use App\Repositories\Brand\BrandRepository;
 use App\Repositories\Image\ImageRepository;
 use App\Repositories\Order\OrderRepository;
+use App\Repositories\Gender\GenderRepository;
 use App\Repositories\Voucher\VoucherRepository;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Category\CategoryRepository;
+use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Brand\BrandRepositoryInterface;
 use App\Repositories\Image\ImageRepositoryInterface;
 use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\Gender\GenderRepositoryInterface;
 use App\Repositories\Voucher\VoucherRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
@@ -53,7 +57,14 @@ class AppServiceProvider extends ServiceProvider
             OrderRepositoryInterface::class,
             OrderRepository::class
         );
-
+        $this->app->singleton(
+            UserRepositoryInterface::class,
+            UserRepository::class
+        );
+        $this->app->singleton(
+            GenderRepositoryInterface::class,
+            GenderRepository::class
+        );
         if ($this->app->environment('local', 'testing')) {
             $this->app->register(DuskServiceProvider::class);
         }

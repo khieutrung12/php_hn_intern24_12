@@ -14,6 +14,36 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         return Product::class;
     }
 
+    public function getProductTopNew()
+    {
+        return $this->model
+            ->orderby('created_at', 'DESC')
+            ->take(config('app.limit_top_new'))->get();
+    }
+
+    public function search($key)
+    {
+        return $this->model
+            ->where('name', 'LIKE', '%' . $key . '%')
+            ->take(config('app.limit_search'))->get();
+    }
+
+    public function searchList($key)
+    {
+        return $this->model
+            ->where('name', 'LIKE', '%' . $key . '%')
+            ->with('brand')
+            ->paginate(config('app.limit'));
+    }
+
+    public function findBySlug($slug)
+    {
+        return $this->model
+            ->where('slug', $slug)
+            ->with('brand')
+            ->first();
+    }
+
     public function storeImageProduct($getFile, $name)
     {
         $result = storeImage($getFile, $name);

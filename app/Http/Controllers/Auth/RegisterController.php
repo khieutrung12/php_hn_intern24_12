@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use App\Repositories\User\UserRepositoryInterface;
 
 class RegisterController extends Controller
 {
@@ -31,15 +30,18 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    protected $userRepo;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(
+        UserRepositoryInterface $userRepo
+    ) {
         $this->middleware('guest');
+        $this->userRepo = $userRepo;
     }
 
     protected function register(Request $request)
@@ -52,7 +54,7 @@ class RegisterController extends Controller
             'address' => ['required'],
         ]);
 
-        $result = User::insert([
+        $result = $this->userRepo->insert([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),

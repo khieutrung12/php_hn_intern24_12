@@ -12,4 +12,9 @@ class BrandRepository extends BaseRepository implements BrandRepositoryInterface
     {
         return Brand::class;
     }
+
+    public function getBrands()
+    {
+        return $this->model->select('*')->with('products')->get();
+    }
 }
