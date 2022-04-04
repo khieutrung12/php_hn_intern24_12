@@ -2,15 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Order;
-use App\Models\Gender;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\UpdateRequest;
+use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\Gender\GenderRepositoryInterface;
 
 class UserController extends Controller
 {
+    protected $userRepo;
+    protected $orderRepo;
+    protected $genderRepo;
+
+    public function __construct(
+        UserRepositoryInterface $userRepo,
+        OrderRepositoryInterface $orderRepo,
+        GenderRepositoryInterface $genderRepo
+    ) {
+        $this->userRepo = $userRepo;
+        $this->orderRepo = $orderRepo;
+        $this->genderRepo = $genderRepo;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -19,8 +31,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        $genders = Gender::all();
+        $user = $this->userRepo->find($id);
+        $genders = $this->genderRepo->getAll();
 
         if (empty($user)) {
             return redirect()
@@ -47,11 +59,10 @@ class UserController extends Controller
             $newAvatarName = time() . '-' . str_replace(' ', '-', $request->name) . '.' . $request->avatar->extension();
             $request->avatar->move(public_path('avatars'), $newAvatarName);
         } else {
-            $newAvatarName = User::find($id)->avatar;
+            $newAvatarName = $this->userRepo->find($id)->avatar;
         }
 
-        $user = User::where('id', $id)
-            ->update([
+        $user = $this->userRepo->update($id, [
                 'name' => $request->input('name'),
                 'birthday' => $request->input('birthday'),
                 'gender_id' => $request->input('gender'),
@@ -66,30 +77,23 @@ class UserController extends Controller
 
     public function viewOrders($id)
     {
-        $users = User::findorfail($id);
-        $orders = Order::where('user_id', $users->id)->with('products', 'orderStatus')
-            ->orderby('created_at', 'DESC')
-            ->paginate(config('app.limit'));
+        $user = $this->userRepo->find($id);
+        $orders = $this->orderRepo->getOrderWithUserId($id);
 
         return view('user.profile.order.orders')->with(compact('orders'));
     }
 
     public function viewDetailOrder($id)
     {
-        $order = Order::findorfail($id);
+        $order = $this->orderRepo->find($id);
 
         return view('user.profile.order.view_order')->with(compact('order'));
     }
 
     public function viewStatusOrder($idUser, $isSatus)
     {
-        $users = User::findorfail($idUser);
-        $orders = Order::where([
-            ['user_id', $users->id],
-            ['order_status_id', $isSatus],
-        ])->with('products', 'orderStatus')
-            ->orderby('created_at', 'DESC')
-            ->paginate(config('app.limit'));
+        $user = $this->userRepo->find($idUser);
+        $orders = $this->orderRepo->getOrderWithUserIdAndStatusOrder($idUser, $isSatus);
 
         return view('user.profile.order.orders')->with(compact('orders'));
     }

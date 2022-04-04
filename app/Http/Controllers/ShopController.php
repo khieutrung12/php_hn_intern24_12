@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
-use App\Models\Product;
-use App\Models\Category;
-use Illuminate\Http\Request;
+use App\Repositories\Brand\BrandRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 
 class ShopController extends Controller
 {
+    protected $brandRepo;
+    protected $productRepo;
+
+    public function __construct(
+        BrandRepositoryInterface $brandRepo,
+        ProductRepositoryInterface $productRepo
+    ) {
+        $this->brandRepo = $brandRepo;
+        $this->productRepo = $productRepo;
+    }
+
     public function index()
     {
-        $brands = Brand::with('products')->get();
-        $products = Product::orderby('created_at', 'DESC')
-            ->paginate(config('app.limit'));
+        $brands = $this->brandRepo->getBrands();
+        $products = $this->productRepo->getProduct();
 
         return view('shop', [
             'brands' => $brands,
@@ -23,9 +31,7 @@ class ShopController extends Controller
 
     public function show($slug)
     {
-        $product = Product::where('slug', $slug)
-            ->with('brand')
-            ->first();
+        $product = $this->productRepo->findBySlug($slug);
 
         return view('show', [
             'product' => $product,

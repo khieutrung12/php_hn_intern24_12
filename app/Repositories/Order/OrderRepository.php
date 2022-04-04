@@ -24,4 +24,22 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             ->where('user_id', $user_id)
             ->whereNotNull('voucher_id')->get();
     }
+
+    public function getOrderWithUserId($user_id)
+    {
+        return $this->model
+            ->where('user_id', $user_id)->with('products', 'orderStatus')
+            ->orderby('created_at', 'DESC')
+            ->paginate(config('app.limit'));
+    }
+
+    public function getOrderWithUserIdAndStatusOrder($user_id, $order_status_id)
+    {
+        return $this->model->where([
+            ['user_id', $user_id],
+            ['order_status_id', $order_status_id],
+        ])->with('products', 'orderStatus')
+            ->orderby('created_at', 'DESC')
+            ->paginate(config('app.limit'));
+    }
 }

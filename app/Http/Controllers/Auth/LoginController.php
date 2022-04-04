@@ -66,10 +66,10 @@ class LoginController extends Controller
             } else {
                 return redirect()->route('home');
             }
-        } else {
-            return redirect()
-                ->route('login')
-                ->with('message', __('messages.login-fail'));
         }
+        
+        return redirect()
+            ->route('login')
+            ->with('message', __('messages.login-fail'));
     }
 }

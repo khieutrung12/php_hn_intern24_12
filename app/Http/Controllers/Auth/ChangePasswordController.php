@@ -5,14 +5,21 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Requests\User\ChangePasswordRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\User;
+use App\Repositories\User\UserRepositoryInterface;
 
 class ChangePasswordController extends Controller
 {
+    protected $userRepo;
+
+    public function __construct(
+        UserRepositoryInterface $userRepo
+    ) {
+        $this->userRepo = $userRepo;
+    }
+
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = $this->userRepo->find($id);
 
         if (empty($user)) {
             return redirect()
@@ -34,9 +41,8 @@ class ChangePasswordController extends Controller
 
         if ($compare) {
             if (!Hash::check($request->input('new_password'), auth()->user()->password)) {
-                $user = User::where('id', $id)
-                    ->update([
-                        'password' => Hash::make($request->input('new_password')),
+                $user = $this->userRepo->update($id, [
+                    'password' => Hash::make($request->input('new_password')),
                 ]);
                 $message = __('messages.update');
             } else {

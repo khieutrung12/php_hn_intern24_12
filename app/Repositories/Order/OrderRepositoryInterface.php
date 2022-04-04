@@ -8,4 +8,6 @@ interface OrderRepositoryInterface extends BaseRepositoryInterface
 {
     public function findByVoucherId($voucher_id);
     public function getVoucherIdByUserId($user_id);
+    public function getOrderWithUserId($user_id);
+    public function getOrderWithUserIdAndStatusOrder($user_id, $order_status_id);
 }

@@ -39,6 +39,18 @@ class LoginTest extends DuskTestCase
         });
     }
 
+    public function testLoginFail()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/login')
+                    ->type('email', 'customerfail@gmail.com')
+                    ->type('password', 'customerfail')
+                    ->click('#btnLogin')
+                    ->assertSee('Login unsuccessful!')
+                    ->assertPathIs('/login');
+        });
+    }
+
     public function testLoginSuccess()
     {
         $this->browse(function (Browser $browser) {
@@ -47,18 +59,6 @@ class LoginTest extends DuskTestCase
                     ->type('password', 'customer')
                     ->click('#btnLogin')
                     ->assertPathIs('/home');
-        });
-    }
-
-    public function testLoginFail()
-    {
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/login')
-                    ->type('email', 'customer@gmail.com')
-                    ->type('password', 'customerfail')
-                    ->click('#btnLogin')
-                    ->assertSee('Login unsuccessful!')
-                    ->assertPathIs('/login');
         });
     }
 }
