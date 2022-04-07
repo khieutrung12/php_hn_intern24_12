@@ -24,4 +24,9 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
             ->whereHas('parentCategory.parentCategory')
             ->get();
     }
+
+    public function getCategoryWhereNullWithChild()
+    {
+        return $this->model->whereNull('parent_id')->with('childCategories')->get();
+    }
 }

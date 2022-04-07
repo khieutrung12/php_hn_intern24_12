@@ -42,4 +42,22 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             ->orderby('created_at', 'DESC')
             ->paginate(config('app.limit'));
     }
+
+    public function findOrderByUserId($user_id)
+    {
+        return $this->model
+            ->where('user_id', $user_id)->get();
+    }
+
+    public function getOrderNotInStatusCancel()
+    {
+        return $this->model->whereNotIn('order_status_id', [config('app.canceled')])
+            ->with('orderStatus')->orderby('created_at', 'DESC')->get();
+    }
+
+    public function getOrderInStatusCancel()
+    {
+        return $this->model->whereIn('order_status_id', [config('app.canceled')])
+            ->orderby('created_at', 'DESC')->paginate(config('app.limit'));
+    }
 }

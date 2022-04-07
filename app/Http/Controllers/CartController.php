@@ -9,14 +9,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Voucher\ApplyRequest;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Voucher\VoucherRepositoryInterface;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $productRepo;
+    protected $voucherRepo;
+    protected $orderRepo;
+
+    public function __construct(
+        ProductRepositoryInterface $productRepo,
+        VoucherRepositoryInterface $voucherRepo,
+        OrderRepositoryInterface $orderRepo
+    ) {
+        $this->productRepo = $productRepo;
+        $this->voucherRepo = $voucherRepo;
+        $this->orderRepo = $orderRepo;
+    }
+
     public function index()
     {
         $data = session()->get('data');
@@ -26,7 +38,7 @@ class CartController extends Controller
 
     public function addToCart($id)
     {
-        $product = Product::findorfail($id);
+        $product = $this->productRepo->find($id);
         $data = session()->get('data');
         if (isset($data['carts'][$id]['quantity'])) {
             $data['carts'][$id]['quantity'] = $data['carts'][$id]['quantity'] + 1;
@@ -105,7 +117,7 @@ class CartController extends Controller
     public function addMoreProduct(Request $request, $id)
     {
         if ($request->quantity) {
-            $product = Product::findorfail($id);
+            $product = $this->productRepo->find($id);
             $data = session()->get('data');
             if (isset($data['carts'][$id]['quantity'])) {
                 $data['carts'][$id]['quantity'] = $data['carts'][$id]['quantity'] + $request->quantity;
@@ -136,8 +148,9 @@ class CartController extends Controller
         if (Session()->get('code')) {
             Session()->forget('code');
         }
-        
-        $voucher = Voucher::where('code', $request->coupon)->first();
+
+        $voucher = $this->voucherRepo->findByCode($request->coupon);
+
         if ($voucher == null) {
             return redirect()->route('carts.index')
                 ->withErrors(['coupon' => __('messages.voucher-doesnt-exist')])
@@ -150,7 +163,8 @@ class CartController extends Controller
                 ->withInput();
         }
 
-        $orders = Order::where('user_id', auth()->user()->id)->get();
+        $orders = $this->orderRepo->findOrderByUserId(auth()->user()->id);
+
         foreach ($orders as $order) {
             if ($order['voucher_id'] == $voucher->id) {
                 return redirect()->route('carts.index')
