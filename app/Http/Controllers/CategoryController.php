@@ -8,19 +8,21 @@ use Illuminate\Contracts\Cache\Store;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Category\StoreRequest;
 use App\Http\Requests\Category\UpdateRequest;
+use App\Repositories\Category\CategoryRepositoryInterface;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $categoryRepo;
+
+    public function __construct(
+        CategoryRepositoryInterface $categoryRepo
+    ) {
+        $this->categoryRepo = $categoryRepo;
+    }
+
     public function index()
     {
-        $allCategory = Category::whereNull('parent_id')
-            ->with('childCategories.childCategories')
-            ->get();
+        $allCategory = $this->categoryRepo->getCategoryWhereNull();
 
         return view('admin.category.all_category')->with(compact('allCategory'));
     }
@@ -32,8 +34,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::whereNull('parent_id')
-            ->with('childCategories')->get();
+        $categories = $this->categoryRepo->getCategoryWhereNullWithChild();
 
         return view('admin.category.add_category')->with(compact('categories'));
     }
@@ -46,12 +47,10 @@ class CategoryController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        $category = $request->all();
         $slug = createSlug($request->name);
-        Category::create([
-            'name' => $request->name,
-            'slug' => $slug,
-            'parent_id' => $request->parent_id,
-        ]);
+        $category['slug'] = $slug;
+        $this->categoryRepo->create($category);
         $request->session()->flash('mess', __('messages.add-success', ['name' => __('titles.category')]));
 
         return redirect()->route('categories.create');
@@ -76,10 +75,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $productCategory = Category::findorfail($id);
-        $categories = Category::whereNull('parent_id')
-            ->with('childCategories')
-            ->get();
+        $productCategory =   $this->categoryRepo->find($id);
+        $categories = $this->categoryRepo->getCategoryWhereNullWithChild();
 
         return view('admin.category.edit_category')->with(compact('productCategory', 'categories'));
     }
@@ -93,13 +90,10 @@ class CategoryController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
+        $category = $request->all();
         $slug = createSlug($request->name);
-        $category = Category::findorfail($id);
-        $category->update([
-            'name' => $request->name,
-            'slug' => $slug,
-            'parent_id' => $request->parent_id,
-        ]);
+        $category['slug'] = $slug;
+        $this->categoryRepo->update($id, $category);
         $request->session()->flash('mess', __('messages.update-success', ['name' => __('titles.category')]));
 
         return redirect()->route('categories.index');
@@ -113,8 +107,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $deleteCategory = Category::findorfail($id);
-        $deleteCategory->delete();
+        $this->categoryRepo->delete($id);
         Session::flash('mess', __('messages.delete-success', ['name' => __('titles.category')]));
 
         return redirect()->route('categories.index');

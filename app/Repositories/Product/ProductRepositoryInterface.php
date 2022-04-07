@@ -23,4 +23,12 @@ interface ProductRepositoryInterface extends BaseRepositoryInterface
     public function createProduct(array $attributes, array $categoryIds);
 
     public function updateProduct(int $productId, array $attributes, array $categoryIds);
+
+    public function decrementQuantityProduct($product_id, $quantity);
+
+    public function incrementQuantityProduct($product_id, $quantity);
+
+    public function decrementSoldProduct($product_id, $quantity);
+
+    public function incrementSoldProduct($product_id, $quantity);
 }

@@ -37,4 +37,15 @@ class VoucherRepository extends BaseRepository implements VoucherRepositoryInter
     {
         return $this->model->where('code', $code)->first();
     }
+
+    public function decrementVoucherWhenStoreOrder($voucher_id, $attributes = [])
+    {
+        $voucher = $this->model->find($voucher_id);
+    }
+
+    public function incrementVoucherWhenCancelOrder($voucher_id)
+    {
+        return $this->model->where('id', $voucher_id)
+            ->increment('quantity', 1);
+    }
 }

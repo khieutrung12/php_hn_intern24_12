@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Brand\StoreRequest;
 use App\Http\Requests\Brand\UpdateRequest;
+use App\Repositories\Brand\BrandRepositoryInterface;
 
 class BrandController extends Controller
 {
@@ -16,9 +17,16 @@ class BrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $brandRepo;
+
+    public function __construct(
+        BrandRepositoryInterface $brandRepo
+    ) {
+        $this->brandRepo = $brandRepo;
+    }
     public function index()
     {
-        $all_brand = Brand::orderby('created_at', 'DESC')->get();
+        $all_brand = $this->brandRepo->getAll();
 
         return view('admin.brand.all_brand')->with(compact('all_brand'));
     }
@@ -42,10 +50,9 @@ class BrandController extends Controller
     public function store(StoreRequest $request)
     {
         $slug = createSlug($request->name);
-        Brand::create([
-            'name' => $request->name,
-            'slug' => $slug,
-        ]);
+        $brand = $request->all();
+        $brand['slug'] = $slug;
+        $this->brandRepo->create($brand);
         $request->session()->flash('mess', __('messages.add-success', ['name' => __('titles.brand')]));
 
         return Redirect::route('brands.create');
@@ -69,7 +76,7 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        $edit_brand = Brand::findorfail($id);
+        $edit_brand = $this->brandRepo->find($id);
 
         return view('admin.brand.edit_brand')->with(compact('edit_brand'));
     }
@@ -83,12 +90,10 @@ class BrandController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
-        $brand = Brand::findorfail($id);
+        $brand = $request->all();
         $slug = createSlug($request->name);
-        $brand->update([
-            'name' => $request->name,
-            'slug' => $slug,
-        ]);
+        $brand['slug'] = $slug;
+        $this->brandRepo->update($id, $brand);
         $request->session()->flash('mess', __('messages.update-success', ['name' => __('titles.brand')]));
 
         return Redirect::route('brands.index');
@@ -102,10 +107,10 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        $delete_brand = Brand::findorfail($id);
-        $delete_brand->delete();
+        $this->brandRepo->delete($id);
 
         Session::flash('mess', __('messages.delete-success', ['name' => __('titles.brand')]));
+
         return Redirect::route('brands.index');
     }
 }

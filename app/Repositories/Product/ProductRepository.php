@@ -9,9 +9,30 @@ use App\Repositories\Product\ProductRepositoryInterface;
 
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
 {
+
     public function getModel()
     {
         return Product::class;
+    }
+
+    public function decrementQuantityProduct($product_id, $quantity)
+    {
+        return $this->model->where('id', $product_id)->decrement('quantity', $quantity);
+    }
+
+    public function incrementQuantityProduct($product_id, $quantity)
+    {
+        return $this->model->where('id', $product_id)->increment('quantity', $quantity);
+    }
+
+    public function decrementSoldProduct($product_id, $quantity)
+    {
+        return $this->model->where('id', $product_id)->decrement('sold', $quantity);
+    }
+
+    public function incrementSoldProduct($product_id, $quantity)
+    {
+        return $this->model->where('id', $product_id)->increment('sold', $quantity);
     }
 
     public function getProductTopNew()

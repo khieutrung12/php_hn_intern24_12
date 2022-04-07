@@ -12,17 +12,23 @@ use App\Repositories\Brand\BrandRepository;
 use App\Repositories\Image\ImageRepository;
 use App\Repositories\Order\OrderRepository;
 use App\Repositories\Gender\GenderRepository;
-use App\Repositories\Voucher\VoucherRepository;
 use App\Repositories\Product\ProductRepository;
+use App\Repositories\Voucher\VoucherRepository;
 use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Shipping\ShippingRepository;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Brand\BrandRepositoryInterface;
 use App\Repositories\Image\ImageRepositoryInterface;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\Gender\GenderRepositoryInterface;
-use App\Repositories\Voucher\VoucherRepositoryInterface;
+use App\Repositories\OrderStatus\OrderStatusRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Voucher\VoucherRepositoryInterface;
+use App\Repositories\OrderProduct\OrderProductRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Shipping\ShippingRepositoryInterface;
+use App\Repositories\OrderStatus\OrderStatusRepositoryInterface;
+use App\Repositories\OrderProduct\OrderProductRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -64,6 +70,18 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             GenderRepositoryInterface::class,
             GenderRepository::class
+        );
+        $this->app->singleton(
+            ShippingRepositoryInterface::class,
+            ShippingRepository::class
+        );
+        $this->app->singleton(
+            OrderProductRepositoryInterface::class,
+            OrderProductRepository::class
+        );
+        $this->app->singleton(
+            OrderStatusRepositoryInterface::class,
+            OrderStatusRepository::class
         );
         if ($this->app->environment('local', 'testing')) {
             $this->app->register(DuskServiceProvider::class);

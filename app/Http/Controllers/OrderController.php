@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Voucher;
 use App\Models\Shipping;
+use App\Models\Statistic;
 use App\Models\OrderStatus;
 use Illuminate\Support\Str;
 use App\Models\OrderProduct;
@@ -13,10 +15,38 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Order\StoreRequest;
+use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Voucher\VoucherRepositoryInterface;
+use App\Repositories\Shipping\ShippingRepositoryInterface;
+use App\Repositories\OrderStatus\OrderStatusRepositoryInterface;
+use App\Repositories\OrderProduct\OrderProductRepositoryInterface;
 
 class OrderController extends Controller
 {
+    protected $productRepo;
+    protected $voucherRepo;
+    protected $orderRepo;
+    protected $shippingRepo;
+    protected $orderProductRepo;
+    protected $orderStatusRepo;
 
+
+    public function __construct(
+        ProductRepositoryInterface $productRepo,
+        VoucherRepositoryInterface $voucherRepo,
+        OrderRepositoryInterface $orderRepo,
+        ShippingRepositoryInterface $shippingRepo,
+        OrderProductRepositoryInterface $orderProductRepo,
+        OrderStatusRepositoryInterface $orderStatusRepo
+    ) {
+        $this->productRepo = $productRepo;
+        $this->voucherRepo = $voucherRepo;
+        $this->orderRepo = $orderRepo;
+        $this->shippingRepo = $shippingRepo;
+        $this->orderProductRepo = $orderProductRepo;
+        $this->orderStatusRepo = $orderStatusRepo;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,8 +54,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('orderStatus')->whereNotIn('order_status_id', [config('app.canceled')])
-            ->orderby('created_at', 'DESC')->get();
+        $orders = $this->orderRepo->getOrderNotInStatusCancel();
 
         return view('admin.order.all_order')->with(compact('orders'));
     }
@@ -59,28 +88,25 @@ class OrderController extends Controller
                 $voucher_id  = null;
             } else {
                 $voucher_id  = $data['voucher']->id;
-                $voucher = Voucher::where('id', $voucher_id)
-                    ->update(['quantity' => $data['voucher']->quantity - 1]);
+                $quantity = ['quantity' => $data['voucher']->quantity - 1];
+                $this->voucherRepo->update($voucher_id, $quantity);
             }
-            $sum_price = Session::get('subTotal');
-            $shipping = Shipping::create([
-                'name' => $request->name,
-                'address' => $request->address,
-                'phone' => $request->phone,
-                'note' => $request->note,
-                'email' => $request->email,
-            ]);
 
-            $orders = Order::create([
+            $sum_price = Session::get('subTotal');
+            $dataShipping = $request->all();
+            $shipping = $this->shippingRepo->create($dataShipping);
+            $dataOrder = [
                 'user_id' => $request->user_id,
                 'order_status_id' => $order_status,
                 'code' => $code,
                 'sum_price' => $sum_price,
                 'shipping_id' => $shipping->id,
                 'voucher_id' => $voucher_id,
-            ]);
+            ];
+
+            $orders = $this->orderRepo->create($dataOrder);
             foreach ($carts as $key => $cart) {
-                $prd = Product::findorfail($key);
+                $prd = $this->productRepo->find($key);
                 if ($prd['quantity'] >= $cart['quantity']) {
                     $order_product[$key] = [
                         'order_id' => $orders->id,
@@ -98,7 +124,8 @@ class OrderController extends Controller
                     return back();
                 }
             }
-            OrderProduct::insert($order_product);
+            $this->orderProductRepo->insertOrderProduct($order_product);
+
             session()->forget('cart');
             session()->forget('data');
             session()->forget('subTotal');
@@ -130,9 +157,8 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        $order = Order::findorfail($id);
-        $order_status = OrderStatus::all();
-
+        $order = $this->orderRepo->find($id);
+        $order_status = $this->orderStatusRepo->getAll();
         return view('admin.order.view_order')->with(compact('order', 'order_status'));
     }
 
@@ -145,28 +171,25 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $order = Order::findorfail($id);
+        $order = $this->orderRepo->find($id);
         $order_status_id = $request->order_status_id;
+
         if ($order->order_status_id != $order_status_id) {
             if ($order_status_id == config('app.confirmed')) {
                 foreach ($order->products as $key => $product) {
-                    DB::table('products')->where('id', $product->id)
-                        ->decrement('quantity', $product->pivot->product_sales_quantity);
-                    DB::table('products')->where('id', $product->id)
-                        ->increment('sold', $product->pivot->product_sales_quantity);
+                    $product->pivot->product_sales_quantity;
+                    $this->productRepo->decrementQuantityProduct($product->id, $product->pivot->product_sales_quantity);
+                    $this->productRepo->incrementSoldProduct($product->id, $product->pivot->product_sales_quantity);
                 }
             } elseif ($order_status_id != config('app.confirmed') && $order_status_id != config('app.canceled')) {
                 foreach ($order->products as $key => $product) {
-                    DB::table('products')->where('id', $product->id)
-                        ->increment('quantity', $product->pivot->product_sales_quantity);
-                    DB::table('products')->where('id', $product->id)
-                        ->decrement('sold', $product->pivot->product_sales_quantity);
+                    $this->productRepo->incrementQuantityProduct($product->id, $product->pivot->product_sales_quantity);
+                    $this->productRepo->decrementSoldProduct($product->id, $product->pivot->product_sales_quantity);
                 }
             }
             if ($order_status_id == config('app.canceled')) {
                 if ($order->voucher != null) {
-                    DB::table('vouchers')->where('id', $order->voucher->id)
-                        ->increment('quantity', 1);
+                    $this->voucherRepo->incrementVoucherWhenCancelOrder($order->voucher->id);
                 }
             }
             $order->update([
@@ -211,16 +234,15 @@ class OrderController extends Controller
 
     public function allCancelOrder()
     {
-        $orders = Order::whereIn('order_status_id', [config('app.canceled')])
-            ->orderby('created_at', 'DESC')->paginate(config('app.limit'));
+        $orders = $this->orderRepo->getOrderInStatusCancel();
 
         return view('admin.order.all_cancel_order')->with(compact('orders'));
     }
 
     public function viewCancelOrder($id)
     {
-        $order = Order::findorfail($id);
-        $order_status = OrderStatus::all();
+        $order = $this->orderRepo->find($id);
+        $order_status = $this->orderStatusRepo->getAll();
 
         return view('admin.order.view_cancel_order')->with(compact('order'));
     }
