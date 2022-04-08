@@ -3,6 +3,7 @@
 namespace App\Repositories\Order;
 
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\BaseRepository;
 use App\Repositories\Order\OrderRepositoryInterface;
 
@@ -59,5 +60,21 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     {
         return $this->model->whereIn('order_status_id', [config('app.canceled')])
             ->orderby('created_at', 'DESC')->paginate(config('app.limit'));
+    }
+
+    public function getRevenueMonth($year)
+    {
+        return $this->model->where('order_status_id', '1')->whereYear('created_at', $year)
+            ->selectRaw('month(created_at) as m, year(created_at) as y,sum(sum_price) as sum')
+            ->groupBy(DB::raw('month(created_at),year(created_at)'))
+            ->pluck('sum', 'm')->toArray();
+    }
+
+    public function getTotalOrdersWeekForMonth($monday, $nextMonday)
+    {
+        return $this->model->where('order_status_id', '1')->whereBetween('created_at', [$monday, $nextMonday])
+            ->selectRaw('year(created_at) as y,count(id) as countId')
+            ->groupBy(DB::raw('year(created_at)'))
+            ->pluck('countId');
     }
 }

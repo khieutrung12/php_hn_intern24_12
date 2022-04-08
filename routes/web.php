@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Voucher;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
@@ -9,13 +10,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\Auth\ChangePasswordController;
-use App\Models\Voucher;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
     Route::get('/all-cancel-order', [OrderController::class, 'allCancelOrder'])->name('allCancelOrder');
     Route::get('/view-cancel-order/{id}', [OrderController::class, 'viewCancelOrder'])->name('viewCancelOrder');
     Route::resource('orders', OrderController::class)->only(['index', 'show', 'edit', 'update']);
+    Route::get('/statistic-by-order', [StatisticController::class, 'statisticByOrder'])->name('statistic.order');
+    Route::get('/statistic-by-revenue', [StatisticController::class, 'statisticByRevenue'])->name('statistic.revenue');
+    Route::post('/select-month-order', [StatisticController::class, 'selectMonthOrder'])
+        ->name('statistic.selectMonthOrder');
+    Route::post('/select-year-revenue', [StatisticController::class, 'selectYearRevenue'])
+        ->name('statistic.selectYearRevenue');
 });
 
 Route::group(['prefix' => 'admin/vouchers', 'middleware' => ['auth', 'admin']], function () {
