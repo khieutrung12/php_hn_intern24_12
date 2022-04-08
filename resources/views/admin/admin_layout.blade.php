@@ -173,6 +173,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </a>
                         </li>
                         <!-- Voucher -->
+
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa-solid fa-box-open"></i>
+                                <span>{{ __('titles.statistic') }}</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a
+                                        href="{{ route('statistic.order') }}">{{ __('titles.statistic_order') }}</a>
+                                </li>
+                                <li><a
+                                        href="{{ route('statistic.revenue') }}">{{ __('titles.statistic_revenue') }}</a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -208,8 +223,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script type="text/javascript"
         src="{{ asset('bower_components/bootstrap-multiselect/dist/js/bootstrap-multiselect.js') }}">
     </script>
+    <script src="{{ asset('bower_components/chart.js/dist/Chart.js') }}">
+    </script>
     @yield('multiple_select_categories')
     @yield('dataTable')
+    @yield('statistic')
 </body>
 
 </html>

@@ -205,4 +205,9 @@ return [
     'top-new-arrival' => 'Sản phẩm mới',
     'see-more' => 'Xem thêm',
     'view_order' => 'Xem đơn hàng',
+    'statistic' => 'Thống kê',
+    'statistic_order' => 'Thống kê theo đơn hàng',
+    'statistic_revenue' => 'Thống kê theo doanh thu',
+    'select_year' => 'Chọn năm',
+    'select_month' => 'Chọn tháng',
 ];

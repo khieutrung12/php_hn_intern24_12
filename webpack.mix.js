@@ -57,3 +57,6 @@ mix.js("resources/js/jquery.dcjqaccordion.2.7.js", "public/js")
 
 mix.copy("resources/i18n/en.json", "public/i18n/en.json")
     .copy("resources/i18n/vi.json", "public/i18n/vi.json");
+
+mix.copy("resources/js/statistic_order.js", "public/js")
+    .copy("resources/js/statistic_revenue.js", "public/js");

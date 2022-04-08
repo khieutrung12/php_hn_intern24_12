@@ -19,4 +19,8 @@ interface OrderRepositoryInterface extends BaseRepositoryInterface
     public function getOrderNotInStatusCancel();
 
     public function getOrderInStatusCancel();
+
+    public function getTotalOrdersWeekForMonth($monday, $nextMonday);
+
+    public function getRevenueMonth($year);
 }
