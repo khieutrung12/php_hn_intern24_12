@@ -3607,3 +3607,192 @@ a.btn-locale:hover {
     padding: 10px 15px;
     background: rgb(218, 223, 219);
 }
+
+.container-profile {
+    display: flex;
+    margin: 0px 25px;
+}
+
+.col-xl-4 {
+    width: 33.33333333%;
+    border: 1px solid rgb(226, 226, 226);
+    box-shadow: 1px 0 3px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}
+
+.col-xl-8 {
+    margin-left: 50px;
+    width: 66%;
+    border: 1px solid rgb(226, 226, 226);
+    box-shadow: 1px 0 3px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}
+
+div.title-profile {
+    font-size: medium;
+    color: #505863;
+    padding: 20px;
+    border-bottom: 1px solid rgb(230, 230, 230);
+    background-color: rgb(236, 235, 235);
+}
+
+div.content-profile {
+    padding: 20px 50px;
+    background-color: white;
+}
+
+div.content-avatar {
+    background-color: white;
+    width: 100%;
+}
+
+div.content-avatar img.form-avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 9999px;
+    margin-top: 50px;
+    margin-left: 140px;
+    margin-bottom: 20px;
+}
+
+img.form-mini-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 9999px;
+}
+
+div.content-avatar div.div-file {
+    position: relative;
+    overflow: hidden;
+    margin-left: 155px;
+}
+
+div.content-avatar div.div-file label {
+    background-color: #313A46;
+    color: white;
+    box-shadow: 1px 0 3px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    border: 2px solid #313A46;
+    padding: 5px;
+}
+
+div.content-avatar input.input-avatar{
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+
+div.content-avatar p {
+    margin-top: 20px;
+    margin-left: 120px;
+    padding-bottom: 50px;
+}
+
+div.form-gender-birthday {
+    display: flex;
+}
+
+div.form-gender {
+    margin-right: 20px;
+    width: 50%;
+}
+
+div.form-birthday {
+    width: 50%;
+}
+
+button.btn-save {
+    background-color: #313A46;
+    color: white;
+    box-shadow: 1px 0 3px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    border: 2px solid #313A46;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+button.btn-save:hover {
+    cursor: pointer;
+    background-color: white;
+    color: #313A46;
+    border: 2px solid #313A46;
+}
+
+div.div-email {
+    display: flex;
+}
+
+div.div-email div.form-email {
+    width: 75%;
+}
+
+div.div-email div.div-email-verified {
+    margin-top: 30px;
+    margin-left: 25px;
+    font-size: small;
+}
+
+div.container-verify-email {
+    border: none !important;
+    margin: auto;
+    width: 50%;
+    box-shadow: 5px 10px 18px rgb(218, 223, 219);
+    background-color: white;
+}
+
+div.container-verify-email div.title-verify-email {
+    font-size: medium;
+    color: #505863;
+    padding: 20px;
+    border-bottom: 1px solid rgb(230, 230, 230);
+    background-color: rgb(236, 235, 235);
+}
+
+div.container-verify-email div.message {
+    padding-top: 30px;
+    width: 100%;
+    margin: auto;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+}
+
+div.container-verify-email form.content-verify-email {
+    padding: 50px;
+}
+
+div.container-verify-email form.content-verify-email p {
+    font-size: small;
+    font-style: italic;
+}
+
+div.container-verify-email form.content-verify-email div.button{
+    display: flex;
+}
+
+div.container-verify-email form.content-verify-email input{
+    margin: auto;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+div.container-verify-email form.content-verify-email div.button a {
+    margin-top: 15px;
+}
+
+div.container-verify-email form.content-verify-email div.button button.btn-save {
+    margin-left: 555px;
+}
+
+div.container-email div.content-email a{
+    display: inline-block;
+    background-color: #313A46;
+    color: white;
+    box-shadow: 1px 0 3px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    border: 2px solid #313A46;
+    padding: 5px;
+    margin-top: 5px;
+}

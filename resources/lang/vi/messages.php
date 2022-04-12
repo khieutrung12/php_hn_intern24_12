@@ -46,4 +46,8 @@ return [
     'suggestion_2' => '- Sử dụng từ khóa khác cùng nghĩa',
     'suggestion_3' => '- Hãy thử bằng từ khóa nghĩa rộng hơn',
     'voucher-used' => 'Phiếu giảm giá đã được sử dụng',
+    'email-non-verified' => 'Vui lòng xác thực email của bạn!',
+    'email-verified' => 'Email đã được xác thực.',
+    'email-not-match' => 'Email không trùng khớp.',
+    'check-your-email' => 'Vui lòng kiểm tra hòm thư của bạn!',
 ];

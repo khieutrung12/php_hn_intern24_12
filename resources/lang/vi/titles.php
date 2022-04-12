@@ -210,4 +210,10 @@ return [
     'statistic_revenue' => 'Thống kê theo doanh thu',
     'select_year' => 'Chọn năm',
     'select_month' => 'Chọn tháng',
+    'profile-admin' => 'Thông tin cá nhân',
+    'profile-picture' => 'Thông tin ảnh',
+    'profile-details' => 'Thông tin chi tiết',
+    'verify-email' => 'Xác thực Email',
+    'back' => 'Quay lại',
+    'send-email' => 'Gửi Email',
 ];

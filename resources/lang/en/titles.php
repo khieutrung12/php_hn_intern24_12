@@ -221,4 +221,10 @@ return [
     'October' => 'October',
     'November' => 'November',
     'December' => 'December',
+    'profile-admin' => 'Profile Admin',
+    'profile-picture' => 'Profile Picture',
+    'profile-details' => 'Profile Details',
+    'verify-email' => 'Verify Email',
+    'back' => 'Back',
+    'send-email' => 'Send Email',
 ];

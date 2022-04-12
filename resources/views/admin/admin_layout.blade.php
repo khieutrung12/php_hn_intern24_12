@@ -76,7 +76,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle"
                             href="#">
-                            <img alt="" src="{{ asset('images/2.png') }}">
+                            @if (Auth()->user()->avatar != null)
+                                <img
+                                    src="{{ asset('avatars/' . Auth()->user()->avatar ) }}"
+                                    class="form-mini-avatar"
+                                    alt="">
+                            @else
+                                <img
+                                    src="{{ asset('images/user.png') }}"
+                                    class="form-mini-avatar"
+                                    alt="">
+                            @endif
                             <span class="username">
                                 {{ Auth()->user()->name }}
                             </span>
@@ -90,7 +100,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="{{ route('admin.profile') }}">
                                     <i class=" fa fa-suitcase"></i>
                                     {{ __('titles.profile') }}
                                 </a>

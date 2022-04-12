@@ -44,4 +44,8 @@ return [
     'suggestion_1' => '- Check if spelling is correct',
     'suggestion_2' => '- Use different keywords',
     'suggestion_3' => '- Try general keywords',
+    'email-non-verified' => 'Please verify your email!',
+    'email-verified' => 'Email has been verified.',
+    'email-not-match' => 'The email does not match.',
+    'check-your-email' => 'Please check your email!',
 ];
