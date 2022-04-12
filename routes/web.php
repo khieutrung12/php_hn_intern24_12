@@ -13,7 +13,6 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\Auth\ChangePasswordController;
@@ -63,6 +62,13 @@ Route::group(['middleware' => ['auth', 'user']], function () {
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
     Route::resource('/categories', CategoryController::class);
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin');
+    Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
+    Route::put('/update/{id}', [AdminController::class, 'update'])->name('admin.update');
+
+    Route::get('verify-email', [AdminController::class, 'verifyEmail'])->name('admin.verify.email');
+    Route::post('verify-email', [AdminController::class, 'sendVerifyEmail'])->name('admin.send.verify.email');
+    Route::get('active-email/{id}/{token}', [AdminController::class, 'activeEmail'])->name('admin.active.email');
+
     Route::resource('/brands', BrandController::class);
     Route::delete('/deleteimage/{id}', [ProductController::class, 'deleteimage'])->name('deleteimage');
     Route::resource('/products', ProductController::class);

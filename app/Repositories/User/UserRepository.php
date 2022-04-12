@@ -18,4 +18,16 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return $this->model->insert($attributes);
     }
+
+    public function saveEmailVerifiedAt(User $user, $email_verified_at)
+    {
+        $user->email_verified_at = $email_verified_at;
+        return $user->save();
+    }
+
+    public function saveToken(User $user, $token)
+    {
+        $user->token = $token;
+        return $user->save();
+    }
 }
