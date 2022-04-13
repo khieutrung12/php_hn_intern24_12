@@ -23,4 +23,6 @@ interface OrderRepositoryInterface extends BaseRepositoryInterface
     public function getTotalOrdersWeekForMonth($monday, $nextMonday);
 
     public function getRevenueMonth($year);
+
+    public function getOrdersOnWeek($fromDate, $toDate);
 }

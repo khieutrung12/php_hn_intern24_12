@@ -12,4 +12,6 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
     public function saveEmailVerifiedAt(User $user, $email_verified_at);
 
     public function saveToken(User $user, $token);
+
+    public function getEmailVerified();
 }

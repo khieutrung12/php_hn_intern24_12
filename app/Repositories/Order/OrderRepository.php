@@ -77,4 +77,12 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             ->groupBy(DB::raw('year(created_at)'))
             ->pluck('countId');
     }
+
+    public function getOrdersOnWeek($fromDate, $toDate)
+    {
+        return $this->model->with('user')
+            ->whereBetween('updated_at', [$fromDate, $toDate])
+            ->where('order_status_id', config('app.confirmed'))
+            ->get();
+    }
 }
