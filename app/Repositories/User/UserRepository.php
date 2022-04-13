@@ -30,4 +30,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $user->token = $token;
         return $user->save();
     }
+
+    public function getEmailVerified()
+    {
+        return $this->model->select('email')
+            ->whereNotNull('email_verified_at')
+            ->get();
+    }
 }

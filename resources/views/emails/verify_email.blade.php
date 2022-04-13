@@ -1,13 +1,13 @@
 <div style="width: 600px; margin: 0 auto;">
     <div style="text-align: center;">
         <h2 style="text-align: center;">
-            Xin chào, {{ Auth()->user()->name }}
+            Hello, {{ Auth()->user()->name }}
         </h2>
         <p style="text-align: center;">
-            Bạn đã đăng ký tài khoản tại hệ thống của chúng tôi,
+            You have registered an account in our system,
         </p>
         <p style="text-align: center;">
-            Để có thể tiếp tục sử dụng các dịch vụ, bạn vui lòng nhấn vào nút xác nhận bên dưới để kích hoạt tài khoản.
+            To be able to continue using the services, please click the confirmation button below to activate your account.
         </p>
         <a  href="{{ route('admin.active.email', [
                     'id' => Auth()->user()->id,
@@ -21,7 +21,7 @@
                     padding: 5px;
                     margin-top: 5px;
                     cursor: pointer;">
-            Xác thực
+            Verify
         </a>
     </div>
 </div>
