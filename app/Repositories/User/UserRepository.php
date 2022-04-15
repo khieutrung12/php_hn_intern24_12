@@ -37,4 +37,16 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             ->whereNotNull('email_verified_at')
             ->get();
     }
+    
+    public function sendNotify($id, $event)
+    {
+        $user = $this->find($id);
+        if ($user) {
+            $user->notify($event);
+
+            return true;
+        }
+
+        return false;
+    }
 }

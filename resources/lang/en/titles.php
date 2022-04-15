@@ -227,4 +227,5 @@ return [
     'verify-email' => 'Verify Email',
     'back' => 'Back',
     'send-email' => 'Send Email',
+    'order_status_update' => 'Order Status Update',
 ];

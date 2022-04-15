@@ -24,6 +24,7 @@
         rel="stylesheet">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="{{ mix('css/style-app-user.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style-custom.css') }}" rel="stylesheet">
 </head>
 
 <body class="bg-white h-screen antialiased leading-none font-sans">
@@ -68,6 +69,12 @@
     <script src="{{ asset('js/search.js') }}"></script>
     <script src="{{ asset('js/customer_voucher.js') }}"></script>
     <script src="{{ asset('js/style_ajax.js') }}"></script>
+    <script src="{{ asset('bower_components/pusher-js/dist/web/pusher.js') }}">
+    </script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script script src="{{ asset('js/notification_order_status.js') }}">
+    </script>
+
 </body>
 
 </html>

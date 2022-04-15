@@ -50,4 +50,6 @@ return [
     'email-verified' => 'Email đã được xác thực.',
     'email-not-match' => 'Email không trùng khớp.',
     'check-your-email' => 'Vui lòng kiểm tra hòm thư của bạn!',
+    'order_accepted_at' => 'Đơn hàng đã được chấp nhận vào lúc ',
+    'order_canceled_at' => 'Đơn hàng đã bị hủy vào lúc ',
 ];

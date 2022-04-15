@@ -22,21 +22,68 @@
         <!-- navicons -->
         @if (Auth::check() && Auth::user()->role_id == config('auth.roles.user'))
             <div class="space-x-10 flex items-center justify-center">
-                <!-- Wish List -->
-                <a href="#"
-                    class="hidden text-center text-gray-700 hover:text-indigo-900 transition relative">
-                    <span
-                        class="absolute left-7 bottom-7 w-5 h-5 rounded-full flex items-center justify-center bg-indigo-900 text-white text-xs">
-                        5
-                    </span>
-                    <div class="text-2xl">
-                        <i class="far fa-heart"></i>
+                <!-- Notification -->
+                @if (Auth::check())
+                    <script>
+                        var userID = "{{ Auth::user()->id }}";
+                    </script>
+                @endif
+                @auth
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown dropdown-notifications">
+                                <a href="" class="dropdown-toggle"
+                                    data-toggle="dropdown">
+                                    <i data-count="{{ Auth::user()->unreadNotifications->count() }}"
+                                        class="far fa-bell notification-icon">
+                                    </i>
+                                </a>
+                                <div class="dropdown-container">
+                                    <div class="dropdown-toolbar">
+                                        <div class="dropdown-toolbar-actions">
+                                            <a href="#">Mark all as read</a>
+                                        </div>
+                                        <h3 class="dropdown-toolbar-title">
+                                            Notifications
+                                            (<span
+                                                class="notif-count">{{ Auth::user()->Notifications->count() }}</span>)
+                                        </h3>
+                                    </div>
+                                    <ul class="dropdown-menu" id="notifications">
+                                        @foreach (Auth::user()->notifications as $notification)
+                                            <a
+                                                href="{{ $notification->data['link'] }}?read={{ $notification->id }}">
+                                                <li class="notification active">
+                                                    <div class="media">
+                                                        <div class="media-left">
+                                                        </div>
+                                                        <div class="media-body">
+                                                            <strong
+                                                                class="notification-title">
+                                                                {{ $notification->data['title'] }}</strong>
+                                                            <div
+                                                                class="notification-meta">
+                                                                <small
+                                                                    class="timestamp">
+                                                                    {{ $notification->data['message'] }}</small>
+                                                                <span
+                                                                    class="dot  {{ $notification->unread() ? 'unread-color' : 'read-color' }}"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </a>
+                                        @endforeach
+                                    </ul>
+                                    <div class="dropdown-footer text-center">
+                                        <a href="#">View All</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                    <small class="text-xs leading-3">
-                        {{ __('titles.Wish List') }}
-                    </small>
-                </a>
-                <!-- end Wish List -->
+                @endauth
+                <!-- end Notification -->
                 <!-- Cart -->
                 <a href="{{ route('carts.index') }}"
                     class="lg:block text-center text-gray-700 hover:text-indigo-900 transition relative">

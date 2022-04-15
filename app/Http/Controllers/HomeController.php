@@ -75,7 +75,7 @@ class HomeController extends Controller
         $ids  = collect();
         $brands = $this->brandRepo->getAll();
         if ($childCategory2) {
-            $subCategory = $childCategory->childCategories()->where('slug', $childCategory2)->firstOrFail();
+            $subCategory = $childCategory->where('slug', $childCategory2)->firstOrFail();
             $ids = collect($subCategory->id);
         } elseif ($childCategory) {
             $ids = $childCategory->childCategories->pluck('id');

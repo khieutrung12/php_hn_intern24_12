@@ -14,7 +14,9 @@ use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Notifications\UpdateOrderStatus;
 use App\Http\Requests\Order\StoreRequest;
+use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Voucher\VoucherRepositoryInterface;
@@ -30,6 +32,7 @@ class OrderController extends Controller
     protected $shippingRepo;
     protected $orderProductRepo;
     protected $orderStatusRepo;
+    protected $userRepo;
 
 
     public function __construct(
@@ -38,7 +41,8 @@ class OrderController extends Controller
         OrderRepositoryInterface $orderRepo,
         ShippingRepositoryInterface $shippingRepo,
         OrderProductRepositoryInterface $orderProductRepo,
-        OrderStatusRepositoryInterface $orderStatusRepo
+        OrderStatusRepositoryInterface $orderStatusRepo,
+        UserRepositoryInterface $userRepo
     ) {
         $this->productRepo = $productRepo;
         $this->voucherRepo = $voucherRepo;
@@ -46,6 +50,7 @@ class OrderController extends Controller
         $this->shippingRepo = $shippingRepo;
         $this->orderProductRepo = $orderProductRepo;
         $this->orderStatusRepo = $orderStatusRepo;
+        $this->userRepo = $userRepo;
     }
     /**
      * Display a listing of the resource.
@@ -195,6 +200,9 @@ class OrderController extends Controller
             $order->update([
                 'order_status_id' => $request->order_status_id,
             ]);
+            $eventNotify = new UpdateOrderStatus($order);
+            $this->userRepo->sendNotify($order->user_id, $eventNotify);
+
             $request->session()->flash('mess', __('messages.update-success', ['name' => __('titles.order')]));
         }
 

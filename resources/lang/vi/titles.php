@@ -216,4 +216,5 @@ return [
     'verify-email' => 'Xác thực Email',
     'back' => 'Quay lại',
     'send-email' => 'Gửi Email',
+    'order_status_update' => 'Cập nhật trạng thái đơn hàng',
 ];
