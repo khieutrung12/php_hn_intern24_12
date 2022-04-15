@@ -48,4 +48,6 @@ return [
     'email-verified' => 'Email has been verified.',
     'email-not-match' => 'The email does not match.',
     'check-your-email' => 'Please check your email!',
+    'order_accepted_at' => 'The order has been accepted at ',
+    'order_canceled_at' => 'The order was canceled at ',
 ];
