@@ -68,4 +68,15 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Gender::class);
     }
+
+
+    /**
+     * The channels the user receives notification broadcasts on.
+     *
+     * @return string
+     */
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'order.' . $this->id;
+    }
 }

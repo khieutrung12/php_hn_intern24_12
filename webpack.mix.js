@@ -60,3 +60,5 @@ mix.copy("resources/i18n/en.json", "public/i18n/en.json")
 
 mix.copy("resources/js/statistic_order.js", "public/js")
     .copy("resources/js/statistic_revenue.js", "public/js");
+
+mix.js("resources/js/notification_order_status.js", "public/js");
