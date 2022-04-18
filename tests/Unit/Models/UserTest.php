@@ -77,4 +77,12 @@ class UserTest extends TestCase
         $this->assertInstanceOf(BelongsTo::class, $relation);
         $this->assertEquals('gender_id', $relation->getForeignKeyName());
     }
+
+    public function testReceivesBroadcastNotificationsChannel()
+    {
+        $user = User::factory()->make();
+        $user->id = 1;
+
+        $this->assertEquals('order.1', $user->receivesBroadcastNotificationsOn());
+    }
 }

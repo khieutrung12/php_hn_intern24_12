@@ -85,4 +85,11 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             ->where('order_status_id', config('app.confirmed'))
             ->get();
     }
+
+    public function countOrderByYear($year)
+    {
+        $data = $this->model->whereYear('updated_at', '=', $year)->get();
+
+        return count($data) > 0;
+    }
 }

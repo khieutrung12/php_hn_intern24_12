@@ -10,16 +10,17 @@ $(function () {
         loadOrder();
     }
 
-    function loadCanvas(total_order){
+    function loadCanvas(week,order,total_order,total,message){
+        if (total>0) {
         $('#line-chart').remove();
         $('#graph-container').append('<canvas id="line-chart"><canvas>');
             var barChart = $('#line-chart');
                 var myChart = new Chart(barChart, {
                     type: 'bar',
                     data: {
-                        labels: ['Week 1','Week 2','Week 3','Week 4'],
+                        labels: week.split(','),
                         datasets: [{
-                                label: 'Total orders',
+                                label: order,
                                 data: total_order.split(','),
                                 backgroundColor: 'rgba(0, 128, 128, 0.7)',
                                 borderColor: 'rgba(0, 128, 128, 0.7)',
@@ -37,6 +38,10 @@ $(function () {
                         },
                     }
                 });
+            toastr.success(message);
+        } else {
+            toastr.warning(message);
+        }
     }
 
     function loadOrder(){
@@ -46,12 +51,14 @@ $(function () {
         $.ajax({
             url: url,
             method: 'post',
+            dataType: 'json',
             data: {
                 month: month,
                 year: year,
             },
             success: function(data) {
-                loadCanvas(data);
+                loadCanvas(data.chart_data['week'],data.chart_data['order'],data.chart_data['totalOrder'],
+                data.chart_data['total'],data.message);
             },
             error: function (error) {
                toastr.error(error);
@@ -66,12 +73,14 @@ $(function () {
         $.ajax({
             url: url,
             method: 'post',
+            dataType: 'json',
             data: {
                 month: month,
                 year: year,
             },
             success: function(data) {
-                loadCanvas(data);
+                loadCanvas(data.chart_data['week'],data.chart_data['order'],data.chart_data['totalOrder'],
+                data.chart_data['total'],data.message);
             },
             error: function (error) {
                 toastr.error(error);
