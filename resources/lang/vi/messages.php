@@ -52,4 +52,6 @@ return [
     'check-your-email' => 'Vui lòng kiểm tra hòm thư của bạn!',
     'order_accepted_at' => 'Đơn hàng đã được chấp nhận vào lúc ',
     'order_canceled_at' => 'Đơn hàng đã bị hủy vào lúc ',
+    'load_data_success' => 'Tải dữ liêu thành công',
+    'no_data' => 'Không có dữ liệu',
 ];

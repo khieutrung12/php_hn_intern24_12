@@ -9,7 +9,9 @@ $(function () {
         loadRevenue();
     }
    
-    function loadCanvasRevenue(month,revenue){
+    function loadCanvasRevenue(revenue_name,month,revenue,message){
+        if (month && revenue) {
+        toastr.success(message);
         $('#chart_revenue').remove();
         $('#graph-container').append('<canvas id="chart_revenue"><canvas>');
             var lineChart = $('#chart_revenue');
@@ -18,7 +20,7 @@ $(function () {
                 data: {
                     labels: month.split(','),
                     datasets: [{
-                            label: 'Revenue',
+                            label: revenue_name,
                             data: revenue.split(','),
                             fill: false,
                             borderColor: 'rgb(75, 192, 192)',
@@ -36,6 +38,9 @@ $(function () {
                     },
                 }
             });
+        } else {
+            toastr.warning(message);
+        }
     }
 
     function loadRevenue(){
@@ -44,13 +49,17 @@ $(function () {
         $.ajax({
             url: url,
             method: "post",
+            dataType:'json',
             data: {
                 year: year,
             },
             success: function(data) {
-                loadCanvasRevenue(data['month'],data['revenue']);
+                // loadCanvasRevenue(data['month'],data['revenue']);
+                loadCanvasRevenue(data.chart_data['revenue_name'],
+                data.chart_data['month'],data.chart_data['revenue'],data.message);
             },
-            error: function (error) {
+            error: function (data) {
+                loadCanvasRevenue(data.chart_data['month']=null,data.chart_data['revenue']=null,data.error);
                 toastr.error(error);
             },
         });
@@ -62,11 +71,13 @@ $(function () {
         $.ajax({
             url: url,
             method: "post",
+            dataType:'json',
             data: {
                 year: year,
             },
             success: function(data) {
-                loadCanvasRevenue(data['month'],data['revenue']);
+                loadCanvasRevenue(data.chart_data['revenue_name'],
+                data.chart_data['month'],data.chart_data['revenue'],data.message);
             },
             error: function (error) {
                 toastr.error(error);

@@ -50,4 +50,6 @@ return [
     'check-your-email' => 'Please check your email!',
     'order_accepted_at' => 'The order has been accepted at ',
     'order_canceled_at' => 'The order was canceled at ',
+    'load_data_success' => 'Load data successfully',
+    'no_data' => 'No data',
 ];
