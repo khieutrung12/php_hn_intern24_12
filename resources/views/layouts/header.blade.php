@@ -41,13 +41,7 @@
                                 <div class="dropdown-container">
                                     <div class="dropdown-toolbar">
                                         <div class="dropdown-toolbar-actions">
-                                            <a href="#">Mark all as read</a>
                                         </div>
-                                        <h3 class="dropdown-toolbar-title">
-                                            Notifications
-                                            (<span
-                                                class="notif-count">{{ Auth::user()->Notifications->count() }}</span>)
-                                        </h3>
                                     </div>
                                     <ul class="dropdown-menu" id="notifications">
                                         @foreach (Auth::user()->notifications as $notification)
@@ -60,12 +54,19 @@
                                                         <div class="media-body">
                                                             <strong
                                                                 class="notification-title">
-                                                                {{ $notification->data['title'] }}</strong>
+                                                                {{ trans('titles.order_status_update') }}:
+                                                                #{{ $notification->data['order_code'] }}</strong>
                                                             <div
                                                                 class="notification-meta">
                                                                 <small
                                                                     class="timestamp">
-                                                                    {{ $notification->data['message'] }}</small>
+                                                                    @if ($notification->data['status_order'] == config('app.confirmed'))
+                                                                        {{ trans('messages.order_accepted_at') }}
+                                                                    @else
+                                                                        {{ trans('messages.order_canceled_at') }}
+                                                                    @endif
+                                                                    {{ $notification->data['time'] }}
+                                                                </small>
                                                                 <span
                                                                     class="dot  {{ $notification->unread() ? 'unread-color' : 'read-color' }}"></span>
                                                             </div>
@@ -75,9 +76,6 @@
                                             </a>
                                         @endforeach
                                     </ul>
-                                    <div class="dropdown-footer text-center">
-                                        <a href="#">View All</a>
-                                    </div>
                                 </div>
                             </li>
                         </ul>

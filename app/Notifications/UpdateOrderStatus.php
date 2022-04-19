@@ -64,11 +64,9 @@ class UpdateOrderStatus extends Notification implements ShouldQueue
             'id' => $this->id,
             'read_at' => null,
             'data' => [
-                'title' => trans('titles.order_status_update') . ': #' . $this->order->code,
-                'message' => ($this->order->order_status_id == config('app.confirmed')) ?
-                    trans('messages.order_accepted_at') .
-                    formatDate($this->order->updated_at) . '' :
-                    trans('messages.order_canceled_at') . formatDate($this->order->updated_at) . ' ',
+                'order_code' => $this->order->code,
+                'status_order' => $this->order->order_status_id,
+                'time' =>  formatDate($this->order->updated_at),
                 'link' => route('viewDetailOrder', ['id' => $this->order->id]),
             ],
         ];
@@ -83,11 +81,9 @@ class UpdateOrderStatus extends Notification implements ShouldQueue
     public function toDatabase($notifiable)
     {
         return [
-            'title' => trans('titles.order_status_update') . ': #' . $this->order->code,
-            'message' => ($this->order->order_status_id == config('app.confirmed')) ?
-                trans('messages.order_accepted_at') .
-                formatDate($this->order->updated_at) . '' :
-                trans('messages.order_canceled_at') . formatDate($this->order->updated_at) . ' ',
+            'order_code' => $this->order->code,
+            'status_order' => $this->order->order_status_id,
+            'time' =>  formatDate($this->order->updated_at),
             'link' => route('viewDetailOrder', ['id' => $this->order->id]),
         ];
     }
