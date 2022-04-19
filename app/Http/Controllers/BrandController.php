@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Brand\StoreRequest;
@@ -53,19 +54,9 @@ class BrandController extends Controller
         $brand = $request->all();
         $brand['slug'] = $slug;
         $this->brandRepo->create($brand);
-        $request->session()->flash('mess', __('messages.add-success', ['name' => __('titles.brand')]));
 
-        return Redirect::route('brands.create');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
+        return Redirect::route('brands.create')
+            ->with('mess', __('messages.add-success', ['name' => __('titles.brand')]));
     }
 
     /**
@@ -77,6 +68,9 @@ class BrandController extends Controller
     public function edit($id)
     {
         $edit_brand = $this->brandRepo->find($id);
+        if (!$edit_brand) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
 
         return view('admin.brand.edit_brand')->with(compact('edit_brand'));
     }
@@ -93,10 +87,13 @@ class BrandController extends Controller
         $brand = $request->all();
         $slug = createSlug($request->name);
         $brand['slug'] = $slug;
-        $this->brandRepo->update($id, $brand);
-        $request->session()->flash('mess', __('messages.update-success', ['name' => __('titles.brand')]));
+        $result = $this->brandRepo->update($id, $brand);
+        if (!$result) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
 
-        return Redirect::route('brands.index');
+        return Redirect::route('brands.index')
+            ->with('mess', __('messages.update-success', ['name' => __('titles.brand')]));
     }
 
     /**
@@ -107,10 +104,12 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        $this->brandRepo->delete($id);
+        $result = $this->brandRepo->delete($id);
+        if (!$result) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
 
-        Session::flash('mess', __('messages.delete-success', ['name' => __('titles.brand')]));
-
-        return Redirect::route('brands.index');
+        return Redirect::route('brands.index')
+            ->with('mess', __('messages.delete-success', ['name' => __('titles.brand')]));
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Category\StoreRequest;
@@ -51,20 +52,9 @@ class CategoryController extends Controller
         $slug = createSlug($request->name);
         $category['slug'] = $slug;
         $this->categoryRepo->create($category);
-        $request->session()->flash('mess', __('messages.add-success', ['name' => __('titles.category')]));
 
-        return redirect()->route('categories.create');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->route('categories.create')
+            ->with('mess', __('messages.add-success', ['name' => __('titles.category')]));
     }
 
     /**
@@ -76,6 +66,10 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $productCategory =   $this->categoryRepo->find($id);
+        if (!$productCategory) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
+
         $categories = $this->categoryRepo->getCategoryWhereNullWithChild();
 
         return view('admin.category.edit_category')->with(compact('productCategory', 'categories'));
@@ -93,10 +87,13 @@ class CategoryController extends Controller
         $category = $request->all();
         $slug = createSlug($request->name);
         $category['slug'] = $slug;
-        $this->categoryRepo->update($id, $category);
-        $request->session()->flash('mess', __('messages.update-success', ['name' => __('titles.category')]));
+        $result = $this->categoryRepo->update($id, $category);
+        if (!$result) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
 
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')
+            ->with('mess', __('messages.update-success', ['name' => __('titles.category')]));
     }
 
     /**
@@ -107,9 +104,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $this->categoryRepo->delete($id);
-        Session::flash('mess', __('messages.delete-success', ['name' => __('titles.category')]));
+        $result = $this->categoryRepo->delete($id);
+        if (!$result) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
 
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')
+            ->with('mess', __('messages.delete-success', ['name' => __('titles.category')]));
     }
 }
