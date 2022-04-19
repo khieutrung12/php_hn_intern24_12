@@ -227,10 +227,11 @@ return [
     'verify-email' => 'Verify Email',
     'back' => 'Back',
     'send-email' => 'Send Email',
-    'order_status_update' => 'Order Status Update',
+    'order_status_update' => 'Order status update',
     'revenue_name' => 'Revenue',
     'week_1' => 'Week 1',
     'week_2' => 'Week 2',
     'week_3' => 'Week 3',
     'week_4' => 'Week 4',
+    'notifications' => 'Notifications',
 ];

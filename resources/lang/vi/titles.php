@@ -234,4 +234,5 @@ return [
     'week_2' => 'Tuần 2',
     'week_3' => 'Tuần 3',
     'week_4' => 'Tuần 4',
+    'notifications' => 'Thông báo',
 ];
