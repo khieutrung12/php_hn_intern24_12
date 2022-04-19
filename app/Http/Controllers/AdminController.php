@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\VerifyMail;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\Admin\UpdateRequest;
 use App\Repositories\User\UserRepositoryInterface;
@@ -42,12 +43,17 @@ class AdminController extends Controller
 
     public function update(UpdateRequest $request, $id)
     {
+        $user = $this->userRepo->find($id);
+        if (!$user) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
+
         if ($request->avatar != null) {
             $newAvatarName = time() . '-' . str_replace(' ', '-', $request->name) . '.'
                 . $request->avatar->extension();
             $request->avatar->move(public_path('avatars'), $newAvatarName);
         } else {
-            $newAvatarName = $this->userRepo->find($id)->avatar;
+            $newAvatarName = $user->avatar;
         }
 
         $user = $this->userRepo->update($id, [
@@ -96,7 +102,11 @@ class AdminController extends Controller
 
     public function activeEmail($id, $token)
     {
-        $user = Auth()->user();
+        $user = $this->userRepo->find($id);
+        if (!$user) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
+
         $email_verified_at = new DateTime();
         
         $this->userRepo->saveEmailVerifiedAt($user, $email_verified_at);

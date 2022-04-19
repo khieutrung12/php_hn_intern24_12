@@ -18,7 +18,7 @@ class ReportWeekly extends Command
      *
      * @var string
      */
-    protected $signature = 'report:weekly';
+    public $signature = 'report:weekly';
 
     /**
      * The console command description.
@@ -48,13 +48,13 @@ class ReportWeekly extends Command
      */
     public function handle()
     {
-        $emails = $this->userRepo->getEmailVerified()->toArray();
+        $emails = $this->userRepo->getEmailVerified();
 
         $fromDate = date('Y-m-d H:i:s', strtotime('-1 week', strtotime(date('Y-m-d'))));
         $toDate = date('Y-m-d H:i:s');
         $orders = $this->orderRepo->getOrdersOnWeek($fromDate, $toDate);
 
-        foreach ($emails as $email) {
+        foreach ((array) $emails as $email) {
             Mail::to($email)->send(new NotificationMail($orders));
         }
     }

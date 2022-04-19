@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Voucher;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -39,6 +40,10 @@ class CartController extends Controller
     public function addToCart($id)
     {
         $product = $this->productRepo->find($id);
+        if (!$product) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
+
         $data = session()->get('data');
         if (isset($data['carts'][$id]['quantity'])) {
             $data['carts'][$id]['quantity'] = $data['carts'][$id]['quantity'] + 1;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
 use App\Http\Requests\User\UpdateRequest;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Order\OrderRepositoryInterface;
@@ -55,11 +56,16 @@ class UserController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
+        $user = $this->userRepo->find($id);
+        if (!$user) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
+
         if ($request->avatar != null) {
             $newAvatarName = time() . '-' . str_replace(' ', '-', $request->name) . '.' . $request->avatar->extension();
             $request->avatar->move(public_path('avatars'), $newAvatarName);
         } else {
-            $newAvatarName = $this->userRepo->find($id)->avatar;
+            $newAvatarName = $user->avatar;
         }
 
         $user = $this->userRepo->update($id, [
