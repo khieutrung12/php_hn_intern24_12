@@ -14,5 +14,8 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
     public function saveToken(User $user, $token);
 
     public function getEmailVerified();
+
     public function sendNotify($id, $event);
+
+    public function findByAttributes($attributes = []);
 }

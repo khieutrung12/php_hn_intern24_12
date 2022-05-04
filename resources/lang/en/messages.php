@@ -20,6 +20,7 @@ return [
     'update' => 'Data updated successfully!',
     'login-fail' => 'Login unsuccessful!',
     'login-success' => 'Login successfully!',
+    'logout-success' => 'Logout successfully!',
     'register-success' => 'Register successfully!',
     'register-fail' => 'Register unsuccessful!',
     'password-fail' => 'Incorrect password!',
