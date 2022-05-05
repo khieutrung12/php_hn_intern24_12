@@ -20,6 +20,7 @@ return [
     'confirmDelete' => 'Bạn có muốn xóa :name này không?',
     'update' => 'Cập nhật dữ liệu thành công!',
     'login-fail' => 'Đăng nhập không thành công!',
+    'logout-success' => 'Đăng xuất thành công!',
     'register-success' => 'Đăng ký thành công!',
     'register-fail' => 'Đăng ký không thành công!',
     'password-fail' => 'Mật khẩu không đúng!',

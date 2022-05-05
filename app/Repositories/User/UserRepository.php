@@ -49,4 +49,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
         return false;
     }
+
+    public function findByAttributes($attributes = [])
+    {
+        return $this->model->where($attributes)->get();
+    }
 }
