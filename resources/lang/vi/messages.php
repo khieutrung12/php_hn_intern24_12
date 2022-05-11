@@ -55,4 +55,5 @@ return [
     'order_canceled_at' => 'Đơn hàng đã bị hủy vào lúc ',
     'load_data_success' => 'Tải dữ liêu thành công',
     'no_data' => 'Không có dữ liệu',
+    'you do not have access' => 'Bạn không có quyền được truy cập',
 ];

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\RegisterController;
 
@@ -21,4 +22,7 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/logout', [LoginController::class, 'logout']);
+    Route::middleware('admin.api')->group(function () {
+        Route::apiResource('admin/brands', BrandController::class);
+    });
 });

@@ -53,4 +53,5 @@ return [
     'order_canceled_at' => 'The order was canceled at ',
     'load_data_success' => 'Load data successfully',
     'no_data' => 'No data',
+    'you do not have access' => 'You do not have permission to access',
 ];
